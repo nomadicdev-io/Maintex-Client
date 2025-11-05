@@ -1,0 +1,349 @@
+import useSidebar from "@/hooks/useSidebar"
+import { Button } from "../ui/button"
+import { AlignLeft, AudioLines, BellRing, Bot, CalendarDays, CalendarDaysIcon, CreditCard, FileText, FolderKey, Globe, LogOut, MessagesSquare, Moon, PanelLeftClose, PanelLeftOpen, Search, Settings, Sun, User2 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { BarLoader } from "react-spinners";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@components/ui/tooltip"
+import { atom, useAtom, useSetAtom } from "jotai";
+import { RxCaretSort } from "react-icons/rx";
+import { Input } from "../ui/input";
+import { RiChatSmileAiLine } from "react-icons/ri";
+import { useRouter } from "@tanstack/react-router";
+import { authClient } from "@/auth";
+import { useTheme } from "next-themes";
+import { useAuthStore } from "../../hooks/useAuthStore";
+import ImageComponent from "../ui/ImageComponent";
+import useAI from "@/hooks/useAI";
+import { voiceAgentAtom } from "../../routes/app/_app";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import HeaderSearch from "../forms/HeaderSearch";
+import dayjs from "dayjs";
+
+export const notificationSheetAtom = atom(false)
+
+export default function AdminHeader() {
+
+  const { isOpen, toggle } = useSidebar()
+
+  return (
+    <>
+    <header className="relative w-full min-h-[4rem] max-h-[4rem] border-b border-border ps-5 flex flex-col">
+      <div className="flex items-center justify-between w-full h-full">
+        <div className="flex items-center gap-2">
+          {
+            !isOpen ?
+            <Button onClick={toggle} size="icon"  variant="shade">
+              <AlignLeft />
+            </Button>
+            :
+            null
+          }
+          <HeaderSearch />
+          <HeaderDate />
+        </div>
+
+        <div className="flex items-center gap-4 h-full">
+
+          <div className="flex items-center gap-3">
+            {/* <HeaderSchedules /> */}
+            <HeaderLanguageSwitcher />
+            <HeaderAIChatBot />
+            {/* <HeaderSettings /> */}
+            <HeaderVoiceAgent />
+            <HeaderChat />
+            <HearThemeSwitcher />
+            <HeaderNotifications />
+          </div>
+
+          <HeaderUser />
+        </div>
+      </div>
+    </header>
+    <NotificationSheet />
+    </>
+  )
+}
+
+function HeaderChat(){
+
+  const router = useRouter()
+
+  return (
+    <div className="flex items-center gap-2">
+    <Tooltip variant="secondary">
+      <TooltipTrigger asChild>
+        <Button onClick={()=> router.navigate({to: '/app/chats'})} size="icon" variant="defaultIcon" >
+          <MessagesSquare />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent side="bottom">Chats</TooltipContent>
+    </Tooltip>
+    </div>
+  )
+}
+
+function HeaderVoiceAgent(){
+
+
+  const setVoiceAgent = useSetAtom(voiceAgentAtom)
+
+  return (
+    <div className="flex items-center gap-2">
+    <Tooltip variant="secondary">
+      <TooltipTrigger asChild>
+        <Button onClick={()=> setVoiceAgent(e=> !e)} size="icon" variant="defaultIcon" >
+          <AudioLines />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent side="bottom">Voice Agent</TooltipContent>
+    </Tooltip>
+    </div>
+  )
+}
+
+
+
+function HeaderNotifications(){
+
+  const setNotificationSheet = useSetAtom(notificationSheetAtom)
+
+  return (
+    <div className="flex items-center gap-2">
+     <Tooltip variant="secondary">
+        <TooltipTrigger asChild>
+          <Button onClick={()=> setNotificationSheet(true)} size="icon" variant="defaultIcon">
+          <BellRing/>
+          <span className="absolute top-1 right-1 w-[10px] h-[10px] bg-red-600 rounded-full"></span>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">Notifications</TooltipContent>
+     </Tooltip>
+    </div>
+  )
+}
+
+function HeaderDate(){
+  return (
+    <div className="relative flex items-center gap-2 h-10 border border-border-600 text-text/80 rounded-lg px-3 ">
+      <CalendarDaysIcon size={16} />
+      <span className="text-sm">{dayjs().format('DD MMMM YYYY')}</span>
+    </div>
+  )
+}
+
+function HeaderSettings(){
+
+  const router = useRouter()
+
+  return (
+    <div className="flex items-center gap-2">
+    <Button onClick={()=> router.navigate({to: '/admin/settings'})} size="icon" variant="defaultIcon">
+      <Settings/>
+    </Button>
+    </div>
+  )
+}
+
+function HearThemeSwitcher(){
+
+  const {resolvedTheme, setTheme} = useTheme()
+
+  const onThemeSwitch = () => {
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
+  }
+
+  return (
+    <div className="flex items-center gap-2">
+    <Tooltip variant="secondary">
+      <TooltipTrigger asChild>
+          <Button onClick={onThemeSwitch} size="icon" variant="defaultIcon">
+          {
+            resolvedTheme === 'dark' ? 
+            <Sun/>
+            :
+            <Moon/>
+          }
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent side="bottom">{resolvedTheme === 'dark' ? 'Light Mode' : 'Dark Mode'}</TooltipContent>
+    </Tooltip>
+    </div>
+  )
+}
+
+function HeaderSchedules(){
+
+  const router = useRouter()
+
+  return (
+    <div className="flex items-center gap-2">
+    <Button onClick={()=> router.navigate({to: '/admin/schedules'})} size="icon" variant="defaultIcon">
+      <CalendarDays className="text-text" />
+    </Button>
+    </div>
+  )
+}
+
+function HeaderUser(){
+
+  const router = useRouter()
+  const setNotificationSheet = useSetAtom(notificationSheetAtom)
+  const {data: session} = authClient.useSession()
+  const {resolvedTheme} = useTheme()
+  const {logout, isLogouting} = useAuthStore()
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <div className="flex items-center gap-3 h-full w-55 border-s border-border px-3 cursor-pointer transition-all duration-300 hover:bg-text/3 group">
+            <div className="relative w-9 h-9 rounded-full overflow-hidden">
+            {
+              session?.user?.image ?
+              <ImageComponent src={session?.user?.image} alt="Profile Avatar" />
+              :
+              <img src={resolvedTheme === 'dark' ? '/user-avatar-dark.png' : '/user-avatar-light.png'} alt="Profile Avatar" className="w-full h-full object-cover" />
+            }
+            </div>
+          <div className="flex flex-col">
+            <p className="text-sm font-semibold leading-4 max-w-[10rem] truncate">{session?.user?.name}</p>
+            <p className="text-xs font-medium text-gray-500 capitalize mt-1">{session?.user?.role}</p>
+          </div>
+          <RxCaretSort size={24} className="text-gray-700 ms-1 group-hover:text-primary"/>
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-55" align="start">
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuGroup>
+          <DropdownMenuItem key="/admin/account" onSelect={()=> router.navigate({to: '/admin/account'})}>
+            <User2 className="w-2 h-2" />
+            Profile
+          </DropdownMenuItem>
+          <DropdownMenuItem key="/admin/notifications" onSelect={()=> {
+            setNotificationSheet(true)
+          }}>
+            <BellRing className="w-2 h-2" />
+            Notifications
+          </DropdownMenuItem>
+          <DropdownMenuItem key="/admin/chats" onSelect={()=> router.navigate({to: '/admin/chats'})}>
+            <MessagesSquare className="w-2 h-2" />
+            Chats
+          </DropdownMenuItem>
+          <DropdownMenuItem key="/admin/settings" onSelect={()=> router.navigate({to: '/admin/settings'})}>
+            <Settings className="w-2 h-2" />
+            Settings
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>Development</DropdownMenuLabel>
+          <DropdownMenuItem key="/admin/api-keys" onSelect={()=> router.navigate({to: '/admin/api-keys'})}>
+            <FolderKey className="w-2 h-2" />
+            API Keys
+          </DropdownMenuItem>
+          <DropdownMenuItem key="/admin/docs" onSelect={()=> router.navigate({to: '/admin/docs'})}>
+            <FileText className="w-2 h-2" />
+            Docs
+          </DropdownMenuItem>
+          <DropdownMenuItem key="/admin/payment" onSelect={()=> router.navigate({to: '/admin/payment'})}>
+            <CreditCard className="w-2 h-2" />
+            Payment
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem key="logout" onSelect={logout}>
+          {
+            isLogouting ? 
+            <BarLoader height={3} width={'100%'} color="#EF4852" />
+            :
+            <>
+             <LogOut className="w-2 h-2 !text-red-300" />
+             Sign Out
+             </>
+          }
+         
+          
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+
+  )
+}
+
+function NotificationSheet(){
+
+  const [open, setOpen] = useAtom(notificationSheetAtom)
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+    <SheetContent>
+      <SheetHeader>
+        <SheetTitle>Are you absolutely sure?</SheetTitle>
+        <SheetDescription>
+          This action cannot be undone. This will permanently delete your account
+          and remove your data from our servers.
+        </SheetDescription>
+      </SheetHeader>
+    </SheetContent>
+  </Sheet>
+  )
+}
+
+
+function HeaderAIChatBot(){
+
+  const {toggle} = useAI()
+
+  return (
+    <Tooltip variant="secondary">
+      <TooltipTrigger asChild>
+        <Button size="icon" variant="defaultIcon" onClick={toggle}>
+          <Bot/>
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent side="bottom">
+        Maintex AI
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
+function HeaderLanguageSwitcher(){
+
+  return (
+    <DropdownMenu>
+    <DropdownMenuTrigger asChild>
+      <Button variant="defaultIcon">
+        <Globe className="size-4"/> <span>English</span>
+      </Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem>English</DropdownMenuItem>
+      <DropdownMenuItem>Italian</DropdownMenuItem>
+      <DropdownMenuItem>Arabic</DropdownMenuItem>
+      <DropdownMenuItem>Spanish</DropdownMenuItem>
+      <DropdownMenuItem>Russian</DropdownMenuItem>
+      <DropdownMenuItem>Chinese</DropdownMenuItem>
+      <DropdownMenuItem>French</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
+  )
+}

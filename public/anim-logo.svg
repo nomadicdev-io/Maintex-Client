@@ -1,0 +1,60 @@
+<svg width="376" height="233" viewBox="0 0 376 233" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+
+    .anim-logo {
+        transform-origin: center;
+        transform-box: fill-box;
+        transform: scale(0.85);
+        position: relative;
+        animation: anim-logo-animation 1s ease-in-out infinite alternate forwards;
+        animation-delay: 0.2s;
+    }
+    .center-line {
+        stroke-dasharray: 210px;
+        stroke-dashoffset: 210px;
+        animation: center-line-animation 1s ease-in-out infinite alternate forwards;
+        animation-delay: 0.5s;
+    }
+    .right-line {
+        stroke-dasharray: 195px;
+        stroke-dashoffset: 195px;
+        animation: line-animation 1s ease-in-out infinite alternate forwards;
+        animation-delay: 0.6s;
+    }
+    .left-line {
+        stroke-dasharray: 195px;
+        stroke-dashoffset: 195px;
+        animation: line-animation 1s ease-in-out infinite alternate forwards;
+        animation-delay: 0.7s;
+    }
+    @keyframes center-line-animation {
+        from {
+            stroke-dashoffset: 208px;
+        }
+        to {
+            stroke-dashoffset: 0px;
+        }
+    }
+    @keyframes line-animation {
+        from {
+            stroke-dashoffset: 195px;
+        }
+        to {
+            stroke-dashoffset: 0px;
+        }
+    }
+    @keyframes anim-logo-animation {
+        from {
+            transform: scale(0.85);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+</style>
+    <g class="anim-logo">
+    <path class="center-line" d="M147.281 212.499L229.22 21.1871" style="stroke-dasharray: 210px; stroke-dashoffset: 210px;" stroke="#00958E" stroke-width="41" stroke-linecap="round"/>
+    <path class="right-line" d="M287 53.5938L355.5 121.594L287 191.094" style="stroke-dasharray: 195px; stroke-dashoffset: 195px;" stroke="#00AF85" stroke-width="41" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="left-line" d="M89.5 184.594L21 116.594L89.5 47.0938" style="stroke-dasharray: 195px; stroke-dashoffset: 195px;" stroke="#36C670" stroke-width="41" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+</svg>

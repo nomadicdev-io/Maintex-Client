@@ -1,0 +1,177 @@
+.license-agreement {
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .header {
+    text-align: center;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+  }
+  
+  h1 {
+    color: var(--color-text);
+    margin-bottom: 10px;
+  }
+  
+  h2 {
+    color: var(--color-text);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+    margin-top: 30px;
+  }
+  
+  .parties {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  
+  .party {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    margin: 0 10px;
+  }
+  
+  .license-fee {
+    background-color: var(--color-bg-100);
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .important-note {
+    background-color: var(--color-bg-100);
+    border-left: 4px solid var(--color-warning);
+    padding: 15px;
+    margin: 20px 0;
+  }
+  
+  .signature-section {
+    margin-top: 50px;
+    border-top: 1px solid var(--color-border);
+    padding-top: 20px;
+  }
+  
+  .signature-fields {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+  
+  .signature-party {
+    width: 45%;
+  }
+  
+  .signature-field {
+    margin-bottom: 15px;
+  }
+  
+  .signature-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .signature-field input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+  }
+  
+  .signature-field input:disabled {
+    background-color: var(--color-bg-100);
+    color: #666;
+  }
+  
+  .signature-field span {
+    display: inline-block;
+    padding: 8px 0;
+  }
+  
+  .action-buttons {
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  .btn-accept, .btn-print {
+    padding: 12px 24px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-accept {
+    background-color: var(--color-success);
+    color: white;
+  }
+  
+  .btn-accept:hover {
+    background-color: var(--color-success-600);
+  }
+  
+  .btn-print {
+    background-color: var(--color-secondary);
+    color: white;
+  }
+  
+  .btn-print:hover {
+    background-color: var(--color-secondary-600);
+  }
+  
+  .acceptance-confirmation {
+    text-align: center;
+  }
+  
+  .accepted-text {
+    color: var(--color-success);
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  footer {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 0.9em;
+    color: var(--color-text-600);
+  }
+  
+  .section {
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    padding-left: 20px;
+  }
+  
+  li {
+    margin-bottom: 5px;
+  }
+  
+  /* Print styles */
+  @media print {
+    .action-buttons, .signature-field input {
+      display: none;
+    }
+    
+    .license-agreement {
+      max-width: none;
+      padding: 0;
+    }
+    
+    .accepted-text {
+      display: block;
+    }
+  }
