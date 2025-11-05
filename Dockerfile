@@ -1,17 +1,37 @@
-# Stage 1: Build the Vite + React application with Bun
-FROM oven/bun:latest as builder
+# Build stage
+FROM oven/bun:latest as build
 
 WORKDIR /app
-COPY package.json ./
-RUN bun install
+
+# Copy package files
+COPY package.json bun.lockb* ./
+
+# Install dependencies
+RUN bun install --frozen-lockfile
+
+# Copy the rest of the application code
 COPY . .
+
+# Build the application
 RUN bun run build
 
-# Stage 2: Serve the build with Bun
+# Production stage
 FROM oven/bun:latest
+
 WORKDIR /app
-COPY --from=builder /app/dist ./dist
-# Install serve package for serving static files
-RUN bun add -g serve
+
+# Install a simple http server to serve static content
+RUN bun install --global serve
+
+# Copy build artifacts from build stage
+COPY --from=build /app/dist /app/dist
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=8881
+
+# Expose the port
 EXPOSE 8881
-CMD ["bun", "x", "serve", "-s", "dist", "-p", "8881"]
+
+# Command to run the application
+CMD ["serve", "-s", "dist", "-l", "8881"]
