@@ -1,114 +1,186 @@
+
+function detectBrowser(userAgent) {
+    const ua = userAgent.toLowerCase()
+    
+    // Chrome (also matches Edge Chromium, but we check Edge first)
+    if (ua.includes('edg/')) {
+        const match = userAgent.match(/Edg\/([\d.]+)/i)
+        return {
+            name: 'Edge',
+            version: match ? match[1] : 'unknown'
+        }
+    }
+    
+    // Firefox
+    if (ua.includes('firefox/')) {
+        const match = userAgent.match(/Firefox\/([\d.]+)/i)
+        return {
+            name: 'Firefox',
+            version: match ? match[1] : 'unknown'
+        }
+    }
+    
+    // Safari (but not Chrome)
+    if (ua.includes('safari/') && !ua.includes('chrome/')) {
+        const match = userAgent.match(/Version\/([\d.]+)/i)
+        return {
+            name: 'Safari',
+            version: match ? match[1] : 'unknown'
+        }
+    }
+    
+    // Chrome
+    if (ua.includes('chrome/')) {
+        const match = userAgent.match(/Chrome\/([\d.]+)/i)
+        return {
+            name: 'Chrome',
+            version: match ? match[1] : 'unknown'
+        }
+    }
+    
+    // Opera
+    if (ua.includes('opera/') || ua.includes('opr/')) {
+        const match = userAgent.match(/(?:Opera|OPR)\/([\d.]+)/i)
+        return {
+            name: 'Opera',
+            version: match ? match[1] : 'unknown'
+        }
+    }
+    
+    // Internet Explorer
+    if (ua.includes('msie') || ua.includes('trident/')) {
+        const match = userAgent.match(/(?:MSIE |rv:)([\d.]+)/i)
+        return {
+            name: 'Internet Explorer',
+            version: match ? match[1] : 'unknown'
+        }
+    }
+    
+    // Default fallback
+    return {
+        name: 'Unknown',
+        version: 'unknown'
+    }
+}
+
+function detectOS(userAgent) {
+    const ua = userAgent.toLowerCase()
+    const platform = navigator.platform?.toLowerCase() || ''
+    
+    // Windows
+    if (ua.includes('windows nt')) {
+        const versionMatch = userAgent.match(/Windows NT ([\d.]+)/i)
+        let version = 'unknown'
+        if (versionMatch) {
+            const ntVersion = versionMatch[1]
+            const versionMap = {
+                '10.0': '10/11',
+                '6.3': '8.1',
+                '6.2': '8',
+                '6.1': '7',
+                '6.0': 'Vista',
+                '5.1': 'XP',
+                '5.0': '2000'
+            }
+            version = versionMap[ntVersion] || ntVersion
+        }
+        return {
+            name: 'Windows',
+            version: version
+        }
+    }
+    
+    // macOS
+    if (ua.includes('mac os x') || ua.includes('macintosh')) {
+        const match = userAgent.match(/Mac OS X ([\d_]+)/i)
+        return {
+            name: 'macOS',
+            version: match ? match[1].replace(/_/g, '.') : 'unknown'
+        }
+    }
+    
+    // iOS
+    if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod')) {
+        const match = userAgent.match(/OS ([\d_]+)/i)
+        return {
+            name: 'iOS',
+            version: match ? match[1].replace(/_/g, '.') : 'unknown'
+        }
+    }
+    
+    // Android
+    if (ua.includes('android')) {
+        const match = userAgent.match(/Android ([\d.]+)/i)
+        return {
+            name: 'Android',
+            version: match ? match[1] : 'unknown'
+        }
+    }
+    
+    // Linux
+    if (ua.includes('linux')) {
+        return {
+            name: 'Linux',
+            version: 'unknown'
+        }
+    }
+    
+    // Use navigator.userAgentData if available (modern browsers)
+    if (navigator.userAgentData) {
+        return {
+            name: navigator.userAgentData.platform || 'Unknown',
+            version: navigator.userAgentData.platformVersion || 'unknown'
+        }
+    }
+    
+    // Fallback to platform
+    return {
+        name: platform || 'Unknown',
+        version: 'unknown'
+    }
+}
+
+function detectDeviceType(userAgent) {
+    const ua = userAgent.toLowerCase()
+    const width = window.screen?.width || 0
+    const height = window.screen?.height || 0
+    
+    // Check for mobile patterns in user agent
+    const isMobileUA = /mobile|android|iphone|ipod|blackberry|opera mini|iemobile|wpdesktop/i.test(userAgent)
+    
+    // Check for tablet patterns
+    const isTabletUA = /tablet|ipad|playbook|silk|(android(?!.*mobile))/i.test(userAgent)
+    
+    // Screen size based detection
+    const isMobileSize = width <= 768 || (width <= 1024 && height <= 768)
+    const isTabletSize = width > 768 && width <= 1024
+    
+    // Combine UA and screen size detection
+    if (isTabletUA || (isTabletSize && !isMobileUA)) {
+        return 'tablet'
+    }
+    
+    if (isMobileUA || isMobileSize) {
+        return 'mobile'
+    }
+    
+    return 'desktop'
+}
+
 function getUserAgent() {
-    const ua = navigator.userAgent || "Unknown";
-    const result = {
-        rawUserAgent: ua,
-        browser: {
-            name: null,
-            version: null,
-            majorVersion: null
-        },
-        engine: {
-            name: null,
-            version: null
-        },
-        os: {
-            name: null,
-            version: null
-        },
-        device: {
-            type: null,
-            vendor: null,
-            model: null
-        },
-        isMobile: false,
-        isTablet: false,
-        isDesktop: true
-    };
-
-    // Log the raw user agent for debugging
-    console.log("Raw User Agent:", ua);
-
-    // Browser detection with fallback
-    if (/Edg/.test(ua)) {
-        result.browser.name = 'Edge';
-        result.browser.version = (ua.match(/Edg\/([\d.]+)/) || [])[1];
-    } else if (/Chrome/.test(ua) && !/OPR/.test(ua)) {
-        result.browser.name = 'Chrome';
-        result.browser.version = (ua.match(/Chrome\/([\d.]+)/) || [])[1];
-    } else if (/Safari/.test(ua) && !/Chrome/.test(ua)) {
-        result.browser.name = 'Safari';
-        result.browser.version = (ua.match(/Version\/([\d.]+)/) || [])[1];
-    } else if (/Firefox/.test(ua)) {
-        result.browser.name = 'Firefox';
-        result.browser.version = (ua.match(/Firefox\/([\d.]+)/) || [])[1];
-    } else if (/OPR/.test(ua)) {
-        result.browser.name = 'Opera';
-        result.browser.version = (ua.match(/OPR\/([\d.]+)/) || [])[1];
-    } else {
-        result.browser.name = 'Unknown';
+    const userAgentString = navigator.userAgent || ''
+    const browser = detectBrowser(userAgentString)
+    const os = detectOS(userAgentString)
+    const deviceType = detectDeviceType(userAgentString)
+    
+    return {
+        userAgent: userAgentString,
+        deviceType,
+        browser: browser.name,
+        os: os.name,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        language: navigator.language || navigator.userLanguage || 'unknown',
     }
-
-    // Extract major version
-    if (result.browser.version) {
-        result.browser.majorVersion = parseInt(result.browser.version.split('.')[0]);
-    }
-
-    // Engine detection
-    if (/WebKit/.test(ua)) {
-        result.engine.name = 'WebKit';
-        result.engine.version = (ua.match(/AppleWebKit\/([\d.]+)/) || [])[1];
-    } else if (/Gecko/.test(ua) && !/WebKit/.test(ua)) {
-        result.engine.name = 'Gecko';
-        result.engine.version = (ua.match(/rv:([\d.]+)/) || [])[1];
-    } else {
-        result.engine.name = 'Unknown';
-    }
-
-    // OS detection with improved Windows matching
-    if (/Windows/.test(ua)) {
-        result.os.name = 'Windows';
-        result.os.version = (ua.match(/Windows NT ([\d.]+)/) || [])[1] || 'Unknown';
-    } else if (/Mac OS X/.test(ua)) {
-        result.os.name = 'Mac OS X';
-        result.os.version = (ua.match(/Mac OS X ([\d_]+)/) || [])[1]?.replace(/_/g, '.') || 'Unknown';
-    } else if (/Android/.test(ua)) {
-        result.os.name = 'Android';
-        result.os.version = (ua.match(/Android ([\d.]+)/) || [])[1] || 'Unknown';
-    } else if (/iPhone|iPad|iPod/.test(ua)) {
-        result.os.name = 'iOS';
-        result.os.version = (ua.match(/OS ([\d_]+)/) || [])[1]?.replace(/_/g, '.') || 'Unknown';
-    } else if (/Linux/.test(ua)) {
-        result.os.name = 'Linux';
-        result.os.version = 'Unknown';
-    } else {
-        result.os.name = 'Unknown';
-    }
-
-    // Device type detection
-    if (/Mobile/.test(ua) || /Android/.test(ua) || /iPhone|iPod/.test(ua)) {
-        result.isMobile = true;
-        result.isDesktop = false;
-        result.device.type = 'mobile';
-    } else if (/iPad/.test(ua) || /Tablet/.test(ua)) {
-        result.isTablet = true;
-        result.isDesktop = false;
-        result.device.type = 'tablet';
-    }
-
-    // Device vendor and model
-    if (/iPhone/.test(ua)) {
-        result.device.vendor = 'Apple';
-        result.device.model = 'iPhone';
-    } else if (/iPad/.test(ua)) {
-        result.device.vendor = 'Apple';
-        result.device.model = 'iPad';
-    } else if (/Android/.test(ua)) {
-        const androidModel = (ua.match(/\(([^)]+)\)/) || [])[1]?.split(';')[1]?.trim();
-        result.device.vendor = androidModel?.split(' ')[0] || 'Unknown';
-        result.device.model = androidModel || 'Unknown';
-    }
-
-    return result;
 }
 
 export default getUserAgent

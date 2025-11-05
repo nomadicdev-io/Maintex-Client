@@ -10,6 +10,7 @@ import { Toaster } from "@/components/ui/sonner"
 import {useAppControls} from '@/hooks/useAppControls'
 import { useEffect } from 'react'
 import orbit from '../api'
+import getUserAgent from '../lib/getUserAgent'
 
 export const Route = createRootRouteWithContext()({
   component: RootLayoutComponent,
@@ -40,10 +41,10 @@ export const Route = createRootRouteWithContext()({
 
 function RootLayoutComponent() {
 
-  const getCurrentLocation = useAppControls((state)=> state.getCurrentLocation)
+  const requestLocationPermission = useAppControls((state)=> state.requestLocationPermission)
 
   useEffect(() => {
-    getCurrentLocation()
+    requestLocationPermission().then((res)=> console.log(res))
   }, [])
 
   return (

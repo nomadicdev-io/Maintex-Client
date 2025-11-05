@@ -60,13 +60,6 @@ export default defineConfig({
     port: import.meta.env.VITE_PORT,
     open: true,
     host: true,
-    proxy: {
-      '/v1/app': {
-        target: import.meta.env.VITE_API_BASE_URL,
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/v1\/app/, ''),
-      }
-    },
   },
   preview: {
     port: import.meta.env.VITE_PORT,
