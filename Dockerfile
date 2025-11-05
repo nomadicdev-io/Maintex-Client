@@ -1,30 +1,18 @@
-# Use Bun official image as base
-FROM oven/bun:1.3.1 AS base
+# Stage 1: Build the Vite + React application with Bun
+FROM oven/bun:latest as builder
+
 WORKDIR /app
-
-# Install dependencies stage
-FROM base AS deps
-COPY package.json bun.lockb* ./
-RUN bun install --frozen-lockfile
-
-# Build stage
-FROM base AS build
-COPY --from=deps /app/node_modules ./node_modules
+COPY package.json ./
+RUN bun install
 COPY . .
 RUN bun run build
 
-# Production stage
-FROM oven/bun:1.3.1-slim AS production
+# Stage 2: Serve the build with nginx
+FROM nginx:alpine
 WORKDIR /app
-
-# Install serve to serve the static files
-RUN bun add -g serve
-
-# Copy built assets from build stage
-COPY --from=build /app/dist ./dist
-
-# Expose port
+# Install wget for healthcheck
+RUN apk add --no-cache wget
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 8881
-
-# Serve the application
-CMD ["serve", "-s", "dist", "-l", "8881"]
+CMD ["nginx", "-g", "daemon off;"]

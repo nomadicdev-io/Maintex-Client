@@ -1,11 +1,26 @@
 services:
   web:
-    env_file: 
-      - path: ./.env
-        required: true
+    container_name: maintex-client
     build:
       context: .
+      dockerfile: Dockerfile
+    env_file:
+      - path: ./.env
+        required: true
     environment:
-      NODE_ENV: production
+      - NODE_ENV=production
     ports:
-      - 8881:8881 
+      - "8881:8881"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8881/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - maintex-network
+
+networks:
+  maintex-network:
+    driver: bridge
