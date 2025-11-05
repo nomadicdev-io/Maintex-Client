@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "bunx --bun vite",
     "dev:debug": "DEBUG=vite:* bunx --bun vite",
-    "build-prod": "bunx --bun vite build",
+    "build": "bunx --bun vite build",
     "build:dev": "bunx --bun vite build --mode development",
     "lint": "eslint .",
     "serve": "bunx --bun vite preview",
