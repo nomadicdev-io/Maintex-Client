@@ -27,7 +27,11 @@ export const Route = createRootRouteWithContext()({
           return res.data
         }catch(error){
           console.log(error)
-          return null
+          return {
+            status: false,
+            message: error.message || error.response.data.message || 'Failed to fetch application context',
+            data: null
+          }
         }
       },
     })
