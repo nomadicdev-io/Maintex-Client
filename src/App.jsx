@@ -6,12 +6,12 @@ import './lang'
 import i18n from './lang'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-
 const queryClient = new QueryClient()
 
 // Router
 const router = createRouter({
     routeTree,
+    basepath: i18n.language,
     context: {
         authTypes: null,
         token: null,
