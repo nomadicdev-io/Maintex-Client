@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json ./
 RUN bun install
 COPY . .
-RUN bun run build
+RUN bun run build-prod
 
 # Stage 2: Serve the build with nginx
 FROM nginx:alpine
