@@ -1,0 +1,11 @@
+services:
+  web:
+    env_file: 
+      - path: ./.env
+        required: true
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8881:8881 

@@ -1,13 +1,13 @@
-# Maintex Pro Client Application | 1.0.0
-![Maintex Pro Banner](https://storage.devpgs.app/u/S9l8fV.png)
+# PGS iO Client | 1.0.0
+![Maintex Pro Banner](https://storage.quadbits.app/7u1eamzlY6sM.png)
 
 ## 🚀 Overview
 
-**Maintex Pro** is a next-generation business management platform built for modern teams, facilities, and maintenance operations. With a user-friendly React frontend, Maintex Pro makes it effortless to handle your workflow, communication, and essential business tasks in one unified interface.
+**PGS iO** is a next-generation business management platform built for modern teams, facilities, and maintenance operations. With a user-friendly React frontend, PGS iO makes it effortless to handle your workflow, communication, and essential business tasks in one unified interface.
 
-## ✨ Why Maintex Pro Stands Out
+## ✨ Why PGS iO Stands Out
 
-Maintex Pro goes beyond traditional management apps by combining a thoughtful, scalable architecture with a refined and accessible user experience. Designed to support facilities managers, field teams, and administrators alike, Maintex Pro offers comprehensive tools without sacrificing ease of use. Whether you're dispatching work orders, scheduling staff, or tracking progress, Maintex Pro adapts to your needs and grows with your organization.
+PGS iO goes beyond traditional management apps by combining a thoughtful, scalable architecture with a refined and accessible user experience. Designed to support facilities managers, field teams, and administrators alike, PGS iO offers comprehensive tools without sacrificing ease of use. Whether you're dispatching work orders, scheduling staff, or tracking progress, PGS iO adapts to your needs and grows with your organization.
 
 ## 🎯 Key Features
 
@@ -62,7 +62,7 @@ Maintex Pro goes beyond traditional management apps by combining a thoughtful, s
 ```bash
 # Start the dev server with hot reloading
 bun dev
-# Launches the Vite server (default: http://localhost:8281)
+# Launches the Vite server with HMR
 
 # Start with debug-level logging
 bun dev:debug
@@ -73,7 +73,7 @@ bun build:dev
 # Output development build with source maps
 
 # Build for production
-bun build
+bun build-prod
 # Produce optimized, production-ready output
 ```
 
@@ -99,81 +99,57 @@ bun type-check
 # Ensure code correctness without emitting output
 ```
 
-## 🌐 Application URLs
+## 🌐 Development Environment
 
-### Development Environment
+The application runs on a configurable port (check your environment variables) with the following structure:
 
-| URL | Purpose | Description |
-|-----|---------|-------------|
-| **http://localhost:8281** | Maintex Pro Frontend | Your business's main application |
-| **http://localhost:8281/auth/login** | User Login | Secure access for your team |
-| **http://localhost:8281/app** | Dashboard | The central control hub (requires authentication) |
-| **http://localhost:8281/app/work-orders** | Work Orders | Assignments and job status management |
-| **http://localhost:8281/app/schedules** | Scheduling | Team and resource calendars |
-| **http://localhost:8281/app/clients** | Clients | Manage client and company records |
-| **http://localhost:8281/app/teams** | Team Management | Add, remove, and organize staff |
-| **http://localhost:8281/app/tracking** | Tracking | Visual location and progress tracking |
+### API Integration
 
-### API Integration (Proxied)
-
-Maintex Pro connects to your backend securely using Vite's proxy (in dev):
+PGS iO connects to your backend securely using Vite's proxy configuration:
 
 **Proxied Endpoints (Development)**
-- `/en/api/*` &rarr; Maintex Pro API (data and business logic)
-- `/en/auth/*` &rarr; Authentication (login, registration, sessions)
-- `/health` &rarr; Health check endpoint
+- `/v1/app/*` → Backend API (proxied and rewritten)
 
-**API Highlights**
-- **Authentication**: Full lifecycle: signup, login, password recovery
-- **Live Data**: Instant updates with TanStack Query
-- **Robust Error Handling**: Friendly user feedback, global error boundaries
-- **Offline Mode**: Service worker for no-connection support
+**API Features**
+- **Authentication**: Full lifecycle with Better Auth
+- **Live Data**: Real-time updates with TanStack Query
+- **Error Handling**: Global error boundaries and user feedback
+- **Type Safety**: Full TypeScript integration
 
 ## 🚀 Quick Start
 
 1. **Clone & Install**
    ```bash
    git clone <repository-url>
-   cd Maintex-Pro/client
+   cd pgs-io-client
    bun install
    ```
 
 2. **Configure Environment**
    ```bash
-   # Copy and edit your environment files
-   cp .env.example .env.development
-   cp .env.example .env.production
-
-   # Fill in API URLs in .env.development
-   VITE_API_URL=http://localhost:8281/en/api/v1
-   VITE_AUTH_URL=http://localhost:8281/en/auth
+   # Set up your environment variables
+   # Configure VITE_PORT and VITE_API_BASE_URL as needed
    ```
 
 3. **Run the Development Server**
    ```bash
    bun dev
-   # Open http://localhost:8281 in your browser
+   # Opens automatically in your browser
    ```
 
-4. **Explore Maintex Pro**
-   - Visit the root URL for the main dashboard
-   - Access authentication at `/auth/login`
-   - Use `/app` for post-login dashboard features
-   - Enable devtools for enhanced developer experience
+4. **Explore PGS iO**
+   - File-based routing with TanStack Router
+   - Hot module replacement for fast development
+   - TypeScript support throughout
+   - Integrated devtools for debugging
 
-5. **(Optional) Connect to Backend API**
-   - Run the Maintex API/backend on port 8280 (default)
-   - The Vite proxy setup will automatically forward API calls
-   - Authentication and real-time updates work out-of-the-box
-
-## 🎨 Maintex Pro Is Perfect For
+## 🎨 PGS iO Is Perfect For
 
 - **Facilities Management**: Streamline jobs, scheduling, and staff workflows
-- **Agile Teams**: Fast UI prototyping and scalable production deployments
-- **Modern Web Development**: Reference architecture for React, API, and real-time apps
+- **Modern Development**: Reference architecture for React applications
 - **Responsive Experience**: Deliver a polished UI for every device
-- **Multi-user Collaboration**: Role-based access, from field teams to management
-- **Progressive Web Applications**: Native-like features, even offline
+- **Team Collaboration**: Role-based access and permissions
+- **Progressive Web Applications**: Native-like features with offline support
 
 ## 🛠 Technology Stack
 
@@ -194,7 +170,7 @@ Maintex Pro connects to your backend securely using Vite's proxy (in dev):
 
 ---
 
-**Maintex Pro helps you manage your business, your way.**  
+**PGS iO helps you manage your business, your way.**  
 Start developing today with `bun dev` and discover a truly modern web platform! 🚀
 
 *Built with ❤️ by Planet Green Solutions*

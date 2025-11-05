@@ -1,0 +1,22 @@
+# Override file for local development
+version: '3.8'
+
+services:
+  maintex-frontend:
+    environment:
+      - VITE_API_URL=http://localhost:8880/v1/app
+      - VITE_API_AI_URL=http://localhost:8880/v1/ai
+      - VITE_API_BASE_URL=http://localhost:8880
+      - VITE_AUTH_URL=http://localhost:8880/auth/v1
+      - VITE_DOCS_URL=http://localhost:8880/docs/json
+      - VITE_SOCKET_URL=ws://localhost:8880/app/socket
+
+  postgres:
+    environment:
+      - POSTGRES_PASSWORD=dev_password
+    ports:
+      - "5433:5432"  # Use different port for local development
+
+  redis:
+    ports:
+      - "6380:6379"  # Use different port for local development
