@@ -35,6 +35,8 @@ function ProfileBanner({user, refetch}) {
           const file = e.target.files[0]
           if(!file) return
     
+          console.log(file)
+          
           if(!imageFormats.includes(file.type)) return toast.error('Invalid image format')
     
           const size = file.size / 1024 / 1024

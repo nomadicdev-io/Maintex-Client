@@ -211,6 +211,8 @@ function HeaderUser(){
   const {resolvedTheme} = useTheme()
   const {logout, isLogouting} = useAuthStore()
 
+  console.log(session)
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
