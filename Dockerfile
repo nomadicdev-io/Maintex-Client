@@ -1,13 +1,7 @@
 # Build stage
-# Using Bun 1.0.30 which has Node.js 20.x (compatible with tree-sitter)
-FROM oven/bun:latest AS build
+FROM oven/bun:latest as build
 
 WORKDIR /app
-
-# Install Python and build tools for native module compilation
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip build-essential && \
-    rm -rf /var/lib/apt/lists/*
 
 # Copy package files
 COPY package.json bun.lockb* ./
