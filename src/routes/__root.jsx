@@ -19,6 +19,7 @@ export const Route = createRootRouteWithContext()({
   loader: async ({context})=> {
     await context.queryClient.ensureQueryData({
       queryKey: ['app'],
+      initialData: null,
       queryFn: async ()=> {
         try{
           const res = await orbit.get({url: 'context'})
