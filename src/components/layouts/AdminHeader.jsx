@@ -1,6 +1,6 @@
 import useSidebar from "@/hooks/useSidebar"
 import { Button } from "../ui/button"
-import { AlignLeft, AudioLines, BellRing, Bot, CalendarDays, CalendarDaysIcon, CreditCard, FileText, FolderKey, Globe, LogOut, MessagesSquare, Moon, Settings, Sun, User2 } from "lucide-react";
+import { AlignLeft, AudioLines, BellRing, Bot, CalendarDays, CalendarDaysIcon, FolderKanban, Globe, LogOut, MessagesSquare, Megaphone, Moon, Settings, Sun, User2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,6 +40,7 @@ export const notificationSheetAtom = atom(false)
 
 export default function AdminHeader() {
 
+  const {data: session} = authClient.useSession()
   const { isOpen, toggle } = useSidebar()
 
   return (
@@ -63,14 +64,20 @@ export default function AdminHeader() {
 
           <div className="flex items-center gap-3">
             {/* <HeaderSchedules /> */}
-            <HeaderLanguageSwitcher />
-            <HeaderDate />
             <HeaderAIChatBot />
-            {/* <HeaderSettings /> */}
+            {
+              (session?.user?.role === 'admin' || session?.user?.role === 'superadmin') ?
+              <HeaderSettings />
+              :
+              null
+            }
             <HeaderVoiceAgent />
             <HeaderChat />
             <HearThemeSwitcher />
             <HeaderNotifications />
+            <HeaderDate />
+            <HeaderLanguageSwitcher />
+
           </div>
 
           <HeaderUser />
@@ -210,8 +217,6 @@ function HeaderUser(){
   const {resolvedTheme} = useTheme()
   const {logout, isLogouting} = useAuthStore()
 
-  console.log(session)
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -234,39 +239,27 @@ function HeaderUser(){
       <DropdownMenuContent className="w-55" align="start">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem key="/admin/account" onSelect={()=> router.navigate({to: '/admin/account'})}>
-            <User2 className="w-2 h-2" />
-            Profile
+          <DropdownMenuItem key="/app/account/projects" onSelect={()=> router.navigate({to: '/app/account/projects'})}>
+            <FolderKanban className="w-2 h-2" />
+              Projects
           </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/notifications" onSelect={()=> {
+          <DropdownMenuItem key="/app/announcements" onSelect={()=> router.navigate({to: '/app/announcements'})}>
+            <Megaphone className="w-2 h-2" />
+              Announcements
+          </DropdownMenuItem>
+          <DropdownMenuItem key="/app/notifications" onSelect={()=> {
             setNotificationSheet(true)
           }}>
             <BellRing className="w-2 h-2" />
             Notifications
           </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/chats" onSelect={()=> router.navigate({to: '/admin/chats'})}>
+          <DropdownMenuItem key="/app/chats" onSelect={()=> router.navigate({to: '/app/chats'})}>
             <MessagesSquare className="w-2 h-2" />
             Chats
           </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/settings" onSelect={()=> router.navigate({to: '/admin/settings'})}>
-            <Settings className="w-2 h-2" />
-            Settings
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuLabel>Development</DropdownMenuLabel>
-          <DropdownMenuItem key="/admin/api-keys" onSelect={()=> router.navigate({to: '/admin/api-keys'})}>
-            <FolderKey className="w-2 h-2" />
-            API Keys
-          </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/docs" onSelect={()=> router.navigate({to: '/admin/docs'})}>
-            <FileText className="w-2 h-2" />
-            Docs
-          </DropdownMenuItem>
-          <DropdownMenuItem key="/admin/payment" onSelect={()=> router.navigate({to: '/admin/payment'})}>
-            <CreditCard className="w-2 h-2" />
-            Payment
+          <DropdownMenuItem key="/app/account/profile" onSelect={()=> router.navigate({to: '/app/account/profile'})}>
+            <User2 className="w-2 h-2" />
+            Profile
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
