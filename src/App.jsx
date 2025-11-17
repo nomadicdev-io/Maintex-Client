@@ -11,7 +11,7 @@ const queryClient = new QueryClient()
 // Router
 const router = createRouter({
     routeTree,
-    basepath: i18n.language,
+    // basepath: i18n.language,
     context: {
         authTypes: null,
         token: null,
