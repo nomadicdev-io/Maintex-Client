@@ -8,7 +8,7 @@ export default function LoginHeader() {
         <div className="container flex items-center justify-between">
         <img src={resolvedTheme === 'dark' ? '/logo-dark.svg' : '/logo-light.svg'} alt="Planet Green Solutions Logo" className="w-auto h-[1.75rem]" />
         <div className="block relative">
-            <p className="text-sm text-text/50 font-regular text-center">PGS iO &copy; {new Date().getFullYear()} </p>
+            <p className="text-sm text-text/50 font-regular text-center">Maintex Pro &copy; {new Date().getFullYear()} </p>
           </div>
         </div>
       </header>

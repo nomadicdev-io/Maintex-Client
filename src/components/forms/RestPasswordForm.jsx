@@ -72,7 +72,7 @@ export default function RestPasswordForm({token}) {
 
             <div className="flex items-center  w-full justify-between mt-2">
               <div className="h-[2.25rem] w-auto relative overflow-hidden items-center justify-center flex">
-                <img src={resolvedTheme === 'dark' ? '/logo-dark.svg' : '/logo-light.svg'} alt="PGS iO Logo" className="h-full w-auto" />
+                <img src={resolvedTheme === 'dark' ? '/logo-dark.svg' : '/logo-light.svg'} alt="Maintex Pro Logo" className="h-full w-auto" />
               </div>
 
               
@@ -130,7 +130,7 @@ export default function RestPasswordForm({token}) {
 
 
           <div className="block w-full relative">
-          <p className="text-xs text-text/50 font-light text-center">PGS iO – The Developer Sandbox &copy; {new Date().getFullYear()}</p>
+          <p className="text-xs text-text/50 font-light text-center">Maintex Pro – The Developer Sandbox &copy; {new Date().getFullYear()}</p>
           </div>
       </motion.form>
     )

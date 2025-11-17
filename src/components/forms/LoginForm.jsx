@@ -126,11 +126,11 @@ export default function LoginForm() {
        
             <div className="flex items-center  w-full justify-between">
               <div className="h-[2rem] w-auto relative overflow-hidden items-center justify-center flex">
-                <img src={resolvedTheme === 'dark' ? '/logo-dark.svg' : '/logo-light.svg'} alt="PGS iO Logo" className="h-full w-auto" />
+                <img src={resolvedTheme === 'dark' ? '/logo-dark.svg' : '/logo-light.svg'} alt="Maintex Pro Logo" className="h-full w-auto" />
               </div>
 
               <div className="h-[4rem] w-[4rem] rounded-full border border-border-600 relative overflow-hidden items-center justify-center flex dark:bg-text/5 bg-text/2">
-                <img src={'/company-logo.png'} alt="PGS iO Logo" className="h-full w-[50%] object-contain invert-100 dark:invert-0" />
+                <img src={'/company-logo.png'} alt="Maintex Pro Logo" className="h-full w-[50%] object-contain invert-100 dark:invert-0" />
               </div>
             </div>
 
@@ -189,7 +189,7 @@ export default function LoginForm() {
 
 
           {/* <div className="block w-full relative">
-          <p className="text-xs text-text/50 font-light text-center">PGS iO Sandbox &copy; {new Date().getFullYear()}</p>
+          <p className="text-xs text-text/50 font-light text-center">Maintex Pro Sandbox &copy; {new Date().getFullYear()}</p>
           </div>  */}
           </form>
         }

@@ -223,8 +223,8 @@ function HeaderUser(){
         <div className="flex items-center gap-3 h-full w-55 border-s border-border px-3 cursor-pointer transition-all duration-300 hover:bg-text/3 group">
             <div className="relative w-9 h-9 rounded-full overflow-hidden">
             {
-              session?.user?.image ?
-              <ImageComponent src={session?.user?.image} alt="Profile Avatar" />
+              session?.user?.image?.key ?
+              <ImageComponent imageKey={session?.user?.image?.key} bucket={session?.user?.image?.bucket} alt="Profile Avatar" />
               :
               <img src={resolvedTheme === 'dark' ? '/user-avatar-dark.png' : '/user-avatar-light.png'} alt="Profile Avatar" className="w-full h-full object-cover" />
             }

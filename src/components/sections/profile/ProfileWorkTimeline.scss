@@ -1,0 +1,49 @@
+.profile-calendar {
+    .rbc-toolbar{
+        display: none;
+    }
+
+    .rbc-header, .rbc-month-view, .rbc-header + .rbc-header, .rbc-month-row + .rbc-month-row, .rbc-day-bg + .rbc-day-bg {
+        border-color: var(--color-border-300);
+    }
+    
+    .rbc-today {
+        background-color: var(--color-border-300);
+    }
+    
+    .rbc-day-bg {
+    }
+    
+    .rbc-off-range-bg {
+        background-color: var(--color-bg-300);
+        opacity: 0.5;
+    }
+    
+    .rbc-date-cell {
+        padding: 0.75rem;
+    }
+    
+    .rbc-button-link {
+        color: var(--color-text);
+        /* opacity: 0.5; */
+    }
+    
+    .rbc-off-range {
+        opacity: 0.35;
+    }
+    
+    .rbc-header {
+        padding: 0.65rem;
+        background-color: #ffffff12;
+        font-size: 1rem;
+    }
+    
+    .rbc-month-view {
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    * {
+        border-color: var(--color-border-300) !important;
+    }
+}

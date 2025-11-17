@@ -1,7 +1,7 @@
-import PGSiOApi from '@api'
+import Maintex ProApi from '@api'
 
 export async function getMetadata() {
-    const res = await PGSiOApi.get('/meta')
+    const res = await Maintex ProApi.get('/meta')
     const data = await res.data
     return {
       meta: [

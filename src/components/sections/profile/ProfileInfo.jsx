@@ -9,10 +9,11 @@ import { Edit, ImageUp } from "lucide-react"
 import { Button } from "../../ui/button"
 import { AnimatePresence } from "motion/react"
 import FormLoader from "../../loaders/FormLoader"
-
+import { ImageCropper } from "../../helpers/ImageCropper"
+import { useEffect } from "react"
 export default function ProfileInfo({user, refetch}) {
   return (
-    <div className="relative flex flex-col border border-border overflow-hidden">
+    <div className="relative flex flex-col border-b border-e border-border overflow-hidden">
         <ProfileBanner user={user} refetch={refetch}/>
         <ProfileAvatar user={user} refetch={refetch}/>
         <ProfileTitle user={user}/>
@@ -26,68 +27,99 @@ export default function ProfileInfo({user, refetch}) {
 
 function ProfileBanner({user, refetch}) {
 
-    const [loading, setLoading] = useState(false)
-    const {resolvedTheme} = useTheme()
+  const [isCropModalOpen, setIsCropModalOpen] = useState(false)
+  const [selectedFile, setSelectedFile] = useState(null)
+  const [loading, setLoading] = useState(false)
 
-    const handleImageChange = async (e) => {
-        setLoading(true)
-        try{
-          const file = e.target.files[0]
-          if(!file) return
-    
-          console.log(file)
-          
-          if(!imageFormats.includes(file.type)) return toast.error('Invalid image format')
-    
-          const size = file.size / 1024 / 1024
-          if(size > 5) return toast.error('Image size must be less than 2MB')
-    
-          const formData = new FormData()
-          formData.append('file', file)
-          formData.append('path', 'profile/')
-          formData.append('type', file.type)
-          formData.append('bucket', user?.id)
-        
-          await orbit.upload.single({data: formData}, {
-            onSuccess: async ({data}) => {
-              await authClient.updateUser({
-                bannerImage: data.key,
-              }, {
-                onSuccess: async ()=> {
-                    await refetch()
-                }
-              })
-            },
-            onError: (error) => {
-              console.log(error)
-            }
-          })
-          toast.success('Profile Image updated!')
-        }catch(error){
-          console.log(error)
-          toast.error(error.message)
-        }finally{
-          setLoading(false)
+
+  const handleImageChange = async () => {
+    setLoading(true)
+      try{
+          const [fileHandle] = await window.showOpenFilePicker({
+              types: [
+                  {
+                      description: 'Images',
+                      accept: {
+                          'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
+                      },
+                  },
+              ],
+              multiple: false,
+          });
+  
+          const file = await fileHandle.getFile();
+
+          if(file){
+              setIsCropModalOpen(true)
+              setSelectedFile(file)
+          }
+          console.log('Selected file:', file.name);
+      }catch(error){
+          console.log('Error:', error)
+          toast.error(error.message || error.error)
+      }finally{
+        setLoading(false)
+      }
+  }
+
+  const handleUpdateCompeted = async (data) => {
+    try{
+      await authClient.updateUser({
+        bannerImage: {
+          key: data.key,
+          bucket: data.bucket,
+          name: data.name,
+          type: data.type,
+          size: data.size,
+        },
+      }, {
+        onSuccess: async ()=> {
+          await refetch()
         }
+      })
+    }catch(error){
+      console.log(error)
+      toast.error(error.message)
     }
+  }
+
+  const handleDelete = () => {
+      console.log('Delete')
+  }
+
+  useEffect(() => {
+      if(isCropModalOpen === false){
+          setSelectedFile(null)
+      }
+  }, [isCropModalOpen])
+
 
     return (
-        <div className="relative w-full h-[12rem] bg-bg-300 z-5 overflow-hidden">
+        <div className="relative w-full h-[9rem] bg-bg-300 z-5 overflow-hidden">
             {
-                user?.bannerImage ?
-                <ImageComponent src={user?.bannerImage} alt="Profile Avatar" />
+                user?.bannerImage?.key ?
+                <ImageComponent imageKey={user?.bannerImage?.key} bucket={user?.bannerImage?.bucket} alt="Profile Avatar" />
                 :
                 <div className="w-full h-full flex relative items-center justify-center">
                     <img src={resolvedTheme === 'dark' ? '/banner-placeholder-dark.png' : '/banner-placeholder-light.png'} alt="Profile Banner" className="w-full h-full object-cover" />
                 </div>
             }
 
-            <div className="absolute top-0 right-0 p-2">
-                <Button variant="blurShade" size="iconSmall" title="Edit Banner Image" aria-label="Edit Banner Image">
-                    <Edit className="!w-4 !h-4" />
-                    <input accept="image/*" type="file" onChange={handleImageChange} className="absolute inset-0 w-full h-full opacity-0 z-6 cursor-pointer" />
+            <div className="absolute top-0 right-0 p-2 z-10">
+                <Button onClick={handleImageChange} variant="blurShade" size="iconSm" title="Edit Banner Image" aria-label="Edit Banner Image">
+                    <Edit className="!w-3.5 !h-3.5" />
                 </Button>
             </div>
+
+            <ImageCropper 
+              file={selectedFile} 
+              open={isCropModalOpen}  
+              onOpenChange={setIsCropModalOpen} 
+              bucket={user?.digitalID.toLowerCase()} 
+              path={'profile/'} 
+              onUpdateCompeted={handleUpdateCompeted}
+              aspect={16/6}
+            />
 
             <AnimatePresence>
                 {
@@ -104,61 +136,82 @@ function ProfileBanner({user, refetch}) {
 
 function ProfileAvatar({user, refetch}) {
 
-    const {resolvedTheme} = useTheme()
-    const [loading, setLoading] = useState(false)
+  const [isCropModalOpen, setIsCropModalOpen] = useState(false)
+  const [selectedFile, setSelectedFile] = useState(null)
+  const [loading, setLoading] = useState(false)
 
-    const handleImageChange = async (e) => {
-        setLoading(true)
-        try{
-          const file = e.target.files[0]
-          if(!file) return
-    
-          if(!imageFormats.includes(file.type)) return toast.error('Invalid image format')
-    
-          const size = file.size / 1024 / 1024
-          if(size > 5) return toast.error('Image size must be less than 2MB')
+
+  const handleImageChange = async () => {
+    setLoading(true)
+      try{
+          const [fileHandle] = await window.showOpenFilePicker({
+              types: [
+                  {
+                      description: 'Images',
+                      accept: {
+                          'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
+                      },
+                  },
+              ],
+              multiple: false,
+          });
   
-          const req = {
-            file: file,
-            path: 'profile/',
-            type: file.type,
-            bucket: user?.id,
+          const file = await fileHandle.getFile();
+
+          if(file){
+              setIsCropModalOpen(true)
+              setSelectedFile(file)
           }
-        
-          await orbit.upload.single({data: req}, {
-            onSuccess: async ({data}) => {
-              await authClient.updateUser({
-                image: data.key,
-              }, {
-                onSuccess: async ()=> {
-                    await refetch()
-                }
-              })
-            },
-            onError: (error) => {
-              console.log(error)
-            }
-          })
-          toast.success('Profile Image updated!')
-        }catch(error){
-          console.log(error)
-          toast.error(error.message)
-        }finally{
-          setLoading(false)
+          console.log('Selected file:', file.name);
+      }catch(error){
+          console.log('Error:', error)
+          toast.error(error.message || error.error)
+      }finally{
+        setLoading(false)
+      }
+  }
+
+  const handleUpdateCompeted = async (data) => {
+    try{
+      await authClient.updateUser({
+        image: {
+          key: data.key,
+          bucket: data.bucket,
+          name: data.name,
+          type: data.type,
+          size: data.size,
+        },
+      }, {
+        onSuccess: async ()=> {
+          await refetch()
         }
+      })
+    }catch(error){
+      console.log(error)
+      toast.error(error.message)
     }
+  }
+
+  const handleDelete = () => {
+      console.log('Delete')
+  }
+
+  useEffect(() => {
+      if(isCropModalOpen === false){
+          setSelectedFile(null)
+      }
+  }, [isCropModalOpen])
 
 
     return (
-        <div className="relative w-full flex gap-5 p-6 mt-[-6rem] z-10">
-            <div className="relative w-[10rem] h-[10rem] rounded-xl border border-border-600 overflow-hidden bg-bg-100 cursor-pointer group aspect-square block">
+        <div className="relative w-full flex gap-5 p-6 mt-[-5rem] z-10">
+            <button type="button" onClick={handleImageChange} className="relative w-[7rem] h-[7rem] rounded-xl border border-border-600 overflow-hidden bg-bg-100 cursor-pointer group aspect-square block">
                 {
-                    user?.image ?
-                    <ImageComponent src={user?.image} alt="Profile Avatar" />
+                    user?.image?.key ?
+                    <ImageComponent imageKey={user?.image?.key} bucket={user?.image?.bucket} alt="Profile Avatar" />
                     :
                     <img src={resolvedTheme === 'dark' ? '/user-avatar-dark.png' : '/user-avatar-light.png'} alt="Profile Avatar" className="w-full h-full object-cover" />
                 }
-                <input accept="image/*" type="file" onChange={handleImageChange} className="absolute inset-0 w-full h-full opacity-0 z-6 cursor-pointer" />
 
                 <div className="absolute inset-0 z-5 flex items-center justify-center bg-bg/90 opacity-0 overflow-hidden transition-all duration-300 group-hover:scale-130 group-hover:opacity-100">
                   <ImageUp size={28} className="opacity-50" />
@@ -171,7 +224,14 @@ function ProfileAvatar({user, refetch}) {
                         null
                     }
                 </AnimatePresence>
-            </div>
+            </button>
+            <ImageCropper 
+            file={selectedFile} 
+            open={isCropModalOpen}  
+            onOpenChange={setIsCropModalOpen} 
+            bucket={user?.digitalID.toLowerCase()} 
+            path={'profile/'} 
+            onUpdateCompeted={handleUpdateCompeted}/>
         </div>
     )
 }

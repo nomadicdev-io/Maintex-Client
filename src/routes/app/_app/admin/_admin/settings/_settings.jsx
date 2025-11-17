@@ -15,14 +15,14 @@ const sidebarNav = [
     href: '/app/admin/settings',
   },
   {
-    id: 's-nav-01.1',
-    label: 'Companies',
-    href: '/app/admin/settings/companies',
-  },
-  {
     id: 's-nav-03',
     label: 'Meta Data',
     href: '/app/admin/settings/meta-data',
+  },
+  {
+    id: 's-nav-01.1',
+    label: 'Companies',
+    href: '/app/admin/settings/companies',
   },
   {
     id: 's-nav-02',

@@ -1,13 +1,13 @@
-# PGS iO Client | 1.0.0
+# Maintex Pro Client | 1.0.0
 ![Maintex Pro Banner](https://storage.quadbits.app/7u1eamzlY6sM.png)
 
 ## 🚀 Overview
 
-**PGS iO** is a next-generation business management platform built for modern teams, facilities, and maintenance operations. With a user-friendly React frontend, PGS iO makes it effortless to handle your workflow, communication, and essential business tasks in one unified interface.
+**Maintex Pro** is a next-generation business management platform built for modern teams, facilities, and maintenance operations. With a user-friendly React frontend, Maintex Pro makes it effortless to handle your workflow, communication, and essential business tasks in one unified interface.
 
-## ✨ Why PGS iO Stands Out
+## ✨ Why Maintex Pro Stands Out
 
-PGS iO goes beyond traditional management apps by combining a thoughtful, scalable architecture with a refined and accessible user experience. Designed to support facilities managers, field teams, and administrators alike, PGS iO offers comprehensive tools without sacrificing ease of use. Whether you're dispatching work orders, scheduling staff, or tracking progress, PGS iO adapts to your needs and grows with your organization.
+Maintex Pro goes beyond traditional management apps by combining a thoughtful, scalable architecture with a refined and accessible user experience. Designed to support facilities managers, field teams, and administrators alike, Maintex Pro offers comprehensive tools without sacrificing ease of use. Whether you're dispatching work orders, scheduling staff, or tracking progress, Maintex Pro adapts to your needs and grows with your organization.
 
 ## 🎯 Key Features
 
@@ -105,7 +105,7 @@ The application runs on a configurable port (check your environment variables) w
 
 ### API Integration
 
-PGS iO connects to your backend securely using Vite's proxy configuration:
+Maintex Pro connects to your backend securely using Vite's proxy configuration:
 
 **Proxied Endpoints (Development)**
 - `/v1/app/*` → Backend API (proxied and rewritten)
@@ -137,13 +137,13 @@ PGS iO connects to your backend securely using Vite's proxy configuration:
    # Opens automatically in your browser
    ```
 
-4. **Explore PGS iO**
+4. **Explore Maintex Pro**
    - File-based routing with TanStack Router
    - Hot module replacement for fast development
    - TypeScript support throughout
    - Integrated devtools for debugging
 
-## 🎨 PGS iO Is Perfect For
+## 🎨 Maintex Pro Is Perfect For
 
 - **Facilities Management**: Streamline jobs, scheduling, and staff workflows
 - **Modern Development**: Reference architecture for React applications
@@ -170,7 +170,7 @@ PGS iO connects to your backend securely using Vite's proxy configuration:
 
 ---
 
-**PGS iO helps you manage your business, your way.**  
+**Maintex Pro helps you manage your business, your way.**  
 Start developing today with `bun dev` and discover a truly modern web platform! 🚀
 
 *Built with ❤️ by Planet Green Solutions*

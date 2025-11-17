@@ -30,7 +30,7 @@ const buttonVariants = cva(
         success: "bg-success text-white hover:bg-success/90",
         defaultIcon: "bg-text/2 border border-border-600 text-text",
         black: "bg-text text-text/75 hover:bg-text-300/90 dark:text-bg font-medium",
-        blurShade: "bg-bg/50 border border-bg/20 text-text/75 backdrop-blur-sm hover:bg-bg/80 hover:text-text"
+        blurShade: "bg-bg/50 border border-text/15 text-text/75 backdrop-blur-sm hover:bg-bg/80 hover:text-text"
       },
       size: {
         default: "h-10 rounded-lg px-5 has-[>svg]:px-3",

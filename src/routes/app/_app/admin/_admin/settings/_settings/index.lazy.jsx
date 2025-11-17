@@ -12,6 +12,7 @@ import FetchLoader from '../../../../../../../components/fetch/FetchLoader'
 import FetchError from '../../../../../../../components/fetch/FetchError'
 import { toast } from 'sonner'
 import RefetchLoader from '../../../../../../../components/fetch/RefetchLoader'
+import RouteLoader from '../../../../../../../components/loaders/RouteLoader'
 
 export const Route = createLazyFileRoute(
   '/app/_app/admin/_admin/settings/_settings/',
@@ -57,12 +58,12 @@ function RouteComponent() {
       <div className='relative w-full flex flex-col'>
         <DashboardBanner title={'General Settings'} description={'General settings for the application. You can change the settings here.'} />
         <div className='relative w-full flex flex-col'>
-          <Activity mode={isRefetching ? 'visible' : 'hidden'}>
-            <RefetchLoader key="refetch-loader" />
-          </Activity>
           <GeneralSettingsForm data={data} onRefetch={refetch} />
         </div>
       </div>
+      <Activity mode={isRefetching ? 'visible' : 'hidden'}>
+        <RouteLoader key="refetch-loader" />
+      </Activity>
     </Activity>
   )
 }
@@ -121,7 +122,7 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
         children={(field) => (
           <DataField
             label="Name"
-            description="Enter or change the name of the application"
+            description="The name of the application"
           >
             <InputField 
               {...field.props}
@@ -145,7 +146,7 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
         children={(field) => (
           <DataField
             label="Description"
-            description="Enter or change the description of the application"
+            description="A brief description of the application"
           >
             <TextareaField 
               name="description"
@@ -171,7 +172,7 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
         children={(field) => (
           <DataField
             label="Tagline"
-            description="Enter or change the tagline of the application"
+            description="A short tagline or slogan for the application"
           >
             <InputField 
               name="tagline"
@@ -194,17 +195,17 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
         children={(field) => (
           <DataField
             label="Host"
-            description="Enter or change the URL of the application"
+            description="The base URL or host address of the application"
           >
             <InputField 
               name="host"
               placeholder="Enter the URL of the application"
               className="max-w-100"
-              disabled={true}
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
               error={field?.state?.meta?.errors?.join(', ')}
               isError={field?.state?.meta?.errors?.length > 0}
+              disabled={true}
               endContent={<Lock size={16} opacity={0.25}/>}
             />
           </DataField>
@@ -219,7 +220,7 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
         children={(field) => (
           <DataField
             label="Owner"
-            description="Application owner details"
+            description="The owner or organization responsible for the application"
           >
             <InputField 
               name="owner"
@@ -242,7 +243,7 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
         children={(field) => (
           <DataField
             label="Email"
-            description="Enter or change the email of the application"
+            description="Contact email address for the application"
           >
             <InputField 
               name="email"
@@ -265,7 +266,7 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
         children={(field) => (
           <DataField
             label="Phone"
-            description="Enter or change the phone of the application"
+            description="Contact phone number for the application"
           >
             <InputField 
               name="phone"
@@ -288,7 +289,7 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
         children={(field) => (
           <DataField
             label="Address"
-            description="Enter or change the address of the application"
+            description="Physical address or location of the application owner"
           >
             <InputField 
               name="address"
@@ -310,7 +311,7 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
         children={(field) => (
           <DataField
           label="Country"
-          description="Enter or change the country of the application"
+          description="The country where the application is based"
           >
             <InputCountry 
               placeholder="Choose country"
@@ -332,7 +333,7 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
         children={(field) => (
           <DataField
             label="Website"
-            description="Enter or change the website of the application"
+            description="The official website URL for the application"
           >
             <InputField 
               name="website"
@@ -355,7 +356,7 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
         children={(field) => (
           <DataField
         label="License Number"
-        description="Software license number"
+        description="The software license number for the application"
         >
             <InputField 
               name="licenseNumber"

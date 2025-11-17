@@ -250,15 +250,8 @@ body {
 
 
 [data-sonner-toast][data-styled=true]{
-    width: auto;
-    max-width: 30rem;
-    min-width: 20rem;
-    left: 50%;
-    transform: translateX(-50%);
     padding-inline: 1rem;
-    padding-block: 0.5rem;
-    backdrop-filter: blur(7px);
-    justify-content: center;
+    padding-block: 0.5rem;    
 }
 
 [data-sonner-toast][data-styled=true] [data-icon] {
@@ -272,4 +265,19 @@ body {
         background: var(--color-text);
         backdrop-filter: blur(7px);
     }
+}
+
+.reactEasyCrop_Contain {
+    object-fit: contain;
+    object-position: center;
+}
+
+body{
+    .reactEasyCrop_CropAreaGrid::before, .reactEasyCrop_CropAreaGrid::after, .reactEasyCrop_CropArea {
+        border-color: #ffffff69;
+    }
+
+    // .reactEasyCrop_Contain{
+    //     transform: none !important;
+    // }
 }

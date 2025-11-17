@@ -2,7 +2,7 @@
   "name": "pgs-io-client",
   "private": true,
   "version": "1.0.0",
-  "description": "PGS iO | API | The Developer Sandbox",
+  "description": "Maintex Pro | API | The Developer Sandbox",
   "type": "module",
   "author": "Planet Green Solutions",
   "license": "ISC",
@@ -92,6 +92,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17",
+    "uuid": "^13.0.0",
     "validator": "^13.15.23",
     "zod": "^4.1.12",
     "zustand": "^5.0.8"

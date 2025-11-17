@@ -8,8 +8,8 @@ export const authClient = createAuthClient({
       adminClient(),
       inferAdditionalFields({
         user: {
-          image:      { type: "string", required: false },
-          bannerImage: { type: "string", required: false },
+          image:      { type: "object", required: false },
+          bannerImage: { type: "object", required: false },
           designation: { type: "string", required: false },
           country:     { type: "string", required: false },
           address:     { type: "string", required: false },

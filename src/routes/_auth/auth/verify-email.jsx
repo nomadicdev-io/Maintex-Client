@@ -30,7 +30,7 @@ export const Route = createFileRoute('/_auth/auth/verify-email')({
   head: ()=> ({
     meta: [
       {
-        title: "Verify Email | PGS iO – The Developer Sandbox"
+        title: "Verify Email | Maintex Pro – The Developer Sandbox"
       }
     ]
   })

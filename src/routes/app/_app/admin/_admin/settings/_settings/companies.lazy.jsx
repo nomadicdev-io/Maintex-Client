@@ -16,7 +16,6 @@ import { InputField, TextareaField, AttachmentUploader } from '@/components/ui/F
 import { toast } from 'sonner'
 import validator from 'validator';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { getS3Image } from '../../../../../../../lib/getS3Image'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,6 +33,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import RouteLoader from '../../../../../../../components/loaders/RouteLoader'
+import { getS3Image } from '../../../../../../../lib/getImage'
 
 const modelAtom = atom(false)
 const selectedAtom = atom(null)
@@ -73,9 +74,7 @@ function RouteComponent() {
           <CompaniesModalForm onRefetch={refetch} />
         </DashboardBanner>
         <div className='relative w-full flex flex-col'>
-          {/* <Activity mode={isRefetching ? 'visible' : 'hidden'}>
-            <RefetchLoader key="refetch-loader" />
-          </Activity> */}
+          
           {
             data?.length > 0 ?
             <div className='relative w-full flex flex-col p-5'>
@@ -87,6 +86,9 @@ function RouteComponent() {
           {/* <CompaniesTable data={data} /> */}
         </div>
       </div>
+      <Activity mode={isRefetching ? 'visible' : 'hidden'}>
+        <RouteLoader key="refetch-loader" />
+      </Activity>
     </Activity>
   )
 }
@@ -386,7 +388,7 @@ function CompanyItem({item, onRefetch}) {
         </div>
         {
           item.logo ?
-          <div className="relative w-25 h-25 overflow-hidden border border-border-600 rounded-lg bg-bg-100/50 flex items-center justify-center">
+          <div className="relative w-22.5 h-22.5 overflow-hidden border border-border-600 rounded-lg bg-bg-100/50 flex items-center justify-center">
             <img src={getS3Image(item.logo.key, item.logo.bucket)} alt={item.name} className="w-[80%] h-auto object-contain" />
           </div>
           : null

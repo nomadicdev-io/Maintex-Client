@@ -11,7 +11,7 @@ export default function DashboardBanner({title, description, className, children
   }
 
   return (
-    <div className={cn('relative w-full flex gap-6  p-5 border-b border-border items-center', className)}>
+    <div className={cn('relative w-full flex gap-6  px-5 py-6 border-b border-border items-center', className)}>
       <div className='relative w-full flex-1 flex flex-col'>
         <div className="relative w-full flex gap-3">
           {/* <button onClick={handleGoBack} className="relative w-7 h-7 flex items-center justify-center rounded-lg bg-bg-300 border border-border/50 hover:bg-text/10 hover:border-border/80 transition-all duration-300 cursor-pointer">

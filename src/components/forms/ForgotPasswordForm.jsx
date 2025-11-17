@@ -90,7 +90,7 @@ export default function ForgotPasswordForm() {
 
 
           <div className="block w-full relative">
-          <p className="text-xs text-text/50 font-light text-center">PGS iO – The Developer Sandbox &copy; {new Date().getFullYear()}</p>
+          <p className="text-xs text-text/50 font-light text-center">Maintex Pro – The Developer Sandbox &copy; {new Date().getFullYear()}</p>
           </div>
       </motion.form>
 

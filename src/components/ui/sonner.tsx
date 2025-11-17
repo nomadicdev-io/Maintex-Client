@@ -26,16 +26,16 @@ const Toaster = ({ ...props }: ToasterProps) => {
         } as React.CSSProperties
       }
       icons={{
-        success: <div className="w-[1.8rem] h-[1.8rem] rounded-full bg-emerald-500/35 flex items-center justify-center">
+        success: <div className="w-[1.85rem] h-[1.85rem] rounded-full bg-emerald-500/35 flex items-center justify-center">
           <CircleCheck className="text-emerald-500" size={20} />
         </div>,
-        error: <div className="w-[1.8rem] h-[1.8rem] rounded-full bg-red-500/35 flex items-center justify-center">
+        error: <div className="w-[1.85rem] h-[1.85rem] rounded-full bg-red-500/35 flex items-center justify-center">
           <CircleAlert className="text-red-500" size={20} />
         </div>,
-        info: <div className="w-[1.8rem] h-[1.8rem] rounded-full bg-blue-500/35 flex items-center justify-center">
+        info: <div className="w-[1.85rem] h-[1.85rem] rounded-full bg-blue-500/35 flex items-center justify-center">
           <Info className="text-blue-500" size={20} />
         </div>,
-        warning: <div className="w-[1.8rem] h-[1.8rem] rounded-full bg-yellow-500/35 flex items-center justify-center">
+        warning: <div className="w-[1.85rem] h-[1.85rem] rounded-full bg-yellow-500/35 flex items-center justify-center">
           <AlertCircle className="text-yellow-500" size={20} />
         </div>,
       }}
