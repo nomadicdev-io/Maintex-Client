@@ -24,30 +24,39 @@ import orbit from "../../api"
 import { Spinner } from "@/components/ui/spinner"
 import ImageComponent from "./ImageComponent"
 
-export const InputField = ({label, name, type, placeholder, value, onChange, error, isError, isLoading, isSuccess, readOnly = false, onBlur, disabled = false, autoFocus = false, className}) => {
+export const InputField = ({label, name, type, placeholder, value, onChange, error, isError, isLoading, isSuccess, readOnly = false, onBlur, disabled = false, autoFocus = false, className, classNames, startContent, endContent}) => {
     
     const id = useId()
     
     return (
-        <div className={cn("grid w-full items-center relative", className)}>
-            <Label htmlFor={id} className="mb-2">{label}</Label>
-            <Input 
-                type={type} 
-                name={name}
-                id={id} 
-                placeholder={placeholder} 
-                onChange={onChange} 
-                value={value} 
-                error={error} 
-                isError={isError}
-                readOnly={readOnly}
-                onBlur={onBlur}
-                isLoading={isLoading}
-                isSuccess={isSuccess}
-                disabled={disabled}
-                autoFocus={autoFocus}
-            />
-            {isError ? <p className="text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full">{error}</p> : null}
+        <div className={cn("grid w-full items-center relative", classNames?.wrapper, className)}>
+            <Label htmlFor={id} className={cn("mb-2", classNames?.label)}>{label}</Label>
+            <div className={cn("relative w-full flex ", classNames?.wrapper)}>
+                <Input 
+                    type={type} 
+                    name={name}
+                    id={id} 
+                    placeholder={placeholder} 
+                    onChange={onChange} 
+                    value={value} 
+                    error={error} 
+                    isError={isError}
+                    readOnly={readOnly}
+                    onBlur={onBlur}
+                    isLoading={isLoading}
+                    isSuccess={isSuccess}
+                    disabled={disabled}
+                    autoFocus={autoFocus}
+                    className={cn("w-full", classNames?.input)}
+                />
+                {startContent ?
+                    <div className={cn("absolute left-0 top-0 bottom-0 flex items-center justify-center h-full w-auto aspect-square", classNames?.startContent)}>{startContent}</div>
+                : null}
+                {endContent ? 
+                    <div className={cn("absolute right-0 top-0 bottom-0 flex items-center justify-center h-full w-auto aspect-square", classNames?.endContent)}>{endContent}</div>
+                : null}
+            </div>
+            {isError ? <p className={cn("text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full", classNames?.error)}>{error}</p> : null}
         </div>
     )
 }
@@ -71,46 +80,63 @@ export const DropUploader = () => {
     )
 }
 
-export const InputSelect = ({label, placeholder, value, onChange, error, isError, disabled = false, options}) => {
+export const InputSelect = ({label, placeholder, value, onChange, error, isError, disabled = false, options, className, classNames, startContent, endContent}) => {
     
     const id = useId()
     
     return (
-        <div className="grid w-full items-center relative">
-            <Label htmlFor={id} className="mb-2">{label}</Label>
-            <Select value={value} onValueChange={onChange} disabled={disabled}>
-                <SelectTrigger className="w-full" error={error}>
-                    <SelectValue value={value} placeholder={placeholder} />
-                </SelectTrigger>
-                <SelectContent>
-                    {options.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
-            {isError ? <p className="text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full">{error}</p> : null}
+        <div className={cn("grid w-full items-center relative", classNames?.wrapper, className)}>
+            <Label htmlFor={id} className={cn("mb-2", classNames?.label)}>{label}</Label>
+            <div className={cn("relative w-full flex flex-col", classNames?.wrapper)}>
+                <Select value={value} onValueChange={onChange} disabled={disabled}>
+                    <SelectTrigger className={cn("w-full", classNames?.input)} error={error}>
+                        <SelectValue value={value} placeholder={placeholder} />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {options.map((option) => (
+                            <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+                {startContent ?
+                    <div className={cn("absolute left-0 top-0 bottom-0 flex items-center justify-center h-full w-auto aspect-square", classNames?.startContent)}>{startContent}</div>
+                : null}
+                {endContent ? 
+                    <div className={cn("absolute right-0 top-0 bottom-0 flex items-center justify-center h-full w-auto aspect-square", classNames?.endContent)}>{endContent}</div>
+                : null}
+            </div>
+
+            {isError ? <p className={cn("text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full", classNames?.error)}>{error}</p> : null}
      </div>
     )
 }
 
-export const InputCountry = ({label, placeholder, value, onChange, error, isError, disabled = false, options}) => {
+export const InputCountry = ({label, placeholder, value, onChange, error, isError, disabled = false, options = [], className, classNames, startContent, endContent}) => {
     
     const id = useId()
     
     return (
-        <div className="grid w-full items-center relative">
-            <Label htmlFor={id} className="mb-2">{label}</Label>
+        <div className={cn("grid w-full items-center relative", classNames?.wrapper, className)}>
+            <Label htmlFor={id} className={cn("mb-2", classNames?.label)}>{label}</Label>
+            <div className={cn("relative w-full flex flex-col", classNames?.wrapper)}>
             <Select value={value} onValueChange={onChange} disabled={disabled}>
-                <SelectTrigger className="w-full">
-                    <SelectValue placeholder={placeholder} />
+                <SelectTrigger className={cn("w-full", classNames?.input)}>
+                    <SelectValue placeholder={!value ? placeholder : null} />
                 </SelectTrigger>
                 <SelectContent>
                     {options.map((option) => (
-                        <SelectItem key={option.iso} value={option.iso}>{option.flag} {option.name}</SelectItem>
+                        <SelectItem key={option.iso} value={option.iso}>{option.flag} &nbsp; {option.name}</SelectItem>
                     ))}
                 </SelectContent>
             </Select>
-            {isError ? <p className="text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full">{error}</p> : null}
+            {startContent ?
+                <div className={cn("absolute left-0 top-0 bottom-0 flex items-center justify-center h-full w-auto aspect-square", classNames?.startContent)}>{startContent}</div>
+            : null}
+            {endContent ? 
+                <div className={cn("absolute right-0 top-0 bottom-0 flex items-center justify-center h-full w-auto aspect-square", classNames?.endContent)}>{endContent}</div>
+            : null}
+            </div>
+            {isError ? <p className={cn("text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full", classNames?.error)}>{error}</p> : null}
      </div>
     )
 }
@@ -169,33 +195,43 @@ export function InputOTPPattern({onChange, value, isError, onComplete}) {
     )
 }
 
-export const TextareaField = ({label, name, placeholder, value, onChange, error, isError, readOnly = false, onBlur, disabled = false, autoFocus = false, className}) => {
+export const TextareaField = ({label, name, placeholder, value, onChange, error, isError, readOnly = false, onBlur, disabled = false, autoFocus = false, className, classNames, startContent, endContent}) => {
     
     const id = useId()
     
     return (
         <div className={cn("grid w-full items-center relative", className)}>
-            <Label htmlFor={id} className="mb-2">{label}</Label>
-            <Textarea
-                name={name}
-                id={id} value={value} 
-                placeholder={placeholder}
-                onChange={onChange} 
-                error={error} 
-                isError={isError} 
-                readOnly={readOnly} 
-                onBlur={onBlur} 
-                disabled={disabled} 
-                autoFocus={autoFocus} 
-            />
-            {isError ? <p className="text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full">{error}</p> : null}
+            <Label htmlFor={id} className={cn("mb-2", classNames?.label)}>{label}</Label>
+            <div className={cn("relative w-full flex flex-col", classNames?.wrapper)}>
+                <Textarea
+                    name={name}
+                    id={id} value={value} 
+                    placeholder={placeholder}
+                    onChange={onChange} 
+                    error={error} 
+                    isError={isError} 
+                    readOnly={readOnly} 
+                    onBlur={onBlur} 
+                    disabled={disabled} 
+                    autoFocus={autoFocus} 
+                    className={cn("w-full", classNames?.input)}
+                />
+                {startContent ?
+                    <div className={cn("absolute left-0 top-0 bottom-0 flex items-center justify-center h-full w-auto aspect-square", classNames?.startContent)}>{startContent}</div>
+                : null}
+                {endContent ? 
+                    <div className={cn("absolute right-0 top-0 bottom-0 flex items-center justify-center h-full w-auto aspect-square", classNames?.endContent)}>{endContent}</div>
+                : null}
+            </div>
+            {isError ? <p className={cn("text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full", classNames?.error)}>{error}</p> : null}
         </div>
     )
 }
 
 export const DragFileUploader = ({
     label = 'Attachments', 
-    name, value, 
+    name, 
+    value, 
     onChange, 
     error, 
     isError, 

@@ -20,9 +20,9 @@ const Toaster = ({ ...props }: ToasterProps) => {
       position="top-center"
       style={
         {
-          "--normal-bg": "var(--color-bg-300)",
-          "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--color-border)",
+          "--normal-bg": "var(--color-text)",
+          "--normal-text": "var(--color-bg)",
+          "--normal-border": "var(--color-text)",
         } as React.CSSProperties
       }
       icons={{
