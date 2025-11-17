@@ -20,6 +20,10 @@ export const Route = createRootRouteWithContext()({
   loader: async ({context})=> {
     await context.queryClient.ensureQueryData({
       queryKey: ['app'],
+      enabled: true,
+      initialData: {
+        status: false,
+      },
       queryFn: async ()=> {
         try{
           const res = await orbit.get({url: 'context'})
@@ -44,7 +48,7 @@ function RootLayoutComponent() {
   const requestLocationPermission = useAppControls((state)=> state.requestLocationPermission)
 
   useEffect(() => {
-    requestLocationPermission().then((res)=> console.log(res))
+    requestLocationPermission()
   }, [])
 
   return (
@@ -62,7 +66,7 @@ function RootLayoutComponent() {
             )
           }
         </RootLayout>
-      <Toaster />
+      <Toaster offset={'5rem'} />
       </SocketProvider>
     </>
   )

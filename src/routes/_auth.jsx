@@ -15,8 +15,8 @@ export const Route = createFileRoute('/_auth')({
 function RouteComponent() {
   return (
     <main className="relative flex-1 flex flex-col gap-10 items-center justify-center">
-      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none invert-100 opacity-75 dark:opacity-50 dark:invert-0">
-        <img src="/bg-ambient.jpg" alt="Background Image" className="w-full h-full object-cover z-0 pointer-events-none grayscale-100" />
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none invert-100 opacity-75 dark:invert-0">
+        <img src="/bg-login.webp" alt="Background Image" className="w-full h-full object-cover z-0 pointer-events-none grayscale-100" />
       </div>
       <Outlet />
 

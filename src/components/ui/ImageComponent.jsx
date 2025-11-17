@@ -29,10 +29,8 @@ const ImageComponent = memo(({className, alt, src, bucket}) => {
                     await orbit.file.s3SignedUrl({key: src, bucket}, {
                         onSuccess: (data) => {
                             url = data
-                            console.log(data)
                         },
                         onError: (error) => {
-                            console.log(error)
                             url = ''
                         }
                     })
@@ -42,15 +40,13 @@ const ImageComponent = memo(({className, alt, src, bucket}) => {
                             url = data
                         },
                         onError: (error) => {
-                            console.log(error)
                             url = ''
                         }
                     })
                 }
-                console.log(url)
                 return url
             }catch(error){
-                console.log(error)
+                console.log('IMAGE COMPONENT ERROR', error)
                 return null
             }
         }

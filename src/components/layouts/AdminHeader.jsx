@@ -1,6 +1,6 @@
 import useSidebar from "@/hooks/useSidebar"
 import { Button } from "../ui/button"
-import { AlignLeft, AudioLines, BellRing, Bot, CalendarDays, CalendarDaysIcon, CreditCard, FileText, FolderKey, Globe, LogOut, MessagesSquare, Moon, PanelLeftClose, PanelLeftOpen, Search, Settings, Sun, User2 } from "lucide-react";
+import { AlignLeft, AudioLines, BellRing, Bot, CalendarDays, CalendarDaysIcon, CreditCard, FileText, FolderKey, Globe, LogOut, MessagesSquare, Moon, Settings, Sun, User2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,8 +25,6 @@ import {
 } from "@components/ui/tooltip"
 import { atom, useAtom, useSetAtom } from "jotai";
 import { RxCaretSort } from "react-icons/rx";
-import { Input } from "../ui/input";
-import { RiChatSmileAiLine } from "react-icons/ri";
 import { useRouter } from "@tanstack/react-router";
 import { authClient } from "@/auth";
 import { useTheme } from "next-themes";
@@ -34,9 +32,9 @@ import { useAuthStore } from "../../hooks/useAuthStore";
 import ImageComponent from "../ui/ImageComponent";
 import useAI from "@/hooks/useAI";
 import { voiceAgentAtom } from "../../routes/app/_app";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import HeaderSearch from "../forms/HeaderSearch";
 import dayjs from "dayjs";
+import { useCallback } from "react";
 
 export const notificationSheetAtom = atom(false)
 
@@ -57,8 +55,8 @@ export default function AdminHeader() {
             :
             null
           }
-          <HeaderSearch />
-          <HeaderDate />
+          <HeaderDocumentGenerator />
+          <HeaderSearch isIcon={true} />
         </div>
 
         <div className="flex items-center gap-4 h-full">
@@ -66,6 +64,7 @@ export default function AdminHeader() {
           <div className="flex items-center gap-3">
             {/* <HeaderSchedules /> */}
             <HeaderLanguageSwitcher />
+            <HeaderDate />
             <HeaderAIChatBot />
             {/* <HeaderSettings /> */}
             <HeaderVoiceAgent />
@@ -347,5 +346,17 @@ function HeaderLanguageSwitcher(){
       <DropdownMenuItem>French</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
+  )
+}
+
+function HeaderDocumentGenerator(){
+
+  const handleDocumentGenerator = useCallback(()=> {
+    window.open('https://documents.nina.quadbits.cloud/', '_blank')
+  }, [])
+  return (
+    <Button variant="shade" aria-label="Nina Generate Document" title="Nina Generate Document" type="button" onClick={handleDocumentGenerator}>
+      <img src="/nina-icon.svg" alt="Nina Logo" className="size-4 me-1 dark:invert-100" /> <span>Document Generator</span>
+    </Button>
   )
 }
