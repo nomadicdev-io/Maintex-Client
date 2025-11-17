@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useMemo } from 'react'
 import { Skeleton } from './skeleton'
 import { useQuery } from '@tanstack/react-query'
 import orbit from '../../api'
@@ -6,12 +6,19 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useTheme } from 'next-themes'
 import { ImageOff } from 'lucide-react';
-import { getS3Image } from '../../lib/getImage';
+import { getS3Image, getStaticImage } from '../../lib/getImage';
 
-const ImageComponent = memo(({className, alt, imageKey, bucket}) => {
+const ImageComponent = memo(({className, alt, imageKey, bucket, isStatic = false}) => {
 
     const {resolvedTheme} = useTheme()
-    const image = getS3Image(imageKey, bucket)
+
+    const image = useMemo(() => {
+        if (isStatic) {
+            return getStaticImage(imageKey)
+        }else{
+            return getS3Image(imageKey, bucket)
+        }
+    }, [imageKey, bucket, isStatic])
     
     return (
         <div className={`relative w-full h-full ${className}`}>

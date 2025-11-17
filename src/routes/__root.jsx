@@ -12,34 +12,22 @@ import { useEffect } from 'react'
 import orbit from '../api'
 import { ErrorBoundary } from "react-error-boundary";
 import FetchError from '../components/fetch/FetchError'
+import { setMetaData } from '../lib/setMetaData'
 
 export const Route = createRootRouteWithContext()({
   component: RootLayoutComponent,
   notFoundComponent: PageNotFound,
   pendingComponent: PageLoader,
   beforeLoad:initAuthStore,
-  loader: async ({context})=> {
-    await context.queryClient.ensureQueryData({
-      queryKey: ['app'],
-      enabled: true,
-      queryFn: async ()=> {
-        try{
-          const res = await orbit.get({url: 'context'})
-          console.log(res.data)
-          if(res.status === false) return null
-          context.application = res.data
-          return res.data
-        }catch(error){
-          console.log(error)
-          return {
-            status: false,
-            message: error.message || error.response.data.message || 'Failed to fetch application context',
-            data: null
-          }
-        }
-      },
-    })
-  }
+  loader: async ()=> {
+    const res = await orbit.get({url: 'context'})
+    if(res.status){
+      return res.data
+    }else{
+      return undefined
+    }
+  },
+  head: ({loaderData}) => (setMetaData(loaderData))
 })
 
 function RootLayoutComponent() {

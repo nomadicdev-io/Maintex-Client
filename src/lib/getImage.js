@@ -4,6 +4,6 @@ export const getS3Image = (key, bucket) => {
 }
 
 export const getStaticImage = (key) => {
-    const url = `${import.meta.env.VITE_API_BASE_URL}/storage/${key}`
+    const url = `${import.meta.env.VITE_API_BASE_URL}/${key}`
     return url
 }

@@ -13,6 +13,8 @@ import RouteLoader from '../../../../../../../components/loaders/RouteLoader'
 import { useQuery } from '@tanstack/react-query'
 import orbit from '@/api'
 import { InputField, TextareaField, InputCountry } from '@/components/ui/FormComponent'
+import { DragFileUploader } from '../../../../../../../components/ui/FormComponent'
+import { toast } from 'sonner'
 
 
 export const Route = createLazyFileRoute(
@@ -74,19 +76,31 @@ const MetaDataForm = ({data, onRefetch}) => {
       ogDescription: data?.ogDescription || '',
       ogType: data?.ogType || '',
       ogUrl: data?.ogUrl || '',
-      ogImage: data?.ogImage || '',
+      ogImage: data?.ogImage || null,
       ogImageAlt: data?.ogImageAlt || '',
       ogSiteName: data?.ogSiteName || '',
       ogLocale: data?.ogLocale || '',
       twitterCard: data?.twitterCard || '',
       twitterTitle: data?.twitterTitle || '',
       twitterDescription: data?.twitterDescription || '',
-      twitterImage: data?.twitterImage || '',
+      twitterImage: data?.twitterImage || null,
       twitterImageAlt: data?.twitterImageAlt || '',
     },
     onSubmit: async ({value}) => {
       setIsLoading(true)
-      console.log(value)
+        try{
+          console.log(value)
+          const res = await orbit.post({url: 'admin/settings/meta-data', data: value})
+          if(!res.status) throw res
+          console.log(res)
+          toast.success('Meta data updated successfully')
+          onRefetch()
+        }catch(error){
+            console.log(error)
+            toast.error(error.message || error.statusText || 'Something went wrong')
+        }finally{
+          setIsLoading(false)
+        }
     }
   })
 
@@ -169,6 +183,46 @@ const MetaDataForm = ({data, onRefetch}) => {
       />
 
       <form.Field
+        name="canonical"
+        children={(field) => (
+          <DataField
+            label="Canonical"
+            description="The canonical URL of the page"
+          >
+            <InputField 
+              name="canonical"
+              placeholder="Enter the canonical URL of the page"
+              className="max-w-100"
+              value={field.state.value}
+              onChange={(e) => field.handleChange(e.target.value)}
+              disabled={true}
+              endContent={<Lock size={16} opacity={0.25}/>}
+            />
+          </DataField>
+        )}
+      />
+
+<form.Field
+        name="robots"
+        children={(field) => (
+          <DataField
+            label="Robots"
+            description="The robots of the page"
+          >
+            <InputField 
+              name="robots"
+              placeholder="Enter the robots of the page"
+              className="max-w-100"
+              value={field.state.value}
+              onChange={(e) => field.handleChange(e.target.value)}
+              disabled={true}
+              endContent={<Lock size={16} opacity={0.25}/>}
+            />
+          </DataField>
+        )}
+      />
+
+      <form.Field
         name="author"
         validators={{
           onChange: ({ value }) => value === "" ? 'Author is required' : undefined,
@@ -186,6 +240,7 @@ const MetaDataForm = ({data, onRefetch}) => {
               onChange={(e) => field.handleChange(e.target.value)}
             error={field?.state?.meta?.errors?.join(', ')}
             isError={field?.state?.meta?.errors?.length > 0}
+
           />
           </DataField>
         )}
@@ -264,6 +319,32 @@ const MetaDataForm = ({data, onRefetch}) => {
           </DataField>
         )}
       />
+
+
+<form.Field
+        name="ogTitle"
+        validators={{
+          onChange: ({ value }) => value === "" ? 'OG Title is required' : undefined,
+        }}
+        children={(field) => (
+          <DataField
+            label="OG Title"
+            description="The title of the page for social media"
+          >
+            <InputField 
+              name="ogTitle"
+              placeholder="Enter the OG site name of the page"
+              className="max-w-100"
+              value={field.state.value}
+              onChange={(e) => field.handleChange(e.target.value)}
+              error={field?.state?.meta?.errors?.join(', ')}
+              isError={field?.state?.meta?.errors?.length > 0}
+            />
+          </DataField>
+        )}
+      />
+
+
         <form.Field
         name="ogDescription"
         validators={{
@@ -313,22 +394,27 @@ const MetaDataForm = ({data, onRefetch}) => {
 
       <form.Field
         name="ogImage"
-        validators={{
-          onChange: ({ value }) => value === "" ? 'OG Image is required' : undefined,
-        }}
         children={(field) => (
           <DataField
             label="OG Image"
             description="The image displayed when the page is shared on social media" 
           >
-            <InputField 
+            <DragFileUploader 
               name="ogImage"
-              placeholder="Enter the OG image of the page"
-              className="max-w-100"
               value={field.state.value}
-              onChange={(e) => field.handleChange(e.target.value)}
+              onChange={field.handleChange}
               error={field?.state?.meta?.errors?.join(', ')}
               isError={field?.state?.meta?.errors?.length > 0}
+              accept="image/*"
+              className="max-w-100"
+              maxFileSize={1024 * 1024 * 5}
+              multiple={false}
+              title="Click here or Drag and drop image here"
+              helperText={'Max image size is 5MB. Max resolution is 1200x630px.'}
+              classNames={{
+                icon: 'w-14 h-14',
+              }}
+              iconSize={22}
             />
           </DataField>
         )}
@@ -359,9 +445,6 @@ const MetaDataForm = ({data, onRefetch}) => {
 
       <form.Field
         name="ogSiteName"
-        validators={{
-          onChange: ({ value }) => value === "" ? 'OG Site Name is required' : undefined,
-        }}
         children={(field) => (
           <DataField
             label="OG Site Name"
@@ -373,8 +456,6 @@ const MetaDataForm = ({data, onRefetch}) => {
               className="max-w-100"
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
-              error={field?.state?.meta?.errors?.join(', ')}
-              isError={field?.state?.meta?.errors?.length > 0}
             />
           </DataField>
         )}
@@ -453,28 +534,6 @@ const MetaDataForm = ({data, onRefetch}) => {
         )}
       />
       <form.Field
-        name="twitterImage"
-        validators={{
-          onChange: ({ value }) => value === "" ? 'Twitter Image is required' : undefined,
-        }}
-        children={(field) => (
-          <DataField
-            label="Twitter Image"
-            description="The image displayed when the page is shared on Twitter"
-          >
-            <InputField 
-              name="twitterImage"
-              placeholder="Enter the Twitter image of the page"
-              className="max-w-100"
-              value={field.state.value}
-              onChange={(e) => field.handleChange(e.target.value)}
-              error={field?.state?.meta?.errors?.join(', ')}
-              isError={field?.state?.meta?.errors?.length > 0}
-            />
-          </DataField>
-        )}
-      />
-      <form.Field
         name="twitterDescription"
         validators={{
           onChange: ({ value }) => value === "" ? 'Twitter Description is required' : undefined,
@@ -496,6 +555,34 @@ const MetaDataForm = ({data, onRefetch}) => {
           </DataField>
         )}
       />
+      <form.Field
+        name="twitterImage"
+        children={(field) => (
+          <DataField
+            label="Twitter Image"
+            description="The image displayed when the page is shared on Twitter"
+          >
+            <DragFileUploader 
+              name="twitterImage"
+              value={field.state.value}
+              onChange={field.handleChange}
+              error={field?.state?.meta?.errors?.join(', ')}
+              isError={field?.state?.meta?.errors?.length > 0}
+              accept="image/*"
+              className="max-w-100"
+              maxFileSize={1024 * 1024 * 5}
+              multiple={false}
+              title="Click here or Drag and drop image here"
+              helperText={'Max image size is 5MB. Max resolution is 1200x630px.'}
+              classNames={{
+                icon: 'w-14 h-14',
+              }}
+              iconSize={22}
+            />
+          </DataField>
+        )}
+      />
+      
       <form.Field
         name="twitterImageAlt"
           validators={{
