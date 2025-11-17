@@ -25,8 +25,8 @@ docker-compose up maintex-dev postgres redis -d
 
 ## Available Services
 
-- **maintex-frontend** (port 8881) - Production React app
-- **maintex-dev** (port 8881) - Development React app with hot reloading
+- **maintex-frontend** (port 8808) - Production React app
+- **maintex-dev** (port 8808) - Development React app with hot reloading
 - **maintex-backend** (port 8880) - Backend API (placeholder)
 - **postgres** (port 5432) - PostgreSQL database
 - **redis** (port 6379) - Redis cache
@@ -37,7 +37,7 @@ docker-compose up maintex-dev postgres redis -d
 The application uses environment variables from `.env` file. Key variables:
 
 - `VITE_API_URL` - Backend API endpoint
-- `VITE_PORT` - Frontend port (default: 8881)
+- `VITE_PORT` - Frontend port (default: 8808)
 - `POSTGRES_DB` - Database name
 - `POSTGRES_USER` - Database user
 - `POSTGRES_PASSWORD` - Database password

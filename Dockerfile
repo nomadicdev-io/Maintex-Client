@@ -34,10 +34,10 @@ COPY --from=build /app/dist /app/dist
 
 # Set environment variables
 ENV NODE_ENV=production
-ENV PORT=8881
+ENV PORT=8808
 
 # Expose the port
-EXPOSE 8881
+EXPOSE 8808
 
 # Command to run the application
-CMD ["serve", "-s", "dist", "-l", "8881"]
+CMD ["serve", "-s", "dist", "-l", "8808"]

@@ -29,10 +29,10 @@ services:
       - VITE_GEMINI_API_KEY=${VITE_GEMINI_API_KEY}
 
     ports:
-      - "8881:8881"
+      - "8808:8808"
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8881/health || exit 1"]
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8808/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
