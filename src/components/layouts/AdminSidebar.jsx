@@ -137,7 +137,7 @@ function SidebarNavItem({ item }){
                 <span className="font-medium">{item.label}</span>
             </div>
             :
-            <Link ref={navItemRef} id={item.id} search={item.search} activeOptions={{exact:item.exact}} to={item.href === '/dashboard/notifications' ? '?' : item.href} className={cn(
+            <Link ref={navItemRef} id={item.id} search={item.search} activeOptions={{exact:item.exact}} to={item.href === '/app/notifications' ? '?' : item.href} target={item.external ? '_blank' : '_self'} className={cn(
                 "relative w-full h-auto flex gap-2 items-center px-3 py-2 rounded-lg transition-all duration-200 [&_svg]:size-5",
                 "dark:hover:bg-text/10 hover:bg-slate-50 hover:text-text/90 dark:text-text/50 text-text/70 [&_svg]:text-text/60 hover:[&_svg]:text-primary dark:[&.active]:bg-gradient-to-br dark:from-text/20 dark:to-text/30 [&.active]:bg-gradient-to-br from-text to-text/80 dark:[&.active]:text-text [&.active]:text-bg dark:[&.active]:[&_svg]:text-text [&.active]:[&_svg]:text-bg [&.active]:opacity-100"
             )}>

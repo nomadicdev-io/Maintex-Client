@@ -189,10 +189,11 @@ export const sidebarNav = [
             {
                 id: 'nav-13.5',
                 label: "API Docs",
-                href: "/app/admin/docs",
+                href: import.meta.env.VITE_DOCS_URL,
                 icon: <FileCode />,
                 exact: false,
-                users: 'admin'
+                users: 'admin',
+                external: true
             },
         ]
     },
