@@ -54,7 +54,7 @@ function RootLayoutComponent() {
   return (
     <>
       <HeadContent />
-      <SocketProvider url={import.meta.env.VITE_SOCKET_URL}>
+      <SocketProvider url={'ws://api.maintex.pro/app/socket'}>
         <RootLayout>
           <Outlet />
           {
