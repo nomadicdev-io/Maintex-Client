@@ -372,7 +372,7 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
       />
 
 
-      <div className='relative w-full flex gap-3 px-5 py-5 pb-8'>
+      <div className='relative w-full flex gap-3 px-5 py-8'>
         <Button type="button" variant="shade" onClick={()=> router.history?.back()}>
           <span>Cancel</span>
         </Button>

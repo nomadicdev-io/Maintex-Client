@@ -10,7 +10,6 @@ import { Toaster } from "@/components/ui/sonner"
 import {useAppControls} from '@/hooks/useAppControls'
 import { useEffect } from 'react'
 import orbit from '../api'
-import getUserAgent from '../lib/getUserAgent'
 
 export const Route = createRootRouteWithContext()({
   component: RootLayoutComponent,
@@ -20,10 +19,6 @@ export const Route = createRootRouteWithContext()({
   loader: async ({context})=> {
     await context.queryClient.ensureQueryData({
       queryKey: ['app'],
-      enabled: true,
-      initialData: {
-        status: false,
-      },
       queryFn: async ()=> {
         try{
           const res = await orbit.get({url: 'context'})

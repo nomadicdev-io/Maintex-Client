@@ -2,7 +2,7 @@
 import { ChevronLeft, LogOut } from "lucide-react"
 import { Button } from "../ui/button"
 import { Link, useLocation, useRouter } from "@tanstack/react-router"
-import { useEffect, useRef, useState } from "react"
+import { Activity, useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { HashLoader } from "react-spinners"
 import {
@@ -26,9 +26,16 @@ export default function AdminSidebar() {
     const { isOpen } = useSidebar()
     const {data} = authClient.useSession()
 
-    if(isOpen) return <MegaSidebar user={data?.user}/>
-    return <MiniSidebar user={data?.user}/>
-
+    return (
+        <>
+        <Activity mode={isOpen ? 'visible' : 'hidden'}>
+            <MegaSidebar user={data?.user}/>
+        </Activity>
+        <Activity mode={isOpen ? 'hidden' : 'visible'}>
+            <MiniSidebar user={data?.user}/>
+        </Activity>
+        </>
+    )
 }
 
 function MegaSidebar({ user }){
