@@ -3,7 +3,7 @@ import { LayoutDashboard, MessagesSquare, CalendarDays, Users, CircleUser, Serve
 export const sidebarNav = [
     {
         label: "General",
-        role: ['user', 'admin', 'hr', 'manager'],
+        role: ['user', 'admin', 'hr', 'manager', 'developer', 'employee'],
         items: [
             {
                 id: 'nav-01',
@@ -31,9 +31,21 @@ export const sidebarNav = [
     },
     {
         label: "Teamify",
+        role: ['admin', 'hr', 'developer', 'employee'],
+        items: [
+            {
+                id: 'nav-24',
+                label: "Projects",
+                href: "/app/teamify/projects",
+                icon: <FolderKanban />,
+                exact: false,
+                users: 'employee'
+            }
+        ]
     },
     {
         label: "Service & Maintenance",
+        role: ['admin', 'hr', 'developer', 'employee'],
         items: [
             {
                 id: 'nav-11.22',
@@ -47,7 +59,7 @@ export const sidebarNav = [
     },
     {
         label: "HR",
-        role: ['admin', 'hr'],
+        role: ['admin', 'hr', 'developer'],
         items: [
             {   
                 id: 'nav-11',
@@ -109,7 +121,7 @@ export const sidebarNav = [
     },
     {
         label: "Account",
-        role: ['user', 'admin', 'hr', 'manager'],
+        role: ['user', 'admin', 'hr', 'manager', 'developer'],
         items: [
             {   
                 id: 'nav-10.2',
@@ -148,7 +160,7 @@ export const sidebarNav = [
     },
     {
         label: "Admin",
-        role: ['admin', 'hr'],
+        role: ['admin'],
         items: [
             {
                 id: 'nav-15',
@@ -168,12 +180,12 @@ export const sidebarNav = [
                 href: "/app/admin/servers-db",
                 icon: <Server />
             },
-            {
-                id: 'nav-18.2',
-                label: "Configuration",
-                href: "/app/admin/configuration",
-                icon: <Columns3Cog />
-            },
+            // {
+            //     id: 'nav-18.2',
+            //     label: "Configuration",
+            //     href: "/app/admin/configuration",
+            //     icon: <Columns3Cog />
+            // },
             {
                 id: 'nav-19',
                 label: "Settings",

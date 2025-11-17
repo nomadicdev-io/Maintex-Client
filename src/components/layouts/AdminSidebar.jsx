@@ -91,11 +91,13 @@ function SidebarLogo({ onToggleSidebar }){
 
 function SidebarNav({ user }){
 
+
     return (
         <div className="relative flex-1 w-full h-full py-4 overflow-y-scroll scrollbar-hide">
             <nav className="relative flex flex-col">
                 {
                     sidebarNav?.map((item, index) => (
+                        (item?.role?.includes(user?.role)) ?
                         <div key={`sidebar-nav-${index}`} className={`relative w-full h-auto border-b border-border pb-4 px-4 [&:last-child]:border-b-0 ${index !== sidebarNav?.length - 1 ? 'mb-4' : ''}`}>
                             <h3 className={`text-sm px-2 font-normal dark:text-text/75 text-slate-500/75 mb-2`}>{item.label}</h3>
                             <div className="relative flex flex-col gap-2">
@@ -111,6 +113,8 @@ function SidebarNav({ user }){
                                 }
                             </div>
                         </div>
+                        :
+                        null
                     ))
                 }
             </nav>
