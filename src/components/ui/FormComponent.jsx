@@ -24,7 +24,7 @@ import orbit from "../../api"
 import { Spinner } from "@/components/ui/spinner"
 import ImageComponent from "./ImageComponent"
 
-export const InputField = ({label, name, type, placeholder, value, onChange, error, isError, isLoading, isSuccess, readOnly = false, onBlur, disabled = false, autoFocus = false, className, classNames, startContent, endContent}) => {
+export const InputField = ({label, name, type, placeholder, value, onChange, error, isError, isLoading, isSuccess, readOnly = false, onBlur, disabled = false, autoFocus = false, autoComplete = 'off', className, classNames, startContent, endContent, ...props}) => {
     
     const id = useId()
     
@@ -33,6 +33,7 @@ export const InputField = ({label, name, type, placeholder, value, onChange, err
             <Label htmlFor={id} className={cn("mb-2", classNames?.label)}>{label}</Label>
             <div className={cn("relative w-full flex ", classNames?.wrapper)}>
                 <Input 
+                    {...props}
                     type={type} 
                     name={name}
                     id={id} 
@@ -47,6 +48,7 @@ export const InputField = ({label, name, type, placeholder, value, onChange, err
                     isSuccess={isSuccess}
                     disabled={disabled}
                     autoFocus={autoFocus}
+                    autoComplete={autoComplete}
                     className={cn("w-full", classNames?.input)}
                 />
                 {startContent ?
@@ -80,7 +82,7 @@ export const DropUploader = () => {
     )
 }
 
-export const InputSelect = ({label, placeholder, value, onChange, error, isError, disabled = false, options, className, classNames, startContent, endContent}) => {
+export const InputSelect = ({label, placeholder, value, onChange, error, isError, disabled = false, options, className, classNames, startContent, endContent, ...props}) => {
     
     const id = useId()
     
@@ -88,7 +90,7 @@ export const InputSelect = ({label, placeholder, value, onChange, error, isError
         <div className={cn("grid w-full items-center relative", classNames?.wrapper, className)}>
             <Label htmlFor={id} className={cn("mb-2", classNames?.label)}>{label}</Label>
             <div className={cn("relative w-full flex flex-col", classNames?.wrapper)}>
-                <Select value={value} onValueChange={onChange} disabled={disabled}>
+                <Select value={value} onValueChange={onChange} disabled={disabled} {...props}>
                     <SelectTrigger className={cn("w-full", classNames?.input)} error={error}>
                         <SelectValue value={value} placeholder={placeholder} />
                     </SelectTrigger>
@@ -111,7 +113,7 @@ export const InputSelect = ({label, placeholder, value, onChange, error, isError
     )
 }
 
-export const InputCountry = ({label, placeholder, value, onChange, error, isError, disabled = false, options = [], className, classNames, startContent, endContent}) => {
+export const InputCountry = ({label, placeholder, value, onChange, error, isError, disabled = false, options = [], className, classNames, startContent, endContent, ...props}) => {
     
     const id = useId()
     
@@ -119,7 +121,7 @@ export const InputCountry = ({label, placeholder, value, onChange, error, isErro
         <div className={cn("grid w-full items-center relative", classNames?.wrapper, className)}>
             <Label htmlFor={id} className={cn("mb-2", classNames?.label)}>{label}</Label>
             <div className={cn("relative w-full flex flex-col", classNames?.wrapper)}>
-            <Select value={value} onValueChange={onChange} disabled={disabled}>
+            <Select value={value} onValueChange={onChange} disabled={disabled} {...props}>
                 <SelectTrigger className={cn("w-full", classNames?.input)}>
                     <SelectValue placeholder={!value ? placeholder : null} />
                 </SelectTrigger>
@@ -141,7 +143,7 @@ export const InputCountry = ({label, placeholder, value, onChange, error, isErro
     )
 }
 
-export const InputPhone = ({label, value, onChange, error, isError, disabled = false}) => {
+export const InputPhone = ({label, value, onChange, error, isError, disabled = false, ...props}) => {
     
     const id = useId()
    
@@ -163,7 +165,7 @@ export const InputPhone = ({label, value, onChange, error, isError, disabled = f
         <div className="grid w-full items-center relative">
             <Label htmlFor={id} className="mb-2">{label}</Label>
             <div className="flex flex-wrap items-center gap-2">
-                <Select value={value.phoneCode} onValueChange={onCodeChange} disabled={disabled}>
+                <Select value={value.phoneCode} onValueChange={onCodeChange} disabled={disabled} {...props}>
                     <SelectTrigger className="min-w-[5rem] max-w-[5rem] px-2 gap-0" hideDropdownIcon={true}>
                         <SelectValue placeholder={'+000'} />
                     </SelectTrigger>
@@ -195,7 +197,7 @@ export function InputOTPPattern({onChange, value, isError, onComplete}) {
     )
 }
 
-export const TextareaField = ({label, name, placeholder, value, onChange, error, isError, readOnly = false, onBlur, disabled = false, autoFocus = false, className, classNames, startContent, endContent}) => {
+export const TextareaField = ({label, name, placeholder, value, onChange, error, isError, readOnly = false, onBlur, disabled = false, autoFocus = false, className, classNames, startContent, endContent, ...props}) => {
     
     const id = useId()
     
@@ -204,6 +206,7 @@ export const TextareaField = ({label, name, placeholder, value, onChange, error,
             <Label htmlFor={id} className={cn("mb-2", classNames?.label)}>{label}</Label>
             <div className={cn("relative w-full flex flex-col", classNames?.wrapper)}>
                 <Textarea
+                    {...props}  
                     name={name}
                     id={id} value={value} 
                     placeholder={placeholder}
@@ -335,15 +338,20 @@ export const AttachmentUploader = ({
     accept = 'image/*', 
     maxFileSize = 1024 * 1024 * 5,
     classNames,
+    isSingle = false,
+    bucket = 'tickets',
+    isStatic = false,
 }) => {
     const id = useId()
     const fileInputRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false)
 
-    console.log(value)
-
     const handleFileChange = async (e) => {
         const files = e.target.files
+
+        if(isStatic) {
+            return true
+        }
 
         try{
             setIsLoading(true)
@@ -374,7 +382,7 @@ export const AttachmentUploader = ({
 
                 const formData = new FormData()
                 formData.append('file', file)
-                formData.append('bucket', 'tickets')
+                formData.append('bucket', bucket)
                 formData.append('path', '')
 
                 const res = await orbit.upload.s3Upload({data: formData})
@@ -424,24 +432,28 @@ export const AttachmentUploader = ({
                                     </div>
                                 )
                             }
-                            <button type="button" onClick={() => handleFileRemove(item.key)}  className="absolute top-1 right-1 p-1 cursor-pointer rounded-md bg-text/10 hover:bg-text/20 transition-all duration-300">
-                                <XIcon size={14} className="text-text/60" />
+                            <button title="Remove file" type="button" onClick={() => handleFileRemove(item.key)}  className="absolute top-1 right-1 p-1 cursor-pointer rounded-md bg-danger/70 hover:bg-danger/90 transition-all duration-300 backdrop-blur-sm border border-danger/90">
+                                <XIcon size={14} className="text-white" />
                             </button>
                         </div>
                     )) : null
                 }
-                <div className={cn("w-full h-auto aspect-square rounded-lg border border-dashed dark:border-border-300 border-border-600/90 flex items-center justify-center group cursor-pointer transition-all duration-300 hover:border-primary/50 hover:bg-text/5 relative overflow-hidden", 
-                    isError ? "border-danger/75" : null,
-                    classNames?.file,
-                )}>
-                    <ImagePlus size={26} className={cn("text-text/60", classNames?.icon)} />
-                    <input ref={fileInputRef} type="file" name={name} id={id} onChange={handleFileChange} disabled={disabled} readOnly={readOnly} className={cn("absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full", classNames?.input)} accept={accept} />
-
-                    {isLoading ? <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-text/2 backdrop-blur-md z-10">
-                        <Spinner className="size-8 text-text/80 animate-spin" />
-                    </div>
-                    : null}
-                </div>
+                {
+                    (isSingle && value?.length === 0) ? (
+                        <div className={cn("w-full h-auto aspect-square rounded-lg border border-dashed dark:border-border-300 border-border-600/90 flex items-center justify-center group cursor-pointer transition-all duration-300 hover:border-primary/50 hover:bg-text/5 relative overflow-hidden", 
+                            isError ? "border-danger/75" : null,
+                            classNames?.file,
+                        )}>
+                            <ImagePlus size={26} className={cn("text-text/60", classNames?.icon)} />
+                            <input ref={fileInputRef} type="file" name={name} id={id} onChange={handleFileChange} disabled={disabled} readOnly={readOnly} className={cn("absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full", classNames?.input)} accept={accept} />
+        
+                            {isLoading ? <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-text/2 backdrop-blur-md z-10">
+                                <Spinner className="size-8 text-text/80 animate-spin" />
+                            </div>
+                            : null}
+                        </div>
+                    ) : null
+                }
             </div>
             {isError ? <p className="text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full">{error}</p> : null}
         </div>

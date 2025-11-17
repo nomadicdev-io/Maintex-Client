@@ -11,10 +11,23 @@ import {
 } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
 
-export default function DefaultFormModal({title, description, children, button, submitButtonText = 'Submit', cancelButtonText = 'Cancel', classNames, handleSubmit, isLoading}) {
+export default function DefaultFormModal({
+  title, 
+  description, 
+  children, 
+  button, 
+  submitButtonText = 'Submit', 
+  cancelButtonText = 'Cancel', 
+  classNames, 
+  handleSubmit, 
+  isLoading,
+  onOpenChange, 
+  open, 
+  onClose,
+}) {
   
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogTrigger asChild>
           {button}
         </DialogTrigger>
@@ -31,9 +44,11 @@ export default function DefaultFormModal({title, description, children, button, 
             </DialogHeader>
             : null
           }
+          <div className="relative w-full block">
           {
             children ? children : null
           }
+          </div>
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="shade">{cancelButtonText}</Button>

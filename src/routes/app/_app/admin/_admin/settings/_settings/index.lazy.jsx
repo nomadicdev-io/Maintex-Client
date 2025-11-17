@@ -124,6 +124,7 @@ const GeneralSettingsForm = ({data, onRefetch}) => {
             description="Enter or change the name of the application"
           >
             <InputField 
+              {...field.props}
               name="name"
               placeholder="Enter the name of the application"
               className="max-w-100"

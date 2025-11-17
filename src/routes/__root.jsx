@@ -10,6 +10,8 @@ import { Toaster } from "@/components/ui/sonner"
 import {useAppControls} from '@/hooks/useAppControls'
 import { useEffect } from 'react'
 import orbit from '../api'
+import { ErrorBoundary } from "react-error-boundary";
+import FetchError from '../components/fetch/FetchError'
 
 export const Route = createRootRouteWithContext()({
   component: RootLayoutComponent,
@@ -19,11 +21,12 @@ export const Route = createRootRouteWithContext()({
   loader: async ({context})=> {
     await context.queryClient.ensureQueryData({
       queryKey: ['app'],
-      initialData: null,
+      enabled: true,
       queryFn: async ()=> {
         try{
           const res = await orbit.get({url: 'context'})
           console.log(res.data)
+          if(res.status === false) return null
           context.application = res.data
           return res.data
         }catch(error){
@@ -52,15 +55,19 @@ function RootLayoutComponent() {
       <HeadContent />
       <SocketProvider url={import.meta.env.VITE_NODE_ENV === 'development' ? 'ws://localhost:8880/app/socket' : 'wss://api.maintex.pro/app/socket'}>
         <RootLayout>
-          <Outlet />
-          {
-            import.meta.env.VITE_DEBUG === 'true' && (
-              <>
-                <TanStackRouterDevtools />
-                <ReactQueryDevtools /> 
-              </>
-            )
-          }
+          <ErrorBoundary FallbackComponent={FetchError} onError={(error) => {
+            console.log(error)
+          }}>
+            <Outlet />
+            {
+              import.meta.env.VITE_DEBUG === 'true' && (
+                <>
+                  <TanStackRouterDevtools />
+                  <ReactQueryDevtools /> 
+                </>
+              )
+            }
+          </ErrorBoundary>
         </RootLayout>
       <Toaster offset={'5rem'} />
       </SocketProvider>

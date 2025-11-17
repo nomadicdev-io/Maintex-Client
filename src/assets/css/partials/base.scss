@@ -3,6 +3,16 @@ body {
     background-color: var(--color-bg);
     color: var(--color-text);
     font-weight: 400;
+
+    &::selection {
+        background-color: var(--color-primary);
+        color: var(--color-bg);
+      }
+      
+    &::-moz-selection {
+    background-color: var(--color-primary);
+    color: var(--color-bg);
+    }
 }
   
 // h1,h2,h3,h4,h5,h6,strong {

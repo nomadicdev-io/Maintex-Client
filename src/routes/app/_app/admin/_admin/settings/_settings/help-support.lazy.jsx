@@ -141,7 +141,7 @@ function RouteComponent() {
                   e.preventDefault()
                   e.stopPropagation()
                   form.handleSubmit()
-                }} className="relative w-full grid grid-cols-2 gap-y-7 gap-x-6 p-5">
+                }} className="relative w-full grid grid-cols-2 gap-y-6 gap-x-5 p-5">
                   <form.Field 
                     name="subject" 
                     validators={{
