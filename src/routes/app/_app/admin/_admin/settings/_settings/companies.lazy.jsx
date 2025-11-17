@@ -79,7 +79,7 @@ function RouteComponent() {
           {
             data?.length > 0 ?
             <div className='relative w-full flex flex-col p-5'>
-              <CompaniesTable data={data} />
+              <CompaniesTable data={data} onRefetch={refetch} />
             </div>
             :
             <FetchEmpty key="fetch-empty" />
@@ -307,25 +307,25 @@ function CompaniesModalForm({onRefetch}) {
   )
 }
 
-function CompaniesTable({data}) {
+function CompaniesTable({data, onRefetch}) {
 
   return (
     <div className="relative grid grid-cols-2 gap-5 w-full">
       {
         data?.map((item) => (
-          <CompanyItem key={item.id} item={item} />
+          <CompanyItem key={item.id} item={item} onRefetch={onRefetch} />
         ))
       }
     </div>
   )
 }
 
-function CompanyItem({item}) {
+function CompanyItem({item, onRefetch}) {
 
   const setSelected = useSetAtom(selectedAtom)
   const setModal = useSetAtom(modelAtom)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
-
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false)
   const handleEdit = useCallback(() => {
     setSelected(item)
     setModal(true)
@@ -334,6 +334,24 @@ function CompanyItem({item}) {
   const handleDelete = useCallback(() => {
     setIsDeleteDialogOpen(true)
   }, [item])
+
+  const handleDeleteConfirm = async () => {
+    setIsDeleteLoading(true)
+    try{
+      const res = await orbit.post({url: `admin/settings/companies/delete/${item.id}`})
+      if(!res.status) throw res
+      toast.success('Company deleted successfully')
+      onRefetch()
+    }
+    catch(error){
+      console.log(error)
+      toast.error(error.message || error.statusText || 'Something went wrong')
+    }
+    finally{
+      setIsDeleteLoading(false)
+    }
+    setIsDeleteDialogOpen(false)
+  }
 
   return (
     <div className="relative w-full flex flex-col border border-border-600 rounded-xl bg-bg-300">
@@ -406,10 +424,10 @@ function CompanyItem({item}) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel asChild>
-              <Button variant='shade' >Cancel</Button>
+              <Button variant="shade" >Cancel</Button>
             </AlertDialogCancel>
             <AlertDialogAction asChild>
-              <Button variant='default' >Continue</Button>
+              <Button variant='default' onClick={handleDeleteConfirm} isLoading={isDeleteLoading} >Continue</Button>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
