@@ -36,9 +36,8 @@ const buttonVariants = cva(
         default: "h-10 rounded-lg px-5 has-[>svg]:px-3",
         sm: "h-8 rounded-lg gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 rounded-lg px-6 has-[>svg]:px-4",
-        icon: "size-9 rounded-lg hover:bg-primary/10",
-        iconSm: "size-7 rounded-lg hover:bg-primary/10",
-        iconSmall: "size-7 rounded-md",
+        icon: "size-10 rounded-lg hover:bg-primary/10",
+        iconSm: "size-8 rounded-lg hover:bg-primary/10",
       },
     },
     defaultVariants: {
