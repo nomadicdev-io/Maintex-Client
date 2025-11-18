@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { orbitAI } from '@/api'
 import orbit from '@/api'
+import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/app/_app/')({
   component: AppHomePage,
@@ -19,6 +20,8 @@ export const Route = createFileRoute('/app/_app/')({
 })
 
 function AppHomePage() {
+
+  const {t} = useTranslation()
 
   const {data} = useQuery({
     queryKey: ['dashboard'],
@@ -36,7 +39,7 @@ function AppHomePage() {
 
   return (
     <div className="relative w-full h-full flex-1 flex flex-col items-center justify-center p-8">
-      <h1 className="text-5xl font-semibold">Dashboard</h1>
+      <h1 className="text-5xl font-semibold">{t('dashboard')}</h1>
     </div>
   )
 }

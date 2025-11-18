@@ -35,10 +35,20 @@ import { voiceAgentAtom } from "../../routes/app/_app";
 import HeaderSearch from "../forms/HeaderSearch";
 import dayjs from "dayjs";
 import { useCallback } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { useTranslation } from "react-i18next";
 
 export const notificationSheetAtom = atom(false)
 
-export default function AdminHeader() {
+export default function AdminHeader({context}) {
 
   const {data: session} = authClient.useSession()
   const { isOpen, toggle } = useSidebar()
@@ -56,13 +66,15 @@ export default function AdminHeader() {
             :
             null
           }
+          <HeaderLanguageSwitcher data={context?.lang}/>
           <HeaderDocumentGenerator />
           <HeaderSearch isIcon={true} />
+
         </div>
 
         <div className="flex items-center gap-4 h-full">
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {/* <HeaderSchedules /> */}
             <HeaderAIChatBot />
             {
@@ -76,7 +88,6 @@ export default function AdminHeader() {
             <HearThemeSwitcher />
             <HeaderNotifications />
             <HeaderDate />
-            <HeaderLanguageSwitcher />
 
           </div>
 
@@ -151,7 +162,7 @@ function HeaderDate(){
   return (
     <div className="relative flex items-center gap-2 h-10 border border-border-600 text-text/80 rounded-lg px-3 ">
       <CalendarDaysIcon size={16} />
-      <span className="text-sm">{dayjs().format('DD MMMM YYYY')}</span>
+      <span className="text-sm">{dayjs().format('DD MMM YYYY')}</span>
     </div>
   )
 }
@@ -320,32 +331,36 @@ function HeaderAIChatBot(){
   )
 }
 
-function HeaderLanguageSwitcher(){
+function HeaderLanguageSwitcher({data}){
+
+  const { i18n } = useTranslation()
+
+  const handleLanguageChange = (lng) => {
+    i18n.changeLanguage(lng)
+  }
 
   return (
-    <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      <Button variant="defaultIcon">
-        <Globe className="size-4"/> <span>English</span>
-      </Button>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent>
-      <DropdownMenuItem>English</DropdownMenuItem>
-      <DropdownMenuItem>Italian</DropdownMenuItem>
-      <DropdownMenuItem>Arabic</DropdownMenuItem>
-      <DropdownMenuItem>Spanish</DropdownMenuItem>
-      <DropdownMenuItem>Russian</DropdownMenuItem>
-      <DropdownMenuItem>Chinese</DropdownMenuItem>
-      <DropdownMenuItem>French</DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
+    <Select defaultValue={i18n.language} onValueChange={handleLanguageChange}>
+      <SelectTrigger variant="shade">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent  >
+        <SelectGroup>
+          {
+            data?.languages?.map((language) => (
+              <SelectItem key={language.value} value={language.value}>{language.flag} &nbsp; {language.label}</SelectItem>
+            ))
+          }
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   )
 }
 
 function HeaderDocumentGenerator(){
 
   const handleDocumentGenerator = useCallback(()=> {
-    window.open('https://documents.nina.quadbits.cloud/', '_blank')
+    window.open('https://docs.maintex.pro', '_blank')
   }, [])
   return (
     <Button variant="shade" aria-label="Nina Generate Document" title="Nina Generate Document" type="button" onClick={handleDocumentGenerator}>

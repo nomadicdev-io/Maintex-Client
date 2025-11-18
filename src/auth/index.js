@@ -1,5 +1,6 @@
 import { createAuthClient } from "better-auth/react"
 import { twoFactorClient, adminClient, inferAdditionalFields } from "better-auth/client/plugins"
+import orbit from "../api"
 
 export const authClient = createAuthClient({
     baseURL: import.meta.env.VITE_AUTH_URL,
@@ -32,11 +33,14 @@ export const authClient = createAuthClient({
 export const initAuthStore = async ()=> {
     try{
       const {data} = await authClient.getSession()
+      const res = await orbit.get({url: 'context'})
+
       return {
         session: data?.session,
         token: data?.session?.token,
         user: data?.session?.user,
         isAuthenticated: data?.session?.token ? true : false,
+        context: res?.data || null,
       }
     }catch(error){
       console.log(error)

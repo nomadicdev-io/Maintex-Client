@@ -84,7 +84,22 @@ export const DropUploader = () => {
     )
 }
 
-export const InputSelect = ({label, placeholder, value, onChange, error, isError, disabled = false, options, className, classNames, startContent, endContent, ...props}) => {
+export const InputSelect = ({
+    label, 
+    placeholder, 
+    value, 
+    onChange, 
+    error, 
+    isError, 
+    disabled = false, 
+    options, 
+    className, 
+    classNames, 
+    startContent, 
+    endContent, 
+    customValue = 'value',
+    customLabel = 'label',
+}) => {
     
     const id = useId()
     
@@ -92,13 +107,13 @@ export const InputSelect = ({label, placeholder, value, onChange, error, isError
         <div className={cn("grid w-full items-center relative", classNames?.wrapper, className)}>
             <Label htmlFor={id} className={cn("mb-2", classNames?.label)}>{label}</Label>
             <div className={cn("relative w-full flex flex-col", classNames?.wrapper)}>
-                <Select value={value} onValueChange={onChange} disabled={disabled} {...props}>
+                <Select value={value} onValueChange={onChange} disabled={disabled}>
                     <SelectTrigger className={cn("w-full", classNames?.input)} error={error}>
                         <SelectValue value={value} placeholder={placeholder} />
                     </SelectTrigger>
                     <SelectContent>
                         {options.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
+                            <SelectItem key={option[customValue]} value={option[customValue]}>{option[customLabel]}</SelectItem>
                         ))}
                     </SelectContent>
                 </Select>

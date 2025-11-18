@@ -2,8 +2,6 @@ import { routeTree } from './routeTree.gen'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import PageLoader from './components/loaders/PageLoader'
 import { ThemeProvider } from 'next-themes'
-import './lang'
-import i18n from './lang'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
@@ -11,7 +9,7 @@ const queryClient = new QueryClient()
 // Router
 const router = createRouter({
     routeTree,
-    // basepath: i18n.language,
+    // basepath: localStorage.getItem('lang') || i18n.language,
     context: {
         authTypes: null,
         token: null,

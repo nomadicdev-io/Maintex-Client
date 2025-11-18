@@ -53,10 +53,10 @@ function LogMap() {
   }, [resolvedTheme])
 
   return (
-    <div className='relative w-full flex flex-col h-[25rem] bg-text/5'>
+    <div className='relative w-full flex flex-col h-150 bg-text/5'>
       <div
         ref={mapElement}
-       className="w-full h-full flex-1"
+       className="w-full h-full flex-1 grayscale-100"
       />
     </div>
   )

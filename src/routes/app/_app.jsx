@@ -28,13 +28,14 @@ function AppLayout() {
   const {isVisible} = useAI()
   const isVoiceAgent = useAtomValue(voiceAgentAtom)
   const {isOnline} = useNetInfo()
+  const {context} = Route.useRouteContext()
 
   return (
     <>
     <div className="relative flex w-full" id="app-layout">
         <AdminSidebar />
         <div className="w-full h-screen overflow-hidden relative flex flex-col">
-          <AdminHeader />
+          <AdminHeader context={context}/>
           <main className="flex flex-col w-full h-full relative">
             <Outlet />
           </main>

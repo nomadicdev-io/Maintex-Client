@@ -1,13 +1,14 @@
 import { LayoutDashboard, MessagesSquare, CalendarDays, Users, CircleUser, Server, Package, FolderKanban, Megaphone, NotebookPen, Clock, DoorOpen, Settings, NotebookText, MapPinned, ListTree, FileCode, ChartNetwork, SquareTerminal, DatabaseBackup, MonitorSpeaker, Wrench, Columns3Cog, Ticket, WrenchIcon, FolderTree } from "lucide-react";
+import i18n from "@/lang";
 
 export const sidebarNav = [
     {
-        label: "General",
+        label: i18n.t("general"),
         role: ['user', 'admin', 'hr', 'manager', 'developer', 'employee'],
         items: [
             {
                 id: 'nav-01',
-                label: "Dashboard",
+                label: i18n.t("dashboard"),
                 href: "/app",
                 icon: <LayoutDashboard />,
                 exact: true,
@@ -15,14 +16,14 @@ export const sidebarNav = [
             },
             {
                 id: 'nav-22',
-                label: "Chats",
+                label: i18n.t("chats"),
                 href: "/app/chats",
                 icon: <MessagesSquare />,
                 exact: true
             },
             {
                 id: 'nav-23',
-                label: "Announcements",
+                label: i18n.t("announcements"),
                 href: "/app/announcements",
                 icon: <Megaphone />,
                 exact: true
@@ -35,7 +36,7 @@ export const sidebarNav = [
         items: [
             {
                 id: 'nav-24',
-                label: "Projects",
+                label: i18n.t("projects"),
                 href: "/app/teamify/projects",
                 icon: <FolderKanban />,
                 exact: false,
@@ -44,12 +45,12 @@ export const sidebarNav = [
         ]
     },
     {
-        label: "Service & Maintenance",
+        label: i18n.t("service-maintenance"),
         role: ['admin', 'hr', 'developer', 'employee'],
         items: [
             {
                 id: 'nav-11.22',
-                label: "Tracking",
+                label: i18n.t("tracking"),
                 href: "/app/manager/tracking",
                 icon: <MapPinned />,
                 exact: false,
@@ -58,12 +59,12 @@ export const sidebarNav = [
         ]
     },
     {
-        label: "HR",
+        label: i18n.t("hr"),
         role: ['admin', 'hr', 'developer'],
         items: [
             {   
                 id: 'nav-11',
-                label: "Attendance",
+                label: i18n.t("attendance"),
                 href: "/app/hr/attendance",
                 icon: <Clock />,
                 exact: false,
@@ -71,7 +72,7 @@ export const sidebarNav = [
             },
             {
                 id: 'nav-11.1',
-                label: "Employees",
+                label: i18n.t("employees"),
                 href: "/app/hr/employees",
                 icon: <Users />,
                 exact: false,
@@ -79,7 +80,7 @@ export const sidebarNav = [
             },
             {
                 id: 'nav-11.2',
-                label: "Leave Management",
+                label: i18n.t("leave-management"),
                 href: "/app/hr/leave-management",
                 icon: <DoorOpen />,
                 exact: false,
@@ -95,7 +96,7 @@ export const sidebarNav = [
             // },
             {
                 id: 'nav-11.3',
-                label: "Notes",
+                label: i18n.t("notes"),
                 href: "/app/hr/notes",
                 icon: <NotebookText />,
                 exact: false,
@@ -103,7 +104,7 @@ export const sidebarNav = [
             },
             {
                 id: 'nav-11.4',
-                label: "Calendar",
+                label: i18n.t("calendar"),
                 href: "/app/hr/calendar",
                 icon: <CalendarDays />,
                 exact: false,
@@ -111,7 +112,7 @@ export const sidebarNav = [
             },
             {
                 id: 'nav-11.5',
-                label: "Manage Requests",
+                label: i18n.t("manage-requests"),
                 href: "/app/hr/manage-requests",
                 icon: <ListTree />,
                 exact: false,
@@ -120,12 +121,12 @@ export const sidebarNav = [
         ]
     },
     {
-        label: "Account",
+        label: i18n.t("account"),
         role: ['user', 'admin', 'hr', 'manager', 'developer'],
         items: [
             {   
                 id: 'nav-10.2',
-                label: "My Drive",
+                label: i18n.t("my-drive"),
                 href: "/app/account/drive",
                 icon: <Package />,
                 exact: false,
@@ -133,7 +134,7 @@ export const sidebarNav = [
             },
             {
                 id: 'nav-10.4',
-                label: "Requests",
+                label: i18n.t("requests"),
                 href: "/app/account/requests",
                 icon: <NotebookPen />,
                 exact: false,
@@ -141,7 +142,7 @@ export const sidebarNav = [
             },
             {   
                 id: 'nav-10.1',
-                label: "Projects",
+                label: i18n.t("projects"),
                 href: "/app/account/projects",
                 icon: <FolderKanban />,
                 exact: false,
@@ -149,7 +150,7 @@ export const sidebarNav = [
             },
             {   
                 id: 'nav-10.3',
-                label: "Profile",
+                label: i18n.t("profile"),
                 href: "/app/account/profile",
                 icon: <CircleUser />,
                 exact: false,
@@ -159,12 +160,12 @@ export const sidebarNav = [
         ]
     },
     {
-        label: "Admin",
+        label: i18n.t("admin"),
         role: ['admin'],
         items: [
             {
                 id: 'nav-15',
-                label: "Activity Monitor",
+                label: i18n.t("activity-monitor"),
                 href: "/app/admin/activity-monitor",
                 icon: <MonitorSpeaker />
             },
@@ -176,7 +177,7 @@ export const sidebarNav = [
             // },
             {
                 id: 'nav-18',
-                label: "Servers & DB",
+                label: i18n.t("servers-db"),
                 href: "/app/admin/servers-db",
                 icon: <Server />
             },
@@ -188,19 +189,19 @@ export const sidebarNav = [
             // },
             {
                 id: 'nav-19',
-                label: "Settings",
+                label: i18n.t("settings"),
                 href: "/app/admin/settings",
                 icon: <Settings />
             },
             {
                 id: 'nav-19.1',
-                label: "Backup",
+                label: i18n.t("backup"),
                 href: "/app/admin/backup",
                 icon: <DatabaseBackup />,
             },
             {
                 id: 'nav-13.5',
-                label: "API Docs",
+                label: i18n.t("api-docs"),
                 href: import.meta.env.VITE_DOCS_URL,
                 icon: <FileCode />,
                 exact: false,
@@ -210,30 +211,30 @@ export const sidebarNav = [
         ]
     },
     {
-        label: "Development",
+        label: i18n.t("development"),
         role: ['developer'],
         items: [
             {
                 id: 'nav-133.6',
-                label: "Tickets",
+                label: i18n.t("tickets"),
                 href: "/app/development/tickets",
                 icon: <Ticket />,
             },
             {
                 id: 'nav-133.7',
-                label: "Toolkit",
+                label: i18n.t("toolkit"),
                 href: "/app/development/toolkit",
                 icon: <WrenchIcon />,
             },
             {
                 id: 'nav-18.1',
-                label: "Terminal",
+                label: i18n.t("terminal"),
                 href: "/app/development/terminal",
                 icon: <SquareTerminal />
             },
             {
                 id: 'nav-133.8',
-                label: "Repositories",
+                label: i18n.t("repositories"),
                 href: "/app/development/repositories",
                 icon: <FolderTree />,
             }
