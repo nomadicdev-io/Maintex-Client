@@ -1,5 +1,6 @@
 
-import { ChevronLeft, LogOut } from "lucide-react"
+import { ChevronLeft, LayoutDashboard, MessagesSquare, CalendarDays, Users, CircleUser, Server, Package, FolderKanban, Megaphone, NotebookPen, Clock, DoorOpen, Settings, NotebookText, MapPinned, ListTree, FileCode, ChartNetwork, SquareTerminal, DatabaseBackup, MonitorSpeaker, Wrench, Columns3Cog, Ticket, WrenchIcon, FolderTree } from "lucide-react";
+
 import { Button } from "../ui/button"
 import { Link, useLocation, useRouter } from "@tanstack/react-router"
 import { Activity, useEffect, useRef, useState } from "react"
@@ -10,7 +11,6 @@ import {
     TooltipContent,
     TooltipTrigger,
   } from "@components/ui/tooltip"
-import { sidebarNav } from "@store/nav"
 import { cn } from "../../lib/utils"
 import { IoMdLogOut } from "react-icons/io"
 import { useSetAtom } from "jotai"
@@ -20,39 +20,281 @@ import { useQueryClient } from "@tanstack/react-query"
 import { useAuthStore } from "@/hooks/useAuthStore"
 import { useTheme } from "next-themes"
 import { authClient } from "@/auth"
+import { useTranslation } from "react-i18next"
 
 export default function AdminSidebar() {
 
     const { isOpen } = useSidebar()
     const {data} = authClient.useSession()
+    const {t} = useTranslation()
 
+    const sidebarNav = [
+        {
+            label: t("general"),
+            role: ['user', 'admin', 'hr', 'manager', 'developer', 'employee'],
+            items: [
+                {
+                    id: 'nav-01',
+                    label: t("dashboard"),
+                    href: "/app",
+                    icon: <LayoutDashboard />,
+                    exact: true,
+                    users: 'user'
+                },
+                {
+                    id: 'nav-22',
+                    label: t("chats"),
+                    href: "/app/chats",
+                    icon: <MessagesSquare />,
+                    exact: true
+                },
+                {
+                    id: 'nav-23',
+                    label: t("announcements"),
+                    href: "/app/announcements",
+                    icon: <Megaphone />,
+                    exact: true
+                }
+            ]
+        },
+        {
+            label: "Teamify",
+            role: ['admin', 'hr', 'developer', 'employee'],
+            items: [
+                {
+                    id: 'nav-24',
+                    label: t("projects"),
+                    href: "/app/teamify/projects",
+                    icon: <FolderKanban />,
+                    exact: false,
+                    users: 'employee'
+                }
+            ]
+        },
+        {
+            label: t("service-maintenance"),
+            role: ['admin', 'hr', 'developer', 'employee'],
+            items: [
+                {
+                    id: 'nav-11.22',
+                    label: t("tracking"),
+                    href: "/app/manager/tracking",
+                    icon: <MapPinned />,
+                    exact: false,
+                    users: 'user'
+                },
+            ]
+        },
+        {
+            label: t("hr"),
+            role: ['admin', 'hr', 'developer'],
+            items: [
+                {   
+                    id: 'nav-11',
+                    label: t("attendance"),
+                    href: "/app/hr/attendance",
+                    icon: <Clock />,
+                    exact: false,
+                    users: 'user'
+                },
+                {
+                    id: 'nav-11.1',
+                    label: t("employees"),
+                    href: "/app/hr/employees",
+                    icon: <Users />,
+                    exact: false,
+                    users: 'user'
+                },
+                {
+                    id: 'nav-11.2',
+                    label: t("leave-management"),
+                    href: "/app/hr/leave-management",
+                    icon: <DoorOpen />,
+                    exact: false,
+                    users: 'user'
+                },
+                // {
+                //     id: 'nav-11.11',
+                //     label: "Events",
+                //     href: "/app/hr/events",
+                //     icon: <Boxes />,
+                //     exact: false,
+                //     users: 'user'
+                // },
+                {
+                    id: 'nav-11.3',
+                    label: t("notes"),
+                    href: "/app/hr/notes",
+                    icon: <NotebookText />,
+                    exact: false,
+                    users: 'user'
+                },
+                {
+                    id: 'nav-11.4',
+                    label: t("calendar"),
+                    href: "/app/hr/calendar",
+                    icon: <CalendarDays />,
+                    exact: false,
+                    users: 'user'
+                },
+                {
+                    id: 'nav-11.5',
+                    label: t("manage-requests"),
+                    href: "/app/hr/manage-requests",
+                    icon: <ListTree />,
+                    exact: false,
+                    users: 'user'
+                }
+            ]
+        },
+        {
+            label: t("account"),
+            role: ['user', 'admin', 'hr', 'manager', 'developer'],
+            items: [
+                {   
+                    id: 'nav-10.2',
+                    label: t("my-drive"),
+                    href: "/app/account/drive",
+                    icon: <Package />,
+                    exact: false,
+                    users: 'user'
+                },
+                {
+                    id: 'nav-10.4',
+                    label: t("requests"),
+                    href: "/app/account/requests",
+                    icon: <NotebookPen />,
+                    exact: false,
+                    users: 'user'
+                },
+                {   
+                    id: 'nav-10.1',
+                    label: t("projects"),
+                    href: "/app/account/projects",
+                    icon: <FolderKanban />,
+                    exact: false,
+                    users: 'user'
+                },
+                {   
+                    id: 'nav-10.3',
+                    label: t("profile"),
+                    href: "/app/account/profile",
+                    icon: <CircleUser />,
+                    exact: false,
+                    users: 'user'
+                },
+                
+            ]
+        },
+        {
+            label: t("admin"),
+            role: ['admin'],
+            items: [
+                {
+                    id: 'nav-15',
+                    label: t("activity-monitor"),
+                    href: "/app/admin/activity-monitor",
+                    icon: <MonitorSpeaker />
+                },
+                // {
+                //     id: 'nav-17',
+                //     label: "User Management",
+                //     href: "/app/admin/user-management",
+                //     icon: <UserCog />
+                // },
+                {
+                    id: 'nav-18',
+                    label: t("servers-db"),
+                    href: "/app/admin/servers-db",
+                    icon: <Server />
+                },
+                // {
+                //     id: 'nav-18.2',
+                //     label: "Configuration",
+                //     href: "/app/admin/configuration",
+                //     icon: <Columns3Cog />
+                // },
+                {
+                    id: 'nav-19',
+                    label: t("settings"),
+                    href: "/app/admin/settings",
+                    icon: <Settings />
+                },
+                {
+                    id: 'nav-19.1',
+                    label: t("backup"),
+                    href: "/app/admin/backup",
+                    icon: <DatabaseBackup />,
+                },
+                {
+                    id: 'nav-13.5',
+                    label: t("api-docs"),
+                    href: import.meta.env.VITE_DOCS_URL,
+                    icon: <FileCode />,
+                    exact: false,
+                    users: 'admin',
+                    external: true
+                },
+            ]
+        },
+        {
+            label: t("development"),
+            role: ['developer'],
+            items: [
+                {
+                    id: 'nav-133.6',
+                    label: t("tickets"),
+                    href: "/app/development/tickets",
+                    icon: <Ticket />,
+                },
+                {
+                    id: 'nav-133.7',
+                    label: t("toolkit"),
+                    href: "/app/development/toolkit",
+                    icon: <WrenchIcon />,
+                },
+                {
+                    id: 'nav-18.1',
+                    label: t("terminal"),
+                    href: "/app/development/terminal",
+                    icon: <SquareTerminal />
+                },
+                {
+                    id: 'nav-133.8',
+                    label: t("repositories"),
+                    href: "/app/development/repositories",
+                    icon: <FolderTree />,
+                }
+            ]
+        }
+    ]  
     return (
         <>
         <Activity mode={isOpen ? 'visible' : 'hidden'}>
-            <MegaSidebar user={data?.user}/>
+            <MegaSidebar user={data?.user} sidebarNav={sidebarNav}/>
         </Activity>
         <Activity mode={isOpen ? 'hidden' : 'visible'}>
-            <MiniSidebar user={data?.user}/>
+            <MiniSidebar user={data?.user} sidebarNav={sidebarNav}/>
         </Activity>
         </>
     )
 }
 
-function MegaSidebar({ user }){
+function MegaSidebar({ user, sidebarNav }){
 
     const {toggle} = useSidebar(false)
 
     return (
         <div className="w-[18.5rem] h-screen dark:bg-bg-300 bg-white border-e border-border relative flex flex-col">
             <SidebarLogo onToggleSidebar={toggle} />
-            <SidebarNav user={user} />
+            <SidebarNav user={user} sidebarNav={sidebarNav} />
             <SidebarSignOut />
             
         </div>
     )
 }
 
-function MiniSidebar({ user }){
+function MiniSidebar({ user, sidebarNav }){
 
     const {resolvedTheme} = useTheme()
     return (
@@ -89,7 +331,7 @@ function SidebarLogo({ onToggleSidebar }){
     )
 }
 
-function SidebarNav({ user }){
+function SidebarNav({ user, sidebarNav }){
 
 
     return (
@@ -145,7 +387,7 @@ function SidebarNavItem({ item }){
                 "dark:hover:bg-text/10 hover:bg-slate-50 hover:text-text/90 dark:text-text/50 text-text/70 [&_svg]:text-text/60 hover:[&_svg]:text-primary dark:[&.active]:bg-gradient-to-br dark:from-text/20 dark:to-text/30 [&.active]:bg-gradient-to-br from-text to-text/80 dark:[&.active]:text-text [&.active]:text-bg dark:[&.active]:[&_svg]:text-text [&.active]:[&_svg]:text-bg [&.active]:opacity-100"
             )}>
                 {item.icon}
-                <span className="font-medium">{item.label}</span>
+                <span className="font-medium flex-1 truncate">{item.label}</span>
             </div>
             :
             <Link ref={navItemRef} id={item.id} search={item.search} activeOptions={{exact:item.exact}} to={item.href === '/app/notifications' ? '?' : item.href} target={item.external ? '_blank' : '_self'} className={cn(
@@ -153,7 +395,7 @@ function SidebarNavItem({ item }){
                 "dark:hover:bg-text/10 hover:bg-slate-50 hover:text-text/90 dark:text-text/50 text-text/70 [&_svg]:text-text/60 hover:[&_svg]:text-primary dark:[&.active]:bg-gradient-to-br dark:from-text/20 dark:to-text/30 [&.active]:bg-gradient-to-br from-text to-text/80 dark:[&.active]:text-text [&.active]:text-bg dark:[&.active]:[&_svg]:text-text [&.active]:[&_svg]:text-bg [&.active]:opacity-100"
             )}>
                 {item.icon}
-                <span className="font-medium">{item.label}</span>
+                <span className="font-medium flex-1 truncate">{item.label}</span>
             </Link>
         }
         </>
@@ -161,7 +403,7 @@ function SidebarNavItem({ item }){
     )
 }
 
-function MiniSidebarNav({ user }){
+function MiniSidebarNav({ user, sidebarNav }){
 
 
     return (

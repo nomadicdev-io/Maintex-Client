@@ -337,6 +337,11 @@ function HeaderLanguageSwitcher({data}){
 
   const handleLanguageChange = (lng) => {
     i18n.changeLanguage(lng)
+    if(lng === 'ar') {
+      document.dir = 'rtl'
+    } else {
+      document.dir = 'ltr'
+    }
   }
 
   return (

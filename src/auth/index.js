@@ -1,6 +1,7 @@
 import { createAuthClient } from "better-auth/react"
 import { twoFactorClient, adminClient, inferAdditionalFields } from "better-auth/client/plugins"
 import orbit from "../api"
+import i18n from "../lang"
 
 export const authClient = createAuthClient({
     baseURL: import.meta.env.VITE_AUTH_URL,
@@ -34,6 +35,12 @@ export const initAuthStore = async ()=> {
     try{
       const {data} = await authClient.getSession()
       const res = await orbit.get({url: 'context'})
+
+      if(i18n.language === 'ar') {
+        document.dir = 'rtl'
+      } else {
+        document.dir = 'ltr'
+      }
 
       return {
         session: data?.session,
