@@ -173,7 +173,7 @@ function HeaderSettings(){
 
   return (
     <div className="flex items-center gap-2">
-    <Button onClick={()=> router.navigate({to: '/admin/settings'})} size="icon" variant="defaultIcon">
+    <Button onClick={()=> router.navigate({to: '/app/admin/settings'})} size="icon" variant="defaultIcon">
       <Settings/>
     </Button>
     </div>

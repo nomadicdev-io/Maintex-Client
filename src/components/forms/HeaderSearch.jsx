@@ -1,6 +1,7 @@
-import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog'
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/dialog'
 import { Search } from 'lucide-react'
 import { Button } from '../ui/button'
+import { VisuallyHidden } from '@radix-ui/themes/dist/cjs/index.js'
 
 export default function HeaderSearch({isIcon = false}){
 
@@ -24,6 +25,9 @@ export default function HeaderSearch({isIcon = false}){
         }
         </DialogTrigger>
         <DialogContent showCloseButton={false} className="max-w-[27.5rem] min-w-[27.5rem]">
+          <VisuallyHidden>
+            <DialogTitle>Search</DialogTitle>
+          </VisuallyHidden>
             <div className="relative w-full flex items-center justify-center gap-3 p-5">
   
             </div>
