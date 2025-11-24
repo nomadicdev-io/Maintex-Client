@@ -50,12 +50,12 @@ export default defineConfig({
     }
   },
   server: {
-    port: import.meta.env.VITE_PORT,
+    port: 8808,
     open: true,
     host: true,
   },
   preview: {
-    port: import.meta.env.VITE_PORT,
+    port: 8808,
     open: true,
     host: true,
   },
