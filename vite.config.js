@@ -51,12 +51,8 @@ export default defineConfig({
   },
   server: {
     port: 8808,
-    open: true,
-    host: true,
   },
   preview: {
     port: 8808,
-    open: true,
-    host: true,
   },
 })
