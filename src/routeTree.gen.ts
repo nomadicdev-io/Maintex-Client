@@ -11,11 +11,16 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SupportRouteImport } from './routes/_support'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AuthIndexRouteImport } from './routes/_auth/index'
 import { Route as AppAppRouteImport } from './routes/app/_app'
 import { Route as AppAppIndexRouteImport } from './routes/app/_app/index'
 import { Route as AppAppTestRouteImport } from './routes/app/_app/test'
+import { Route as SupportSupportTermsConditionsRouteImport } from './routes/_support/support/terms-conditions'
+import { Route as SupportSupportPrivacyPolicyRouteImport } from './routes/_support/support/privacy-policy'
+import { Route as SupportSupportFaqRouteImport } from './routes/_support/support/faq'
+import { Route as SupportSupportContactUsRouteImport } from './routes/_support/support/contact-us'
 import { Route as AuthAuthVerifyEmailRouteImport } from './routes/_auth/auth/verify-email'
 import { Route as AuthAuthPasswordResetRouteImport } from './routes/_auth/auth/password-reset'
 import { Route as AuthAuthJoinRouteImport } from './routes/_auth/auth/join'
@@ -171,6 +176,10 @@ const AppRoute = AppRouteImport.update({
   path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/_support',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
@@ -225,6 +234,28 @@ const AppAppTestRoute = AppAppTestRouteImport.update({
   id: '/test',
   path: '/test',
   getParentRoute: () => AppAppRoute,
+} as any)
+const SupportSupportTermsConditionsRoute =
+  SupportSupportTermsConditionsRouteImport.update({
+    id: '/support/terms-conditions',
+    path: '/support/terms-conditions',
+    getParentRoute: () => SupportRoute,
+  } as any)
+const SupportSupportPrivacyPolicyRoute =
+  SupportSupportPrivacyPolicyRouteImport.update({
+    id: '/support/privacy-policy',
+    path: '/support/privacy-policy',
+    getParentRoute: () => SupportRoute,
+  } as any)
+const SupportSupportFaqRoute = SupportSupportFaqRouteImport.update({
+  id: '/support/faq',
+  path: '/support/faq',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportSupportContactUsRoute = SupportSupportContactUsRouteImport.update({
+  id: '/support/contact-us',
+  path: '/support/contact-us',
+  getParentRoute: () => SupportRoute,
 } as any)
 const AuthAuthVerifyEmailRoute = AuthAuthVerifyEmailRouteImport.update({
   id: '/auth/verify-email',
@@ -704,6 +735,10 @@ export interface FileRoutesByFullPath {
   '/auth/join': typeof AuthAuthJoinRoute
   '/auth/password-reset': typeof AuthAuthPasswordResetRoute
   '/auth/verify-email': typeof AuthAuthVerifyEmailRoute
+  '/support/contact-us': typeof SupportSupportContactUsRoute
+  '/support/faq': typeof SupportSupportFaqRoute
+  '/support/privacy-policy': typeof SupportSupportPrivacyPolicyRoute
+  '/support/terms-conditions': typeof SupportSupportTermsConditionsRoute
   '/app/test': typeof AppAppTestRoute
   '/app/announcements': typeof AppAppAnnouncementsLazyRoute
   '/app/': typeof AppAppIndexRoute
@@ -765,6 +800,10 @@ export interface FileRoutesByTo {
   '/auth/join': typeof AuthAuthJoinRoute
   '/auth/password-reset': typeof AuthAuthPasswordResetRoute
   '/auth/verify-email': typeof AuthAuthVerifyEmailRoute
+  '/support/contact-us': typeof SupportSupportContactUsRoute
+  '/support/faq': typeof SupportSupportFaqRoute
+  '/support/privacy-policy': typeof SupportSupportPrivacyPolicyRoute
+  '/support/terms-conditions': typeof SupportSupportTermsConditionsRoute
   '/app/test': typeof AppAppTestRoute
   '/app/announcements': typeof AppAppAnnouncementsLazyRoute
   '/app/account': typeof AppAppAccountAccountRouteWithChildren
@@ -819,12 +858,17 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_auth': typeof AuthRouteWithChildren
+  '/_support': typeof SupportRouteWithChildren
   '/app': typeof AppRouteWithChildren
   '/app/_app': typeof AppAppRouteWithChildren
   '/_auth/': typeof AuthIndexRoute
   '/_auth/auth/join': typeof AuthAuthJoinRoute
   '/_auth/auth/password-reset': typeof AuthAuthPasswordResetRoute
   '/_auth/auth/verify-email': typeof AuthAuthVerifyEmailRoute
+  '/_support/support/contact-us': typeof SupportSupportContactUsRoute
+  '/_support/support/faq': typeof SupportSupportFaqRoute
+  '/_support/support/privacy-policy': typeof SupportSupportPrivacyPolicyRoute
+  '/_support/support/terms-conditions': typeof SupportSupportTermsConditionsRoute
   '/app/_app/test': typeof AppAppTestRoute
   '/app/_app/announcements': typeof AppAppAnnouncementsLazyRoute
   '/app/_app/': typeof AppAppIndexRoute
@@ -896,6 +940,10 @@ export interface FileRouteTypes {
     | '/auth/join'
     | '/auth/password-reset'
     | '/auth/verify-email'
+    | '/support/contact-us'
+    | '/support/faq'
+    | '/support/privacy-policy'
+    | '/support/terms-conditions'
     | '/app/test'
     | '/app/announcements'
     | '/app/'
@@ -957,6 +1005,10 @@ export interface FileRouteTypes {
     | '/auth/join'
     | '/auth/password-reset'
     | '/auth/verify-email'
+    | '/support/contact-us'
+    | '/support/faq'
+    | '/support/privacy-policy'
+    | '/support/terms-conditions'
     | '/app/test'
     | '/app/announcements'
     | '/app/account'
@@ -1010,12 +1062,17 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_auth'
+    | '/_support'
     | '/app'
     | '/app/_app'
     | '/_auth/'
     | '/_auth/auth/join'
     | '/_auth/auth/password-reset'
     | '/_auth/auth/verify-email'
+    | '/_support/support/contact-us'
+    | '/_support/support/faq'
+    | '/_support/support/privacy-policy'
+    | '/_support/support/terms-conditions'
     | '/app/_app/test'
     | '/app/_app/announcements'
     | '/app/_app/'
@@ -1082,6 +1139,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
+  SupportRoute: typeof SupportRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
 }
 
@@ -1092,6 +1150,13 @@ declare module '@tanstack/react-router' {
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_support': {
+      id: '/_support'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof SupportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth': {
@@ -1170,6 +1235,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/test'
       preLoaderRoute: typeof AppAppTestRouteImport
       parentRoute: typeof AppAppRoute
+    }
+    '/_support/support/terms-conditions': {
+      id: '/_support/support/terms-conditions'
+      path: '/support/terms-conditions'
+      fullPath: '/support/terms-conditions'
+      preLoaderRoute: typeof SupportSupportTermsConditionsRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/_support/support/privacy-policy': {
+      id: '/_support/support/privacy-policy'
+      path: '/support/privacy-policy'
+      fullPath: '/support/privacy-policy'
+      preLoaderRoute: typeof SupportSupportPrivacyPolicyRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/_support/support/faq': {
+      id: '/_support/support/faq'
+      path: '/support/faq'
+      fullPath: '/support/faq'
+      preLoaderRoute: typeof SupportSupportFaqRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/_support/support/contact-us': {
+      id: '/_support/support/contact-us'
+      path: '/support/contact-us'
+      fullPath: '/support/contact-us'
+      preLoaderRoute: typeof SupportSupportContactUsRouteImport
+      parentRoute: typeof SupportRoute
     }
     '/_auth/auth/verify-email': {
       id: '/_auth/auth/verify-email'
@@ -1589,6 +1682,23 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
+interface SupportRouteChildren {
+  SupportSupportContactUsRoute: typeof SupportSupportContactUsRoute
+  SupportSupportFaqRoute: typeof SupportSupportFaqRoute
+  SupportSupportPrivacyPolicyRoute: typeof SupportSupportPrivacyPolicyRoute
+  SupportSupportTermsConditionsRoute: typeof SupportSupportTermsConditionsRoute
+}
+
+const SupportRouteChildren: SupportRouteChildren = {
+  SupportSupportContactUsRoute: SupportSupportContactUsRoute,
+  SupportSupportFaqRoute: SupportSupportFaqRoute,
+  SupportSupportPrivacyPolicyRoute: SupportSupportPrivacyPolicyRoute,
+  SupportSupportTermsConditionsRoute: SupportSupportTermsConditionsRoute,
+}
+
+const SupportRouteWithChildren =
+  SupportRoute._addFileChildren(SupportRouteChildren)
+
 interface AppAppAccountAccountProfileProfileRouteChildren {
   AppAppAccountAccountProfileProfileIndexLazyRoute: typeof AppAppAccountAccountProfileProfileIndexLazyRoute
 }
@@ -1939,6 +2049,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
+  SupportRoute: SupportRouteWithChildren,
   AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport

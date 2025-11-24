@@ -43,13 +43,6 @@ export default defineConfig({
       '@api': path.resolve(__dirname, "./src/api"),
     },
   },
-  optimizeDeps: {
-    include: ['ajv', 'ajv-formats'],
-    exclude: ['ajv-draft-04'],
-    esbuildOptions: {
-      resolveExtensions: ['.js', '.jsx', '.ts', '.tsx'],
-    }
-  },
   build: {
     outDir: 'dist',
     commonjsOptions: {
