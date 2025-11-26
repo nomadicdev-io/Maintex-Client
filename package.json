@@ -50,6 +50,7 @@
     "@radix-ui/react-visually-hidden": "^1.2.4",
     "@radix-ui/themes": "^3.2.1",
     "@tailwindcss/vite": "^4.1.17",
+<<<<<<< HEAD
     "@tanstack/react-form": "^1.26.0",
     "@tanstack/react-query": "^5.90.11",
     "@tanstack/react-query-devtools": "^5.91.1",
@@ -59,6 +60,17 @@
     "autoprefixer": "^10.4.22",
     "axios": "^1.13.2",
     "better-auth": "^1.4.2",
+=======
+    "@tanstack/react-form": "^1.25.0",
+    "@tanstack/react-query": "^5.90.10",
+    "@tanstack/react-query-devtools": "^5.91.0",
+    "@tanstack/react-router": "^1.139.3",
+    "@tanstack/react-router-devtools": "^1.139.3",
+    "@tomtom-international/web-sdk-maps": "^6.25.0",
+    "autoprefixer": "^10.4.22",
+    "axios": "^1.13.2",
+    "better-auth": "^1.4.1",
+>>>>>>> fe159b007cc0adaa7f3a7098b7e236e3847c2466
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
@@ -101,8 +113,13 @@
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@tailwindcss/postcss": "^4.1.17",
+<<<<<<< HEAD
     "@tanstack/router-plugin": "^1.139.6",
     "@types/react": "^19.2.7",
+=======
+    "@tanstack/router-plugin": "^1.139.3",
+    "@types/react": "^19.2.6",
+>>>>>>> fe159b007cc0adaa7f3a7098b7e236e3847c2466
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "eslint": "^9.39.1",

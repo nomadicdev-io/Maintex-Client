@@ -4,10 +4,10 @@ FROM oven/bun:latest as build
 WORKDIR /app
 
 # Copy package files
-COPY package.json bun.lockb* ./
+COPY package.json bun.lock* ./
 
 # Install dependencies
-RUN bun install --frozen-lockfile --production
+RUN bun install --frozen-lockfile 
 
 # Copy the rest of the application code
 COPY . .

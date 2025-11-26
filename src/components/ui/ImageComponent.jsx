@@ -23,7 +23,7 @@ const ImageComponent = memo(({className, alt, imageKey, bucket, isStatic = false
     return (
         <div className={`relative w-full h-full ${className}`}>
             <LazyLoadImage
-                alt={alt}
+            alt={alt}
                 height={'100%'}
                 src={image} 
                 width={'100%'} 
