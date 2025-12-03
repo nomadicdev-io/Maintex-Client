@@ -14,6 +14,7 @@ import FetchError from '../components/fetch/FetchError'
 import { setMetaData } from '../lib/setMetaData'
 import i18n from '@/lang'
 import DevTools from '../components/ui/DevTools'
+import { HotkeysProvider } from 'react-hotkeys-hook'
 
 export const Route = createRootRouteWithContext()({
   component: RootLayoutComponent,
@@ -72,7 +73,7 @@ function RootLayoutComponent() {
   }, [])
 
   return (
-    <>
+    <HotkeysProvider initiallyActiveScopes={['settings']}>
       <HeadContent />
       <SocketProvider url={import.meta.env.VITE_NODE_ENV === 'development' ? 'ws://localhost:8880/app/socket' : 'wss://api.maintex.pro/app/socket'}>
         <RootLayout>
@@ -83,6 +84,6 @@ function RootLayoutComponent() {
       <Toaster offset={'5rem'} />
       {import.meta.env.VITE_DEBUG === 'true' && <DevTools /> }
       </SocketProvider>
-    </>
+      </HotkeysProvider>
   )
 }

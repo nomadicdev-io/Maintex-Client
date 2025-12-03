@@ -10,7 +10,7 @@ export const Route = createLazyFileRoute(
 
 function RouteComponent() {
   return (
-    <div className='relative w-full flex flex-col'>
+    <div className='relative w-full flex flex-col [view-transition-name:main-content]'>
       <DashboardBanner title={'Role Management'} description={'Role management settings for the application. You can change the role management here.'} />
     </div>
   )

@@ -55,7 +55,7 @@ function RouteComponent() {
 
   return (
     <Activity mode={isFetched ? 'visible' : 'hidden'}>
-      <div className='relative w-full flex flex-col'>
+      <div className='relative w-full flex flex-col [view-transition-name:main-content]'>
         <DashboardBanner title={'General Settings'} description={'General settings for the application. You can change the settings here.'} />
         <div className='relative w-full flex flex-col'>
           <GeneralSettingsForm data={data} onRefetch={refetch} />

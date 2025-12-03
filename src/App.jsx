@@ -18,7 +18,7 @@ const router = createRouter({
     },
     scrollRestoration: true,
     defaultPendingComponent: PageLoader,
-    defaultErrorComponent: PageNotFound
+    // defaultErrorComponent: PageNotFound
 })
 
 export default function App() {

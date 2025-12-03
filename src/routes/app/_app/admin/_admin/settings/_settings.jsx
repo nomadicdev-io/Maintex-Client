@@ -155,7 +155,7 @@ function SettingsSidebar() {
 
 function SidebarNavItem({ item }){
   return (
-    <Link to={item.href} activeOptions={{exact: true}} className="relative w-full h-auto py-2 px-4 text-text/40 hover:text-text/90 font-medium text-base [&.active]:text-text/90">
+    <Link to={item.href} activeOptions={{exact: true}} viewTransition={{ types: ['slide-right'] }} className="relative w-full h-auto py-2 px-4 text-text/40 hover:text-text/90 font-medium text-base [&.active]:text-text/90">
       {item.label}
     </Link>
   )
