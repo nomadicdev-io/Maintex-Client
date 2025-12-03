@@ -3,6 +3,7 @@ import * as SelectPrimitive from "@radix-ui/react-select"
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { useTranslation } from "react-i18next"
 
 function Select({
   ...props
@@ -32,6 +33,9 @@ function SelectTrigger({
   variant = "default",
   ...props
 }) {
+
+  const {i18n} = useTranslation()
+
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
@@ -43,7 +47,9 @@ function SelectTrigger({
         className,
         variant === "shade" ?  "bg-text/5 border border-text/15 text-text/75 hover:bg-text/20 hover:text-text": null,
       )}
-      {...props}>
+      {...props}
+      dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+      >
       {children}
       {hideDropdownIcon ? null : <SelectPrimitive.Icon asChild>
         <ChevronDownIcon className="size-4 opacity-50" />
@@ -58,6 +64,9 @@ function SelectContent({
   position = "popper",
   ...props
 }) {
+
+  const {i18n} = useTranslation()
+
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
@@ -69,7 +78,9 @@ function SelectContent({
           className
         )}
         position={position}
-        {...props}>
+        {...props}
+        dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+        >
         <SelectScrollUpButton />
         <SelectPrimitive.Viewport
           className={cn("p-1", position === "popper" &&
@@ -103,11 +114,12 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 cursor-pointer hover:bg-bg-100",
+        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full items-center gap-2 rounded-sm py-1.5 pe-8 ps-2 text-sm outline-hidden select-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 cursor-pointer hover:bg-bg-100",
         className
       )}
-      {...props}>
-      <span className="absolute right-2 flex size-3.5 items-center justify-center">
+      {...props}
+      >
+      <span className="absolute right-2 rtl:left-2 rtl:right-auto flex size-3.5 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
           <CheckIcon className="size-4 text-text" />
         </SelectPrimitive.ItemIndicator>

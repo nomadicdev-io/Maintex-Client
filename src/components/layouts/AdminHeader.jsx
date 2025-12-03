@@ -12,18 +12,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { BarLoader } from "react-spinners";
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet"
-import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@components/ui/tooltip"
-import { atom, useAtom, useSetAtom } from "jotai";
+import { atom, useSetAtom } from "jotai";
 import { RxCaretSort } from "react-icons/rx";
 import { useRouter } from "@tanstack/react-router";
 import { authClient } from "@/auth";
@@ -45,6 +38,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useTranslation } from "react-i18next";
+import DashboardNotification from "../sections/DashboardNotification";
 
 export const notificationSheetAtom = atom(false)
 
@@ -95,7 +89,7 @@ export default function AdminHeader({context}) {
         </div>
       </div>
     </header>
-    <NotificationSheet />
+    <DashboardNotification atom={notificationSheetAtom} />
     </>
   )
 }
@@ -293,24 +287,6 @@ function HeaderUser(){
   )
 }
 
-function NotificationSheet(){
-
-  const [open, setOpen] = useAtom(notificationSheetAtom)
-
-  return (
-    <Sheet open={open} onOpenChange={setOpen}>
-    <SheetContent>
-      <SheetHeader>
-        <SheetTitle>Are you absolutely sure?</SheetTitle>
-        <SheetDescription>
-          This action cannot be undone. This will permanently delete your account
-          and remove your data from our servers.
-        </SheetDescription>
-      </SheetHeader>
-    </SheetContent>
-  </Sheet>
-  )
-}
 
 
 function HeaderAIChatBot(){
@@ -336,6 +312,9 @@ function HeaderLanguageSwitcher({data}){
   const { i18n } = useTranslation()
 
   const handleLanguageChange = (lng) => {
+
+    if(i18n.language === lng) return
+    
     i18n.changeLanguage(lng)
     if(lng === 'ar') {
       document.dir = 'rtl'

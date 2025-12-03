@@ -2,17 +2,20 @@ import * as React from "react"
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
 
 import { cn } from "@/lib/utils"
+import { useTranslation } from "react-i18next"
 
 function ScrollArea({
   className,
   children,
   ...props
 }: React.ComponentProps<typeof ScrollAreaPrimitive.Root>) {
+  const {i18n} = useTranslation()
   return (
     <ScrollAreaPrimitive.Root
       data-slot="scroll-area"
       className={cn("relative", className)}
       {...props}
+      dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
     >
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"

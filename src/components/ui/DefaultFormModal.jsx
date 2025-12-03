@@ -39,7 +39,7 @@ export default function DefaultFormModal({
                     title ? <DialogTitle>{title}</DialogTitle> : null
                 }
                 {
-                    description ? <DialogDescription className="text-text/65">{description}</DialogDescription> : null
+                    description ? <DialogDescription className="text-text/65 text-start">{description}</DialogDescription> : null
                 }
             </DialogHeader>
             : null

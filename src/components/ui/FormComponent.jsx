@@ -1,8 +1,8 @@
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useCallback, useEffect, useId, useRef, useState } from "react"
+import { useCallback, useId, useRef, useState } from "react"
 import Dropzone from 'react-dropzone'
-import { FileIcon, FileTextIcon, HardDriveUpload, ImagePlus, ImageUp, XIcon } from "lucide-react"
+import { FileSpreadsheet, HardDriveUpload, ImagePlus, ImageUp, XIcon } from "lucide-react"
 import {
     Select,
     SelectContent,
@@ -108,7 +108,7 @@ export const InputSelect = ({
             <Label htmlFor={id} className={cn("mb-2", classNames?.label)}>{label}</Label>
             <div className={cn("relative w-full flex flex-col", classNames?.wrapper)}>
                 <Select value={value} onValueChange={onChange} disabled={disabled}>
-                    <SelectTrigger className={cn("w-full", classNames?.input)} error={error}>
+                    <SelectTrigger className={cn("w-full", classNames?.input, startContent ? 'ps-9' : null)} error={error}>
                         <SelectValue value={value} placeholder={placeholder} />
                     </SelectTrigger>
                     <SelectContent>
@@ -214,7 +214,23 @@ export function InputOTPPattern({onChange, value, isError, onComplete}) {
     )
 }
 
-export const TextareaField = ({label, name, placeholder, value, onChange, error, isError, readOnly = false, onBlur, disabled = false, autoFocus = false, className, classNames, startContent, endContent, ...props}) => {
+export const TextareaField = ({
+    label, 
+    name, 
+    placeholder, 
+    value, 
+    onChange,
+    error, 
+    isError, 
+    readOnly = false, 
+    onBlur, 
+    disabled = false, 
+    autoFocus = false, 
+    className, 
+    classNames, 
+    startContent, 
+    endContent, 
+    ...props}) => {
     
     const id = useId()
     
@@ -400,16 +416,25 @@ export const AttachmentUploader = ({
     accept = 'image/*', 
     maxFileSize = 1024 * 1024 * 5,
     classNames,
-    isSingle = false,
+    multiple = false,
+    isSingle=false,
     bucket = 'tickets',
     isStatic = false,
+    maximumFiles = 10,
 }) => {
     const id = useId()
     const fileInputRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false)
 
+
     const handleFileChange = async (e) => {
+
         const files = e.target.files
+        
+        if(value.length >= maximumFiles) {
+            toast.error('You can only upload up to 10 files')
+            return false
+        }
 
         if(isStatic) {
             return true
@@ -449,6 +474,7 @@ export const AttachmentUploader = ({
 
                 const res = await orbit.upload.s3Upload({data: formData})
 
+
                 if(res?.status){
                     const list = [...value, res.data]
                     onChange(list)
@@ -487,10 +513,10 @@ export const AttachmentUploader = ({
                         )}>
                             {
                                 item?.type.includes('image') ? (
-                                    <ImageComponent src={item.key} bucket={item.bucket} className={cn("w-full h-full object-contain", classNames?.image)} />
+                                    <ImageComponent imageKey={item.key} bucket={item.bucket} className={cn("w-full h-full object-contain", classNames?.image)} />
                                 ) : (
-                                    <div className="w-full h-full flex items-center justify-center">
-                                        <FileTextIcon size={34} className="text-text/60" />
+                                    <div className="w-full h-full flex items-center justify-center bg-text/5">
+                                        <FileSpreadsheet size={34} className="text-text/60" />
                                     </div>
                                 )
                             }
@@ -500,22 +526,41 @@ export const AttachmentUploader = ({
                         </div>
                     )) : null
                 }
+
                 {
-                    (isSingle && value?.length === 0) ? (
+                    isSingle ?
+                        (
+                            value.length === 0 ?
+                            <div className={cn("w-full h-auto aspect-square rounded-lg border border-dashed dark:border-border-300 border-border-600/90 flex items-center justify-center group cursor-pointer transition-all duration-300 hover:border-primary/50 hover:bg-text/5 relative overflow-hidden", 
+                                isError ? "border-danger/75" : null,
+                                classNames?.file,
+                            )}>
+                                <ImagePlus size={26} className={cn("text-text/60", classNames?.icon)} />
+                                <input multiple={multiple} ref={fileInputRef} type="file" name={name} id={id} onChange={handleFileChange} disabled={disabled} readOnly={readOnly} className={cn("absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full", classNames?.input)} accept={accept} />
+            
+                                {isLoading ? <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-text/2 backdrop-blur-md z-10">
+                                    <Spinner className="size-8 text-text/80 animate-spin" />
+                                </div>
+                                : null}
+                            </div>
+                            : null
+                        )
+                    : (
                         <div className={cn("w-full h-auto aspect-square rounded-lg border border-dashed dark:border-border-300 border-border-600/90 flex items-center justify-center group cursor-pointer transition-all duration-300 hover:border-primary/50 hover:bg-text/5 relative overflow-hidden", 
                             isError ? "border-danger/75" : null,
                             classNames?.file,
                         )}>
                             <ImagePlus size={26} className={cn("text-text/60", classNames?.icon)} />
-                            <input ref={fileInputRef} type="file" name={name} id={id} onChange={handleFileChange} disabled={disabled} readOnly={readOnly} className={cn("absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full", classNames?.input)} accept={accept} />
+                            <input multiple={multiple} ref={fileInputRef} type="file" name={name} id={id} onChange={handleFileChange} disabled={disabled} readOnly={readOnly} className={cn("absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full", classNames?.input)} accept={accept} />
         
                             {isLoading ? <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-text/2 backdrop-blur-md z-10">
                                 <Spinner className="size-8 text-text/80 animate-spin" />
                             </div>
                             : null}
                         </div>
-                    ) : null
+                    )
                 }
+      
             </div>
             {isError ? <p className="text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full">{error}</p> : null}
         </div>

@@ -22,7 +22,7 @@ function SheetClose({
   return <SheetPrimitive.Close data-slot="sheet-close" {...props} />;
 }
 
-function SheetPortal({
+function SheetPortal({ 
   ...props
 }) {
   return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />;
@@ -69,10 +69,12 @@ function SheetContent({
         {...props}>
         {children}
         <SheetPrimitive.Close
-          className="ring-offset-background focus:ring-ring data-[state=open]:bg-bg-300 absolute top-4 right-1 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none">
-          <XIcon className="size-4" />
-          <span className="sr-only">Close</span>
-        </SheetPrimitive.Close>
+            data-slot="dialog-close"
+            className="ring-offset-background focus:ring-ring data-[state=open]:bg-text/10 bg-text/10 data-[state=open]:text-muted-foreground absolute top-3 right-3 rounded-lg opacity-70 transition-opacity hover:opacity-100 hover:bg-text/20 p-1 focus:ring focus:ring-text/20 focus:ring-offset focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 cursor-pointer border border-text/5 rtl:left-3 rtl:right-auto"
+          >
+            <XIcon />
+            <span className="sr-only">Close</span>
+          </SheetPrimitive.Close>
       </SheetPrimitive.Content>
     </SheetPortal>
   );
@@ -85,7 +87,7 @@ function SheetHeader({
   return (
     <div
       data-slot="sheet-header"
-      className={cn("flex flex-col gap-1.5 p-4", className)}
+      className={cn("flex flex-col gap-2 p-5 border-b border-border text-center sm:text-left", className)}
       {...props} />
   );
 }
@@ -108,9 +110,10 @@ function SheetTitle({
 }) {
   return (
     <SheetPrimitive.Title
-      data-slot="sheet-title"
-      className={cn("text-foreground font-semibold", className)}
-      {...props} />
+    data-slot="sheet-title"
+    className={cn("text-2xl leading-none font-semibold flex flex-row items-center gap-2", className)}
+    {...props}
+  />
   );
 }
 
@@ -121,8 +124,9 @@ function SheetDescription({
   return (
     <SheetPrimitive.Description
       data-slot="sheet-description"
-      className={cn("text-muted-foreground text-sm", className)}
-      {...props} />
+      className={cn("text-muted-foreground text-sm text-text/75 mt-1", className)}
+      {...props}
+      />
   );
 }
 
