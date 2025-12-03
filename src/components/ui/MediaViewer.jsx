@@ -7,24 +7,29 @@ import {
 } from "@/components/ui/dialog"
 import { XIcon } from "lucide-react"
 import { getStaticImage, getS3Image } from "@/lib/getImage"
-import {  useMemo } from "react"
+import {  useMemo, useState } from "react"
 import ImageComponent from "./ImageComponent"
 import DocViewer, { DocViewerRenderers, PDFRenderer, PNGRenderer } from "react-doc-viewer";
 import "./MediaViewer.scss"
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import { ScrollArea } from "@/components/ui/scroll-area"
+
+pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 export function MediaViewer({title, src, open, onOpenChange, showCloseButton}) {
+  console.log('SRC', src)
 
-
-  const stream = useMemo(()=> {
+  const url = useMemo(()=> {
     let url = null
     if(src?.isStatic) {
         url =  getStaticImage(src?.key)
     }else{
         url = getS3Image(src?.key, src?.bucket)
     }
-    console.log('URL', url)
     return url
-  }, [src?.key, src?.bucket])
+  }, [src?.key])
 
 
   return (
@@ -51,12 +56,12 @@ export function MediaViewer({title, src, open, onOpenChange, showCloseButton}) {
                     ) : 
                     
                     src?.type?.includes('pdf') ? (
-                      <iframe src={stream} className="w-full h-full"  />
+                      <PDFViewer file={url} />
                     ):(
                       (
                         <DocViewer
                           pluginRenderers={[DocViewerRenderers, PDFRenderer, PNGRenderer]}
-                          documents={[{uri: stream}]}
+                          documents={[{uri: url}]}
                           className="media-viewer-doc"
                         />
                       )
@@ -68,4 +73,26 @@ export function MediaViewer({title, src, open, onOpenChange, showCloseButton}) {
         </DialogContent>
     </Dialog>
   )
+}
+
+function PDFViewer({file}) {
+  const [numPages, setNumPages] = useState(null);
+  
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
+
+  return (
+    <ScrollArea className="w-auto h-full">
+      <Document
+        file={file}
+        className="w-auto h-full"
+        onLoadSuccess={onDocumentLoadSuccess}
+      >
+        {Array.from(new Array(numPages), (el, index) => (
+          <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+        ))}
+      </Document>
+    </ScrollArea>
+  );
 }
