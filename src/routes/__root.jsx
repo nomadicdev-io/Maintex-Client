@@ -13,33 +13,60 @@ import orbit from '../api'
 import { ErrorBoundary } from "react-error-boundary";
 import FetchError from '../components/fetch/FetchError'
 import { setMetaData } from '../lib/setMetaData'
+import { authClient } from '../auth'
+import i18n from '../lang'
 
 export const Route = createRootRouteWithContext()({
   component: RootLayoutComponent,
   notFoundComponent: PageNotFound,
   pendingComponent: PageLoader,
-  beforeLoad:initAuthStore,
-  loader: async ({context})=> {
+  beforeLoad: async ()=> {
 
-    context.queryClient.ensureQueryData({
-      queryKey: ['context'],
-      queryFn: async () => {
-        const res = await orbit.get({url: 'context'})
-        console.log('CONTEXT', res)
-        if(res.status){
-          return res.data
-        }else{
-          return undefined
-        }
-      },
-    })
+    console.log(
+      '%cDeveloped By, Quadbits Lab https://lab.quadbits.io' ,
+      'background: #333; text-align: center; color: #FAFAFA; font-weight: bold; font-size: 14px; padding:8px; border-radius: 4px 0 0 4px; border: 1px solid #cacaca',
+    )
 
-      console.log(
-        '%cDeveloped By, Quadbits Lab https://lab.quadbits.io' ,
-        'background: #333; text-align: center; color: #FAFAFA; font-weight: bold; font-size: 14px; padding:8px; border-radius: 4px 0 0 4px; border: 1px solid #cacaca',
-      )
+    const {data} = await authClient.getSession()
 
+    const res = await orbit.get({url: 'context'})
+
+    if(i18n.language === 'ar') {
+      document.dir = 'rtl'
+    } else {
+      document.dir = 'ltr'
+    }
+
+    const resData = {
+      session: data?.session || null,
+      token: data?.session?.token || null,
+      user: data?.user || null,
+      isAuthenticated: data?.session?.token ? true : false,
+      context: res?.data || null
+    }
+
+    console.log('CONTEXT', resData)
+
+    return resData
   },
+  // loader: async ({context})=> {
+  //   const {data} = await authClient.getSession()
+  //   context.queryClient.ensureQueryData({
+  //     queryKey: ['context'],
+  //     queryFn: async () => {
+  //       const res = await orbit.get({url: 'context'})
+  //       console.log('CONTEXT', res)
+  //       if(res.status){
+  //         return res.data
+  //       }else{
+  //         return undefined
+  //       }
+  //     },
+  //   })
+
+      
+
+  // },
   head: ({loaderData}) => (setMetaData(loaderData))
 })
 
