@@ -19,8 +19,6 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 export function MediaViewer({title, src, open, onOpenChange, showCloseButton}) {
-  console.log('SRC', src)
-
   const url = useMemo(()=> {
     let url = null
     if(src?.isStatic) {
@@ -36,7 +34,7 @@ export function MediaViewer({title, src, open, onOpenChange, showCloseButton}) {
     <Dialog open={open} onOpenChange={onOpenChange} >
 
        
-        <DialogContent className="w-screem h-screen max-w-screen min-w-screen dark:bg-transparent bg-transparent" showCloseButton={showCloseButton}>
+        <DialogContent aria-describedby="media-viewer" className="w-screem h-screen max-w-screen min-w-screen dark:bg-transparent bg-transparent" showCloseButton={showCloseButton}>
             <div className="fixed top-0 p-4 right-0 flex items-center gap-2 z-10">
             <Button type="button" size="iconSm" variant="shade" onClick={onOpenChange}>
                 <XIcon size={14} />

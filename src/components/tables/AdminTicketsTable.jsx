@@ -182,7 +182,7 @@ function DetailSheet({data}) {
 
     return (
         <Sheet open={isOpen} onOpenChange={handleChange}>
-        <SheetContent>
+        <SheetContent aria-describedby="detail-sheet">
           <SheetHeader className="pe-12 space-y-1">
             <SheetTitle>{currentData?.subject}</SheetTitle>
             <Badge variant="outline">{currentData?._id}</Badge>
