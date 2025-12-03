@@ -21,7 +21,7 @@ export default function DevTools() {
     
   return (
     <>
-    <div className="fixed bottom-0 left-[50%] gap-2 translate-x-[-50%] p-3 bg-black/50 z-99999 flex items-center justify-center">
+    <div className="fixed bottom-0 left-0 gap-2 p-3 bg-black/50 z-99999 flex items-center justify-center">
         <Button variant="shade" size={'sm'} onClick={handleRouterOpen}>
             <Route />
             <span>{t('router-devtools')}</span>

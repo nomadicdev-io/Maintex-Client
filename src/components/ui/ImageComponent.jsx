@@ -7,8 +7,9 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useTheme } from 'next-themes'
 import { ImageOff } from 'lucide-react';
 import { getS3Image, getStaticImage } from '../../lib/getImage';
+import { cn } from '@/lib/utils'
 
-const ImageComponent = memo(({className, alt, imageKey, bucket, isStatic = false}) => {
+const ImageComponent = memo(({className, alt, imageKey, bucket, isStatic = false, classNames}) => {
 
     const {resolvedTheme} = useTheme()
 
@@ -27,7 +28,7 @@ const ImageComponent = memo(({className, alt, imageKey, bucket, isStatic = false
                 height={'100%'}
                 src={image} 
                 width={'100%'} 
-                className='w-full h-full object-cover'
+                className={cn('w-full h-full object-cover', classNames?.image)}
                 wrapperClassName={'w-full h-full object-cover'}
                 effect={'blur'}
                 wrapperProps={{

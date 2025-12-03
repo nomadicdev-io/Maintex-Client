@@ -117,6 +117,7 @@
         "common-page-error-title": "Мы извиняемся за прерывание",
         "common-page-error-description": "Мы не можем обработать ваш запрос.",
         "router-devtools": "DevTools Router",
-        "query-devtools": "DevTools Query"
+        "query-devtools": "DevTools Query",
+        "close": "Закрыть"
     }
 }

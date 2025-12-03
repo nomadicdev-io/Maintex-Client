@@ -117,6 +117,7 @@
         "common-page-error-title": "Siamo spiacenti per l'interruzione",
         "common-page-error-description": "Non possiamo processare la tua richiesta.",
         "router-devtools": "DevTools di Router",
-        "query-devtools": "DevTools di Query"
+        "query-devtools": "DevTools di Query",
+        "close": "Chiudere" 
     }
 }

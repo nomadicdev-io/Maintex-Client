@@ -1,0 +1,21 @@
+.media-viewer-doc {
+    background: var(--color-bg-300);
+    color: var(--color-text);
+    height: 100%;
+    width: 75%;
+
+    #header-bar {
+        background: var(--color-bg-300);
+    }
+    
+    #proxy-renderer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #loading-renderer svg path {
+        fill: var(--color-text-300);
+    }
+}
+

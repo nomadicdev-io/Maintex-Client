@@ -117,6 +117,7 @@
         "common-page-error-title": "نأسف للإغاثة",
         "common-page-error-description": "شيء ما لا يعمل على جانبنا. نحن نعمل على إصلاحه.",
         "router-devtools": "أدوات المسار",
-        "query-devtools": "أدوات الاستعلام"
+        "query-devtools": "أدوات الاستعلام",
+        "close": "إغلاق"
     }
 }

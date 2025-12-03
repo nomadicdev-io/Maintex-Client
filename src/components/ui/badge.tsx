@@ -22,6 +22,11 @@ const badgeVariants = cva(
         amber: "border-transparent bg-amber-500/10 text-text [a&]:hover:bg-amber-500/20",
         red: "border-transparent bg-red-500/10 text-text [a&]:hover:bg-red-500/20",
       },
+      size: {
+        default: "text-xs",
+        sm: "text-xs",
+        lg: "text-base px-3 py-2",
+      },
     },
     defaultVariants: {
       variant: "default",
@@ -41,7 +46,7 @@ function Badge({
   return (
     <Comp
       data-slot="badge"
-      className={cn(badgeVariants({ variant }), className)}
+      className={cn(badgeVariants({ variant }), className, props.size === 'lg' ? 'text-base px-3 py-1' : props.size === 'sm' ? 'text-xs' : 'text-xs')}
       {...props}
     />
   )

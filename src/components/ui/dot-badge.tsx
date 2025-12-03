@@ -5,14 +5,20 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const dotBadgeVariants = cva(
-  "inline-flex items-center justify-start rounded-md border px-2 py-1 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden border-border-600 bg-bg-100/50 text-text",
+  "inline-flex items-center justify-start rounded-md border px-2 py-1 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden border-border-600 bg-bg-100/50 text-text/80",
   {
     variants: {
       variant: {
        
       },
+      size: {
+        default: "text-xs",
+        sm: "text-xs",
+        lg: "text-base px-3 py-2",
+      },
     },
     defaultVariants: {
+      size: "default",
     },
   }
 )
@@ -29,11 +35,11 @@ function DotBadge({
   return (
     <Comp
       data-slot="dot-badge"
-      className={cn(dotBadgeVariants({ variant }), className)}
+      className={cn(dotBadgeVariants({ variant }), className, props.size === 'lg' ? 'text-base px-3 py-1' : props.size === 'sm' ? 'text-xs' : 'text-xs')}
       {...props}
     >
         <i className={cn([
-            "w-2 h-2 rounded-full bg-text me-1",
+            "w-2.5 h-2.5 rounded-full bg-text me-1",
             variant === "teal" ? "bg-teal-500" : variant === "sky" ? "bg-sky-500" : variant === "amber" ? "bg-amber-500" : variant === "red" ? "bg-red-500" : variant === "blue" ? "bg-blue-500" : variant === "cyan" ? "bg-cyan-500" : "bg-text",
         ])}></i>
         {props.children}
