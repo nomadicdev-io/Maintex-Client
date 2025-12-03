@@ -115,6 +115,8 @@
         "can-not-fetch-data-please-try-again": "لا يمكن الحصول على البيانات. يرجى المحاولة مرة أخرى.",
         "ops-something-went-wrong": "عفواً, حدث خطأ ما.",
         "common-page-error-title": "نأسف للإغاثة",
-        "common-page-error-description": "شيء ما لا يعمل على جانبنا. نحن نعمل على إصلاحه."
+        "common-page-error-description": "شيء ما لا يعمل على جانبنا. نحن نعمل على إصلاحه.",
+        "router-devtools": "أدوات المسار",
+        "query-devtools": "أدوات الاستعلام"
     }
 }

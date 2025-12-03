@@ -115,6 +115,8 @@
         "can-not-fetch-data-please-try-again": "No se puede obtener los datos. Por favor, inténtelo de nuevo.",
         "ops-something-went-wrong": "Ops!, Algo salió mal.",
         "common-page-error-title": "Lo sentimos por la interrupción",
-        "common-page-error-description": "Algo no está funcionando en nuestro lado. Ya estamos trabajando para solucionarlo."
+        "common-page-error-description": "Algo no está funcionando en nuestro lado. Ya estamos trabajando para solucionarlo.",
+        "router-devtools": "DevTools de Router",
+        "query-devtools": "DevTools de Query"
     }
 }

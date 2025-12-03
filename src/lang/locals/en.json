@@ -115,6 +115,8 @@
         "can-not-fetch-data-please-try-again": "Can't fetch data. Please try again.",
         "ops-something-went-wrong": "Ops!, Something went wrong",
         "common-page-error-title": "We're sorry for the interruption",
-        "common-page-error-description": " Something's not working on our end. We're already working to fix it."
+        "common-page-error-description": " Something's not working on our end. We're already working to fix it.",
+        "router-devtools": "Router DevTools",
+        "query-devtools": "Query DevTools"
     }
 }

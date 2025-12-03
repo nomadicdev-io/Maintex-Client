@@ -13,6 +13,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import FetchError from '../components/fetch/FetchError'
 import { setMetaData } from '../lib/setMetaData'
 import i18n from '@/lang'
+import DevTools from '../components/ui/DevTools'
 
 export const Route = createRootRouteWithContext()({
   component: RootLayoutComponent,
@@ -77,17 +78,10 @@ function RootLayoutComponent() {
         <RootLayout>
           <ErrorBoundary FallbackComponent={(props) => <FetchError {...props} context={loaderData}/>} onError={(error) => {console.log(error)}}>
             <Outlet />
-            {
-              import.meta.env.VITE_DEBUG === 'true' && (
-                <>
-                  <TanStackRouterDevtools />
-                  <ReactQueryDevtools /> 
-                </>
-              )
-            }
           </ErrorBoundary>
         </RootLayout>
       <Toaster offset={'5rem'} />
+      {import.meta.env.VITE_DEBUG === 'true' && <DevTools /> }
       </SocketProvider>
     </>
   )

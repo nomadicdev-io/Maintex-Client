@@ -115,6 +115,8 @@
         "can-not-fetch-data-please-try-again": "Impossibile ottenere i dati. Per favore, riprova.",
         "ops-something-went-wrong": "Ops!, Qualcosa è andato storto.",
         "common-page-error-title": "Siamo spiacenti per l'interruzione",
-        "common-page-error-description": "Non possiamo processare la tua richiesta."
+        "common-page-error-description": "Non possiamo processare la tua richiesta.",
+        "router-devtools": "DevTools di Router",
+        "query-devtools": "DevTools di Query"
     }
 }
