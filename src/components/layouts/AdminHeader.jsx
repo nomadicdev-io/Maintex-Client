@@ -33,14 +33,14 @@ import LanguageSwitcher from "../ui/LanguageSwticher";
 
 export const notificationSheetAtom = atom(false)
 
-export default function AdminHeader({context}) {
+export default function AdminHeader() {
 
   const {data: session} = authClient.useSession()
   const { isOpen, toggle } = useSidebar()
 
   return (
     <>
-    <header className="relative w-full min-h-[4rem] max-h-[4rem] border-b border-border ps-5 flex flex-col">
+    <header className="relative w-full h-[4rem] min-h-[4rem] max-h-[4rem] border-b border-border ps-5 flex flex-col">
       <div className="flex items-center justify-between w-full h-full">
         <div className="flex items-center gap-2">
           {
@@ -51,7 +51,7 @@ export default function AdminHeader({context}) {
             :
             null
           }
-          <LanguageSwitcher data={context?.lang}/>
+          <LanguageSwitcher />
           <HeaderDocumentGenerator />
           <HeaderSearch isIcon={true} />
 

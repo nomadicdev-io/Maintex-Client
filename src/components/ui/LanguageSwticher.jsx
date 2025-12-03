@@ -1,10 +1,14 @@
 import { useTranslation } from "react-i18next"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./select"
+import { useQueryClient } from "@tanstack/react-query"
 
-export default function LanguageSwitcher({data}){
+export default function LanguageSwitcher(){
 
     const { i18n } = useTranslation()
-  
+    const queryClient = useQueryClient()
+
+    const data = queryClient.getQueryData(['global-context'])
+
     const handleLanguageChange = (lng) => {
       
       i18n.changeLanguage(lng)
@@ -23,7 +27,7 @@ export default function LanguageSwitcher({data}){
         <SelectContent  >
           <SelectGroup>
             {
-              data?.languages?.map((language) => (
+              data?.lang?.languages?.map((language) => (
                 <SelectItem key={language.value} value={language.value}>{language.flag} &nbsp; {language.label}</SelectItem>
               ))
             }
