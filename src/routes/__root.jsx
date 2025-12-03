@@ -19,13 +19,18 @@ export const Route = createRootRouteWithContext()({
   notFoundComponent: PageNotFound,
   pendingComponent: PageLoader,
   beforeLoad:initAuthStore,
-  loader: async ()=> {
-    const res = await orbit.get({url: 'context'})
-    if(res.status){
-      return res.data
-    }else{
-      return undefined
-    }
+  loader: async ({context})=> {
+    context.queryClient.ensureQueryData({
+      queryKey: ['context'],
+      queryFn: async () => {
+        const res = await orbit.get({url: 'context'})
+        if(res.status){
+          return res.data
+        }else{
+          return undefined
+        }
+      },
+    })
   },
   head: ({loaderData}) => (setMetaData(loaderData))
 })
@@ -33,6 +38,7 @@ export const Route = createRootRouteWithContext()({
 function RootLayoutComponent() {
 
   const requestLocationPermission = useAppControls((state)=> state.requestLocationPermission)
+  const {context} = Route.useRouteContext()
 
   useEffect(() => {
     requestLocationPermission()

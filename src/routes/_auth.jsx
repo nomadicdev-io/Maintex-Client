@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { useTheme } from 'next-themes'
 import { useCallback } from 'react'
 import { Moon, Sun } from 'lucide-react'
+import ThemeSwitcher from '../components/ui/ThemeSwitcher'
 
 export const Route = createFileRoute('/_auth')({
   component: RouteComponent,
@@ -29,24 +30,3 @@ function RouteComponent() {
 }
 
 
-function ThemeSwitcher() {
-
-  const {resolvedTheme, setTheme} = useTheme()
-
-  const onThemeSwitch = useCallback(() => {
-    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
-  }, [resolvedTheme])
-
-  return (
-    <div className="absolute top-0 right-0 p-5">
-      <Button size={'icon'} variant={'defaultIcon'} onClick={onThemeSwitch}>
-      {
-        resolvedTheme === 'dark' ? 
-        <Sun />
-        :
-        <Moon />
-      }
-      </Button>
-    </div>
-  )
-}

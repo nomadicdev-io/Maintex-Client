@@ -28,17 +28,8 @@ import { voiceAgentAtom } from "../../routes/app/_app";
 import HeaderSearch from "../forms/HeaderSearch";
 import dayjs from "dayjs";
 import { useCallback } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { useTranslation } from "react-i18next";
 import DashboardNotification from "../sections/DashboardNotification";
+import LanguageSwitcher from "../ui/LanguageSwticher";
 
 export const notificationSheetAtom = atom(false)
 
@@ -60,7 +51,7 @@ export default function AdminHeader({context}) {
             :
             null
           }
-          <HeaderLanguageSwitcher data={context?.lang}/>
+          <LanguageSwitcher data={context?.lang}/>
           <HeaderDocumentGenerator />
           <HeaderSearch isIcon={true} />
 
@@ -307,39 +298,6 @@ function HeaderAIChatBot(){
   )
 }
 
-function HeaderLanguageSwitcher({data}){
-
-  const { i18n } = useTranslation()
-
-  const handleLanguageChange = (lng) => {
-
-    if(i18n.language === lng) return
-    
-    i18n.changeLanguage(lng)
-    if(lng === 'ar') {
-      document.dir = 'rtl'
-    } else {
-      document.dir = 'ltr'
-    }
-  }
-
-  return (
-    <Select defaultValue={i18n.language} onValueChange={handleLanguageChange}>
-      <SelectTrigger variant="shade">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent  >
-        <SelectGroup>
-          {
-            data?.languages?.map((language) => (
-              <SelectItem key={language.value} value={language.value}>{language.flag} &nbsp; {language.label}</SelectItem>
-            ))
-          }
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  )
-}
 
 function HeaderDocumentGenerator(){
 

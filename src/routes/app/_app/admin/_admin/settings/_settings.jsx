@@ -14,11 +14,11 @@ function RouteComponent() {
 
   return (
     <AnimatePresence>
-      <div className="relative w-full grid grid-cols-[17rem_1fr]">
-        <ScrollArea className="relative w-full block h-[calc(100vh-4rem)]" scrollHideDelay={300}>
+      <div className="relative w-full flex">
+        <ScrollArea className="relative block h-[calc(100vh-4rem)] w-[17rem]" scrollHideDelay={300}>
           <SettingsSidebar />
         </ScrollArea>
-        <ScrollArea className="relative w-full block h-[calc(100vh-4rem)]" scrollHideDelay={300}>
+        <ScrollArea className="relative w-full block h-[calc(100vh-4rem)] flex-1" scrollHideDelay={300}>
           <Outlet />
         </ScrollArea>
       </div>
@@ -38,6 +38,11 @@ function SettingsSidebar() {
       href: '/app/admin/settings',
     },
     {
+      id: 's-nav-11',
+      label: t('role-management'),
+      href: '/app/admin/settings/role-management',
+    },
+    {
       id: 's-nav-03',
       label: t('meta-data'),
       href: '/app/admin/settings/meta-data',
@@ -52,20 +57,15 @@ function SettingsSidebar() {
       label: t('languages-region'),
       href: '/app/admin/settings/languages-region',
     }, 
-    {
-      id: 's-nav-07.1',
-      label: t('translations-localization'),
-      href: '/app/admin/settings/translations-localization',
-    },
+    // {
+    //   id: 's-nav-07.1',
+    //   label: t('translations-localization'),
+    //   href: '/app/admin/settings/translations-localization',
+    // },
     {
       id: 's-nav-04',
       label: t('appearance-theme'),
       href: '/app/admin/settings/appearance-theme',
-    },
-    {
-      id: 's-nav-11',
-      label: t('role-management'),
-      href: '/app/admin/settings/role-management',
     },
     {
       id: 's-nav-05',
@@ -107,11 +107,11 @@ function SettingsSidebar() {
       label: t('log-settings'),
       href: '/app/admin/settings/log-settings',
     },
-    {
-      id: 's-nav-09',
-      label: t('mobile-apps'),
-      href: '/app/admin/settings/mobile-apps',
-    },
+    // {
+    //   id: 's-nav-09',
+    //   label: t('mobile-apps'),
+    //   href: '/app/admin/settings/mobile-apps',
+    // },
     {
       id: 's-nav-12.1',
       label: t('amc'),

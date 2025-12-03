@@ -14,6 +14,7 @@ import { InputField, TextareaField, InputSelect, AttachmentUploader } from '@/co
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import AdminTicketsTable from '../../../../../../../components/tables/AdminTicketsTable'
 
 export const Route = createLazyFileRoute(
   '/app/_app/admin/_admin/settings/_settings/help-support',
@@ -131,7 +132,7 @@ function RouteComponent() {
 
   return (
     <Activity mode={isFetched ? 'visible' : 'hidden'}>
-      <div className='relative w-full flex flex-col'>
+      <div className='relative w-full flex flex-col mb-8'>
         <DashboardBanner title={t('help-support')} description={t('help-support-description')}>
           <DefaultFormModal 
             open={model}
@@ -269,7 +270,7 @@ function RouteComponent() {
         <div className='relative w-full flex flex-col p-6'>
           {
             data?.length > 0 ? 
-            <TicketList data={data} />
+            <AdminTicketsTable data={data} />
             : 
             <FetchEmpty key="fetch-empty" />
           }
@@ -279,12 +280,3 @@ function RouteComponent() {
   )
 }
 
-
-function TicketList() {
-  const {t} = useTranslation()
-  return (
-    <div className='relative w-full flex flex-col p-5'>
- 
-    </div>
-  )
-}
