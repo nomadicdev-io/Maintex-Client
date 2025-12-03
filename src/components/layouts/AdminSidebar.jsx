@@ -305,7 +305,7 @@ function MiniSidebar({ user, sidebarNav }){
                 </Link>
             </div>
 
-            <MiniSidebarNav user={user} />
+            <MiniSidebarNav user={user} sidebarNav={sidebarNav} />
 
             <MiniSidebarSignOut />
         </div>
