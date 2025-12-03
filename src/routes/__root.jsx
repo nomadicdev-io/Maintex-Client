@@ -49,9 +49,7 @@ function RootLayoutComponent() {
       <HeadContent />
       <SocketProvider url={import.meta.env.VITE_NODE_ENV === 'development' ? 'ws://localhost:8880/app/socket' : 'wss://api.maintex.pro/app/socket'}>
         <RootLayout>
-          <ErrorBoundary FallbackComponent={FetchError} onError={(error) => {
-            console.log(error)
-          }}>
+          <ErrorBoundary FallbackComponent={(props) => <FetchError {...props} context={context}/>} onError={(error) => {console.log(error)}}>
             <Outlet />
             {
               import.meta.env.VITE_DEBUG === 'true' && (

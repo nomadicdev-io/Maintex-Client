@@ -8,12 +8,16 @@ import anim from '@animations/server-anim.json'
 import Lottie from "lottie-react"
 import { useCanGoBack, useRouter } from "@tanstack/react-router"
 import i18n from "../../lang"
+import { useMemo } from "react"
 
 export default function FetchError({title, description, children, classNames, error, resetErrorBoundary, context}) {
 
   const {t} = useTranslation()
   const canGoBack = useCanGoBack()
   const router = useRouter()
+  const message = useMemo(()=> {
+    return error?.data?.message || error?.message || error?.statusText || error?.status || error?.data?.error || error?.data?.errors || error?.data?.error?.message || error?.data?.error?.errors || error?.data?.error?.statusText || error?.data?.error?.status
+  }, [error])
 
   const onBack = () => {
     if(canGoBack) {
@@ -38,7 +42,7 @@ export default function FetchError({title, description, children, classNames, er
         </div>
 
         <h2 className={cn("text-3xl font-semibold mb-1 text-center text-text", classNames?.title)}>{title ? title : t('common-page-error-title')}</h2>
-        <p className={cn("text-xl mt-2 font-light text-text/75 text-center max-w-[90%]", classNames?.description)}>{description ? description : t('common-page-error-description')}</p>
+        <p className={cn("text-xl mt-2 font-light text-text/75 text-center max-w-[90%]", classNames?.description)}>{message || description || t('common-page-error-description')}</p>
 
         <div className="relative w-full flex items-center justify-center gap-2 mt-8">
           <Button

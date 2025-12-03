@@ -17,11 +17,22 @@ import TotalItem from '../ui/TotalItem'
 import { ButtonGroup } from "@/components/ui/button-group"
 import SearchBar from '../ui/SearchBar'
 import { TablePagination } from '../ui/TablePagination'
+import { atom, useAtom } from 'jotai'
+import { useCallback, useMemo } from 'react'
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+  } from "@/components/ui/sheet"
 
+const adminTicketsAtom = atom('')
 
 export default function AdminTicketsTable({data, onRefresh}) {
 
     const {t} = useTranslation()
+    const [adminTicket, setAdminTicket] = useAtom(adminTicketsAtom)
 
     const getPriority = (priority) => {
         switch(priority) {
@@ -57,9 +68,7 @@ export default function AdminTicketsTable({data, onRefresh}) {
         }
     }
 
-    const handleViewTicket = (id) => {
-        console.log(id)
-    }
+    const handleViewTicket = useCallback((id) => setAdminTicket(id), [adminTicket])
 
     return (
       <div className='relative w-full flex flex-col'>
@@ -124,8 +133,36 @@ export default function AdminTicketsTable({data, onRefresh}) {
             </Table>
         </div>
 
-        <TablePagination />
+        <DetailSheet data={data} />
+
+        {/* <TablePagination /> */}
       </div>
     )
 }
 
+function DetailSheet({data}) {
+
+    const {t} = useTranslation()
+    const [adminTicket, setAdminTicket] = useAtom(adminTicketsAtom)
+
+    const isOpen = useMemo(()=> {
+        return adminTicket !== ''
+    }, [adminTicket])
+
+    const handleChange = useCallback(() => setAdminTicket(isOpen ? '' : adminTicket), [adminTicket])
+
+    const currentData = useMemo(()=> {
+        return data.find((item)=> item._id === adminTicket)
+    }, [adminTicket])
+
+    return (
+        <Sheet open={isOpen} onOpenChange={handleChange}>
+        <SheetContent>
+          <SheetHeader className="pe-12">
+            <SheetTitle>{currentData?.subject}</SheetTitle>
+            <SheetDescription>{currentData?.description}</SheetDescription> 
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+      )
+}

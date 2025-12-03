@@ -18,7 +18,7 @@ export default function DashboardBanner({title, description, className, children
             <ArrowLeft size={18} className="text-text/60" />
           </button> */}
         {
-          title ? <h1 className='text-2xl font-semibold'>{title}</h1> : null
+          title ? <h1 className='text-3xl font-semibold'>{title}</h1> : null
         }
         </div>
         {

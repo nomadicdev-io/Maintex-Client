@@ -15,6 +15,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import AdminTicketsTable from '../../../../../../../components/tables/AdminTicketsTable'
+import RouteLoader from '../../../../../../../components/loaders/RouteLoader'
 
 export const Route = createLazyFileRoute(
   '/app/_app/admin/_admin/settings/_settings/help-support',
@@ -275,6 +276,10 @@ function RouteComponent() {
             <FetchEmpty key="fetch-empty" />
           }
         </div>
+
+        <Activity mode={isRefetching ? 'visible' : 'hidden'}>
+          <RouteLoader key="refetch-loader" />
+        </Activity>
       </div>
     </Activity>
   )
