@@ -118,6 +118,7 @@
         "common-page-error-description": "Nous ne pouvons pas traiter votre demande.",
         "router-devtools": "DevTools de Router",
         "query-devtools": "DevTools de Query",
-        "close": "Fermer"
+        "close": "Fermer",
+        "created-by": "Créé par"
     }
 }

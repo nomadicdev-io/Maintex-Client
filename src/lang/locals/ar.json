@@ -118,6 +118,7 @@
         "common-page-error-description": "شيء ما لا يعمل على جانبنا. نحن نعمل على إصلاحه.",
         "router-devtools": "أدوات المسار",
         "query-devtools": "أدوات الاستعلام",
-        "close": "إغلاق"
+        "close": "إغلاق",
+        "created-by": "تم إنشاء بواسطة"
     }
 }

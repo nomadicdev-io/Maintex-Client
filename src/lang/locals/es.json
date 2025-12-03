@@ -118,6 +118,7 @@
         "common-page-error-description": "Algo no está funcionando en nuestro lado. Ya estamos trabajando para solucionarlo.",
         "router-devtools": "DevTools de Router",
         "query-devtools": "DevTools de Query",
-        "close": "Cerrar"
+        "close": "Cerrar",
+        "created-by": "Creado por"
     }
 }

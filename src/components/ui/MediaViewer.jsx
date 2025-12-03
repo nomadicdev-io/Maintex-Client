@@ -20,6 +20,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.vers
 
 export function MediaViewer({title, src, open, onOpenChange, showCloseButton}) {
   const url = useMemo(()=> {
+
+    if(!src || !src?.key || !src?.bucket) return null
+    
     let url = null
     if(src?.isStatic) {
         url =  getStaticImage(src?.key)

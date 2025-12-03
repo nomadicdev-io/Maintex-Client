@@ -118,6 +118,7 @@
         "common-page-error-description": " Something's not working on our end. We're already working to fix it.",
         "router-devtools": "Router DevTools",
         "query-devtools": "Query DevTools",
-        "close": "Close"
+        "close": "Close",
+        "created-by": "Created By"
     }
 }

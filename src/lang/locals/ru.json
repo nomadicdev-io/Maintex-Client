@@ -118,6 +118,7 @@
         "common-page-error-description": "Мы не можем обработать ваш запрос.",
         "router-devtools": "DevTools Router",
         "query-devtools": "DevTools Query",
-        "close": "Закрыть"
+        "close": "Закрыть",
+        "created-by": "Создано"
     }
 }

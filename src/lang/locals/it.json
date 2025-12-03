@@ -118,6 +118,7 @@
         "common-page-error-description": "Non possiamo processare la tua richiesta.",
         "router-devtools": "DevTools di Router",
         "query-devtools": "DevTools di Query",
-        "close": "Chiudere" 
+        "close": "Chiudere" ,
+        "created-by": "Creato da"
     }
 }
