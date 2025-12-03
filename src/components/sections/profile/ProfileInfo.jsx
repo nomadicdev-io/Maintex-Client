@@ -1,8 +1,6 @@
 import { useTheme } from "next-themes"
 import { toast } from "sonner"
-import orbit from "@api"
-import { imageFormats } from "../../../store/imageFormats"
-import { authClient } from '../../../auth'
+import { authClient } from '@/auth'
 import ImageComponent from "../../ui/ImageComponent"
 import { useState } from "react"
 import { Edit, ImageUp } from "lucide-react"
@@ -30,6 +28,7 @@ function ProfileBanner({user, refetch}) {
   const [isCropModalOpen, setIsCropModalOpen] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
   const [loading, setLoading] = useState(false)
+  const {resolvedTheme} = useTheme()
 
 
   const handleImageChange = async () => {
@@ -115,7 +114,7 @@ function ProfileBanner({user, refetch}) {
               file={selectedFile} 
               open={isCropModalOpen}  
               onOpenChange={setIsCropModalOpen} 
-              bucket={user?.digitalID.toLowerCase()} 
+              bucket={user?.digitalID?.toLowerCase()} 
               path={'profile/'} 
               onUpdateCompeted={handleUpdateCompeted}
               aspect={16/6}
@@ -139,7 +138,7 @@ function ProfileAvatar({user, refetch}) {
   const [isCropModalOpen, setIsCropModalOpen] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
   const [loading, setLoading] = useState(false)
-
+  const {resolvedTheme} = useTheme()
 
   const handleImageChange = async () => {
     setLoading(true)
@@ -229,7 +228,7 @@ function ProfileAvatar({user, refetch}) {
             file={selectedFile} 
             open={isCropModalOpen}  
             onOpenChange={setIsCropModalOpen} 
-            bucket={user?.digitalID.toLowerCase()} 
+            bucket={user?.digitalID?.toLowerCase()} 
             path={'profile/'} 
             onUpdateCompeted={handleUpdateCompeted}/>
         </div>
