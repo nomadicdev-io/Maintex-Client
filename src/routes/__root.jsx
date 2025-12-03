@@ -20,10 +20,12 @@ export const Route = createRootRouteWithContext()({
   pendingComponent: PageLoader,
   beforeLoad:initAuthStore,
   loader: async ({context})=> {
+
     context.queryClient.ensureQueryData({
       queryKey: ['context'],
       queryFn: async () => {
         const res = await orbit.get({url: 'context'})
+        console.log('CONTEXT', res)
         if(res.status){
           return res.data
         }else{
@@ -31,6 +33,12 @@ export const Route = createRootRouteWithContext()({
         }
       },
     })
+
+      console.log(
+        '%cDeveloped By, Quadbits Lab https://lab.quadbits.io' ,
+        'background: #333; text-align: center; color: #FAFAFA; font-weight: bold; font-size: 14px; padding:8px; border-radius: 4px 0 0 4px; border: 1px solid #cacaca',
+      )
+
   },
   head: ({loaderData}) => (setMetaData(loaderData))
 })

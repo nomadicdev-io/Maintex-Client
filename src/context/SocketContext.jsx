@@ -27,7 +27,7 @@ export const SocketProvider = ({ children, url }) => {
     ws.onopen = () => {
       setIsConnected(true);
       setError(null);
-      console.log('Admin Socket Connected');
+      console.log('%cSocket Connected: ' + new Date().toISOString(), 'background: blue; text-align: center; color: #fafafa; font-weight: bold; font-size: 12px; padding:8px; border-radius: 4px 0 0 4px;');
     };
 
     ws.onmessage = (event) => {
