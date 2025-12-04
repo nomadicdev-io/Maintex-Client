@@ -11,6 +11,7 @@ const api = axios.create({
         'X-App-Device': navigator?.userAgentData?.platform || navigator?.platform,
         'X-App-Platform': 'Maintex Web',
         'X-App-TimeZone': Intl.DateTimeFormat().resolvedOptions().timeZone,
+        'X-App-OS': navigator?.userAgentData?.platform || navigator?.platform,
         'Accept': 'application/json',
     },
 })
@@ -30,6 +31,7 @@ const apiCollection = ky.create({
         'X-App-Device': navigator?.userAgentData?.platform || navigator?.platform,
         'X-App-Platform': 'Maintex Web',
         'X-App-TimeZone': Intl.DateTimeFormat().resolvedOptions().timeZone,
+        'X-App-OS': navigator?.userAgentData?.platform || navigator?.platform,  
         'Accept': 'application/json',
     },
 });
@@ -49,6 +51,7 @@ const apiCollectionAI = ky.create({
         'X-App-Device': navigator?.userAgentData?.platform || navigator?.platform,
         'X-App-Platform': 'Maintex Web',
         'X-App-TimeZone': Intl.DateTimeFormat().resolvedOptions().timeZone,
+        'X-App-OS': navigator?.userAgentData?.platform || navigator?.platform,
         'Accept': 'application/json',
     },
 });
