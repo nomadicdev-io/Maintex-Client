@@ -11,6 +11,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LocationErrorRouteImport } from './routes/location-error'
 import { Route as SupportRouteImport } from './routes/_support'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AuthIndexRouteImport } from './routes/_auth/index'
@@ -174,6 +175,11 @@ const AppAppAdminAdminSettingsSettingsAboutLazyRouteImport = createFileRoute(
 const AppRoute = AppRouteImport.update({
   id: '/app',
   path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LocationErrorRoute = LocationErrorRouteImport.update({
+  id: '/location-error',
+  path: '/location-error',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SupportRoute = SupportRouteImport.update({
@@ -730,6 +736,7 @@ const AppAppAdminAdminSettingsSettingsAboutLazyRoute =
   )
 
 export interface FileRoutesByFullPath {
+  '/location-error': typeof LocationErrorRoute
   '/app': typeof AppAppRouteWithChildren
   '/': typeof AuthIndexRoute
   '/auth/join': typeof AuthAuthJoinRoute
@@ -795,6 +802,7 @@ export interface FileRoutesByFullPath {
   '/app/admin/settings/': typeof AppAppAdminAdminSettingsSettingsIndexLazyRoute
 }
 export interface FileRoutesByTo {
+  '/location-error': typeof LocationErrorRoute
   '/app': typeof AppAppIndexRoute
   '/': typeof AuthIndexRoute
   '/auth/join': typeof AuthAuthJoinRoute
@@ -859,6 +867,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_auth': typeof AuthRouteWithChildren
   '/_support': typeof SupportRouteWithChildren
+  '/location-error': typeof LocationErrorRoute
   '/app': typeof AppRouteWithChildren
   '/app/_app': typeof AppAppRouteWithChildren
   '/_auth/': typeof AuthIndexRoute
@@ -935,6 +944,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/location-error'
     | '/app'
     | '/'
     | '/auth/join'
@@ -1000,6 +1010,7 @@ export interface FileRouteTypes {
     | '/app/admin/settings/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/location-error'
     | '/app'
     | '/'
     | '/auth/join'
@@ -1063,6 +1074,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_auth'
     | '/_support'
+    | '/location-error'
     | '/app'
     | '/app/_app'
     | '/_auth/'
@@ -1140,6 +1152,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   SupportRoute: typeof SupportRouteWithChildren
+  LocationErrorRoute: typeof LocationErrorRoute
   AppRoute: typeof AppRouteWithChildren
 }
 
@@ -1150,6 +1163,13 @@ declare module '@tanstack/react-router' {
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/location-error': {
+      id: '/location-error'
+      path: '/location-error'
+      fullPath: '/location-error'
+      preLoaderRoute: typeof LocationErrorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_support': {
@@ -2050,6 +2070,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   SupportRoute: SupportRouteWithChildren,
+  LocationErrorRoute: LocationErrorRoute,
   AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport

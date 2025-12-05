@@ -23,7 +23,7 @@ export const Route = createLazyFileRoute(
 function RouteComponent() {
 
   const {data, isLoading, isError, error, isFetched, refetch, isRefetching} = useQuery({
-    queryKey: ['admin-settings-general'],
+    queryKey: ['admin-settings-activity-monitor'],
     enabled: true,
     queryFn: async () => {
       try{

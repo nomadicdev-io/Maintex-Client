@@ -1,9 +1,5 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import appConfig from '../../app.config'
-import { Button } from '@/components/ui/button'
-import { useTheme } from 'next-themes'
-import { useCallback } from 'react'
-import { Moon, Sun } from 'lucide-react'
 import ThemeSwitcher from '../components/ui/ThemeSwitcher'
 
 export const Route = createFileRoute('/_auth')({

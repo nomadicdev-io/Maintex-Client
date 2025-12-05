@@ -302,7 +302,7 @@ function HeaderAIChatBot(){
 function HeaderDocumentGenerator(){
 
   const handleDocumentGenerator = useCallback(()=> {
-    window.open('https://docs.maintex.pro', '_blank')
+    window.open('https://app.documentsnina.cloud/', '_blank')
   }, [])
   return (
     <Button variant="shade" aria-label="Nina Generate Document" title="Nina Generate Document" type="button" onClick={handleDocumentGenerator}>

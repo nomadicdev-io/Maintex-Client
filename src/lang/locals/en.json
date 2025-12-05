@@ -119,6 +119,15 @@
         "router-devtools": "Router DevTools",
         "query-devtools": "Query DevTools",
         "close": "Close",
-        "created-by": "Created By"
+        "created-by": "Created By",
+        "activity-logs": "Activity Logs",
+        "active-users": "Active Users",
+        "activity-monitor-description": "Real-time activity logs for the application. You can see the activity user activities here.",
+        "global-activity": "Global Activity",
+        "location-access-required": "Location Access Required",
+        "location-access-required-description": "This application strictly requires access to your device's location to function. Please enable location services in your browser or device settings. Without location access, you will not be able to use the app.",
+        "enable-location": "Enable Location",
+        "active-countries": "Active Countries"
+        
     }
 }

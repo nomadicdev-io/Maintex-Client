@@ -1,4 +1,4 @@
-{ 
+ { 
     "translation": {
         "welcome": "Bienvenue sur notre site web",
         "about": "À propos de nous",
@@ -119,6 +119,14 @@
         "router-devtools": "DevTools de Router",
         "query-devtools": "DevTools de Query",
         "close": "Fermer",
-        "created-by": "Créé par"
+        "created-by": "Créé par",
+        "activity-logs": "Logs d'Activité",
+        "active-users": "Utilisateurs Actifs",
+        "activity-monitor-description": "Logs d'activité en temps réel pour l'application. Vous pouvez voir les activités des utilisateurs ici.",
+        "global-activity": "Activité Globale",
+        "location-access-required": "Accès à la localisation requis",
+        "location-access-required-description": "Cette application nécessite strictement un accès à la localisation de votre appareil pour fonctionner. Veuillez activer les services de localisation dans les paramètres de votre navigateur ou de votre appareil. Sans accès à la localisation, vous ne pourrez pas utiliser l'application.",
+        "enable-location": "Activer la Localisation",
+        "active-countries": "Pays Actifs"
     }
 }

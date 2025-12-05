@@ -30,31 +30,30 @@ export default function FetchError({title, description, children, classNames, er
   return (
     <main className={cn("relative w-full flex flex-col items-center justify-center h-screen", classNames?.wrapper)}>
 
-      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none invert-100 dark:invert-0">
-        <img src="/bg-login.png" alt="Background Image" className="w-full h-full object-cover z-0 pointer-events-none grayscale-100" />
-      </div>
-
-      <div className="relative flex flex-col items-center justify-center bg-bg-100/50 dark:bg-bg-100/20 backdrop-blur-sm w-120 h-auto border border-border-600 rounded-3xl p-5 pb-8">
-        <div className="relative w-70 aspect-square mb-10 h-70 opacity-60 grayscale dark:invert-0 invert-100 flex items-center mt-5 justify-center before:content-[''] before:absolute before:inset-0 before:bg-bg-100/5 dark:before:bg-bg-100 before:rounded-full before:w-full before:h-full before:backdrop-blur-sm">
+    <div className="fixed inset-0 w-full h-full z-0 pointer-events-none invert-100 dark:invert-0 opacity-50">
+      <img src="/bg-ambient.jpg" alt="Background Image" className="w-full h-full object-cover z-0 pointer-events-none grayscale-100" />
+    </div>
+      <div className="relative flex flex-col items-center justify-center ">
+        <div className="relative w-70 aspect-square mb-10 h-70 opacity-60 grayscale dark:invert-0  overflow-hidden rounded-full flex items-center mt-5 justify-center before:content-[''] before:absolute before:inset-0 before:bg-text/10 dark:before:bg-text/7 backdrop-blur-lg before:rounded-full before:w-full before:h-full before:backdrop-blur-sm">
           {/* <img src={'/error-data.png'} alt="Empty" className="w-full h-auto object-contain" /> */}
-          <Lottie animationData={anim} className='w-full h-full grayscale opacity-60 ' loop={true}/>
+          <Lottie animationData={anim} className='w-[90%] h-full grayscale opacity-80 ' loop={true}/>
 
         </div>
 
-        <h2 className={cn("text-3xl font-semibold mb-1 text-center text-text", classNames?.title)}>{title ? title : t('common-page-error-title')}</h2>
+        <h2 className={cn("text-4xl font-semibold mb-2 text-center text-text", classNames?.title)}>{title ? title : t('common-page-error-title')}</h2>
         <p className={cn("text-xl mt-2 font-light text-text/75 text-center max-w-[90%]", classNames?.description)}>{message || description || t('common-page-error-description')}</p>
 
-        <div className="relative w-full flex items-center justify-center gap-2 mt-8">
+        <div className="relative w-full flex items-center justify-center gap-3 mt-8">
           <Button
             variant='shade'
             onClick={onBack}
-            size='lg'
+            size='xl'
           >
-            {i18n.language === 'ar' ? <ArrowRight size={24} /> : <ArrowLeft size={24} />}
+            {i18n.language === 'ar' ? <ArrowRight size={24} /> : <ArrowLeft size={26} />}
             <span>{t('go-back')}</span>
           </Button>
-          <Button variant='default' onClick={()=> window.location.reload()} size='lg'>
-            <RefreshCcw size={24} />
+          <Button variant='default' onClick={()=> window.location.reload()} size='xl'>
+            <RefreshCcw size={26} />
             <span>{t('refresh')}</span>
           </Button>
           

@@ -1,13 +1,9 @@
 import { HeadContent, Outlet, createRootRouteWithContext } from '@tanstack/react-router'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import PageNotFound from '@components/layouts/PageNotFound'
 import RootLayout from '@components/layouts/RootLayout'
 import PageLoader from '@/components/loaders/PageLoader'
 import { SocketProvider } from '@context/SocketContext'
 import { Toaster } from "@/components/ui/sonner"
-import {useAppControls} from '@/hooks/useAppControls'
-import { useEffect } from 'react'
 import orbit from '../api'
 import { ErrorBoundary } from "react-error-boundary";
 import FetchError from '../components/fetch/FetchError'
@@ -15,6 +11,8 @@ import { setMetaData } from '../lib/setMetaData'
 import i18n from '@/lang'
 import DevTools from '../components/ui/DevTools'
 import { HotkeysProvider } from 'react-hotkeys-hook'
+import { useEffect } from 'react'
+import { useGeoLocation } from '../hooks/useGeoLocation'
 
 export const Route = createRootRouteWithContext()({
   component: RootLayoutComponent,
@@ -66,10 +64,11 @@ export const Route = createRootRouteWithContext()({
 
 function RootLayoutComponent() {
 
-  const requestLocationPermission = useAppControls((state)=> state.requestLocationPermission)
   const loaderData = Route.useLoaderData()  
+  const {getLocation} = useGeoLocation()
+
   useEffect(() => {
-    requestLocationPermission()
+    getLocation()
   }, [])
 
   return (
