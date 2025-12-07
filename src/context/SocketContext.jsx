@@ -1,93 +1,90 @@
-import { createContext, useContext, useState, useEffect, useRef } from 'react';
+import { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 
-// Create the context
 const socketContext = createContext(undefined);
 
-// Provider component
 export const SocketProvider = ({ children, url }) => {
   const [isConnected, setIsConnected] = useState(false);
-  const [error, setError] = useState(null);
+  const [lastMessage, setLastMessage] = useState(null);
   const wsRef = useRef(null);
+  const messageListenersRef = useRef(new Set());
+  const errorRef = useRef(null);
 
-  // Cleanup function
-  const cleanup = () => {
-    if (wsRef.current) {
-      wsRef.current.close();
-      wsRef.current = null;
-    }
-  };
+  // Register message listener
+  const onMessage = useCallback((callback) => {
+    console.log('ON MESSAGE', callback)
+    messageListenersRef.current.add(callback);
+    return () => {
+      messageListenersRef.current.delete(callback);
+    };
+  }, []);
 
-  // Connect function
-  const connect = () => {
-    cleanup(); // Ensure clean state
+  // Connect to socket
+  useEffect(() => {
+    if (!url) return;
 
     const ws = new WebSocket(url);
     wsRef.current = ws;
 
     ws.onopen = () => {
-      setIsConnected(true);
-      setError(null);
+      setIsConnected(true); 
       console.log('%cSocket Connected: ' + new Date().toISOString(), 'background: blue; text-align: center; color: #fafafa; font-weight: bold; font-size: 12px; padding:8px; border-radius: 4px 0 0 4px;');
     };
 
     ws.onmessage = (event) => {
       try {
-        const data = event
-      } catch (parseErr) {
-        console.error('Failed to parse WebSocket message:', parseErr);
-        setError('Invalid message format');
+        const data = JSON.parse(event.data);
+
+        console.log('SOCKET MESSAGE', data)
+        setLastMessage(data);
+        
+        // Notify all listeners
+        messageListenersRef.current.forEach((callback) => {
+          callback(data);
+        });
+      } catch (err) {
+        console.error('Failed to parse message:', err);
       }
     };
 
-    ws.onclose = (event) => {
+    ws.onclose = () => {
       setIsConnected(false);
+      console.error('Socket closed');
     };
 
-    ws.onerror = (event) => {
-      console.error('WebSocket error:', event);
-      setError('Connection error');
+    ws.onerror = (error) => {
+      console.error('Socket error:', error);
     };
-  };
 
-  // Send message function
-  const sendMessage = (message) => {
-    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-      wsRef.current.send(JSON.stringify(message));
-    } else {
-      console.warn('WebSocket not connected, message not sent');
-      setError('Not connected');
-    }
-  };
-
-  // Initial connection on mount
-  useEffect(() => {
-    connect();
-
-    // Cleanup on unmount
     return () => {
-      cleanup();
+      ws.close();
     };
-  }, [url]); // Reconnect if URL changes
+  }, [url]);
 
-  // Context value
+  // Send message
+  const sendMessage = useCallback((message) => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify(message));
+    }
+  }, []);
+
   const value = {
     isConnected,
     sendMessage,
-    error,
+    lastMessage,
+    onMessage,
   };
 
   return (
-    <socketContext.Provider value={value}>
+    <>
       {children}
-    </socketContext.Provider>
+    </>
   );
 };
 
-// Custom hook to use the context
 export const useSocket = () => {
-    const context = useContext(socketContext);
-    if (context === undefined) {
-      throw new Error('useWebSocket must be used within a WebSocketProvider');
-    }
-    return context;
+  const context = useContext(socketContext);
+  if (context === undefined) {
+    throw new Error('useSocket must be used within a SocketProvider');
+  }
+  return context;
 };

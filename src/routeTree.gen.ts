@@ -26,19 +26,23 @@ import { Route as AuthAuthVerifyEmailRouteImport } from './routes/_auth/auth/ver
 import { Route as AuthAuthPasswordResetRouteImport } from './routes/_auth/auth/password-reset'
 import { Route as AuthAuthJoinRouteImport } from './routes/_auth/auth/join'
 import { Route as AppAppManagerManagerRouteImport } from './routes/app/_app/manager/_manager'
+import { Route as AppAppMaintexAiAiRouteImport } from './routes/app/_app/maintex-ai/_ai'
 import { Route as AppAppHrHrRouteImport } from './routes/app/_app/hr/_hr'
 import { Route as AppAppDevelopmentDevelopmentRouteImport } from './routes/app/_app/development/_development'
 import { Route as AppAppAdminAdminRouteImport } from './routes/app/_app/admin/_admin'
 import { Route as AppAppAccountAccountRouteImport } from './routes/app/_app/account/_account'
+import { Route as AppAppMaintexAiAiIndexRouteImport } from './routes/app/_app/maintex-ai/_ai/index'
 import { Route as AppAppManagerManagerTrackingIndexRouteImport } from './routes/app/_app/manager/_manager/tracking/index'
 import { Route as AppAppAdminAdminServersDbIndexRouteImport } from './routes/app/_app/admin/_admin/servers-db/index'
 import { Route as AppAppAdminAdminSettingsSettingsRouteImport } from './routes/app/_app/admin/_admin/settings/_settings'
 import { Route as AppAppAdminAdminConfigurationConfigurationRouteImport } from './routes/app/_app/admin/_admin/configuration/_configuration'
 import { Route as AppAppAccountAccountProfileProfileRouteImport } from './routes/app/_app/account/_account/profile/_profile'
 import { Route as AppAppAdminAdminConfigurationConfigurationIndexRouteImport } from './routes/app/_app/admin/_admin/configuration/_configuration/index'
+import { Route as AppAppAccountAccountProfileProfileEditProfileRouteImport } from './routes/app/_app/account/_account/profile/_profile/edit-profile'
 
 const AppRouteImport = createFileRoute('/app')()
 const AppAppManagerRouteImport = createFileRoute('/app/_app/manager')()
+const AppAppMaintexAiRouteImport = createFileRoute('/app/_app/maintex-ai')()
 const AppAppHrRouteImport = createFileRoute('/app/_app/hr')()
 const AppAppDevelopmentRouteImport = createFileRoute('/app/_app/development')()
 const AppAppAdminRouteImport = createFileRoute('/app/_app/admin')()
@@ -65,11 +69,11 @@ const AppAppHrHrManageRequestsLazyRouteImport = createFileRoute(
 const AppAppHrHrLeaveManagementLazyRouteImport = createFileRoute(
   '/app/_app/hr/_hr/leave-management',
 )()
+const AppAppHrHrEventsLazyRouteImport = createFileRoute(
+  '/app/_app/hr/_hr/events',
+)()
 const AppAppHrHrEmployeesLazyRouteImport = createFileRoute(
   '/app/_app/hr/_hr/employees',
-)()
-const AppAppHrHrCalendarLazyRouteImport = createFileRoute(
-  '/app/_app/hr/_hr/calendar',
 )()
 const AppAppHrHrAttendanceLazyRouteImport = createFileRoute(
   '/app/_app/hr/_hr/attendance',
@@ -204,6 +208,11 @@ const AppAppManagerRoute = AppAppManagerRouteImport.update({
   path: '/manager',
   getParentRoute: () => AppAppRoute,
 } as any)
+const AppAppMaintexAiRoute = AppAppMaintexAiRouteImport.update({
+  id: '/maintex-ai',
+  path: '/maintex-ai',
+  getParentRoute: () => AppAppRoute,
+} as any)
 const AppAppHrRoute = AppAppHrRouteImport.update({
   id: '/hr',
   path: '/hr',
@@ -289,6 +298,10 @@ const AppAppManagerManagerRoute = AppAppManagerManagerRouteImport.update({
   id: '/_manager',
   getParentRoute: () => AppAppManagerRoute,
 } as any)
+const AppAppMaintexAiAiRoute = AppAppMaintexAiAiRouteImport.update({
+  id: '/_ai',
+  getParentRoute: () => AppAppMaintexAiRoute,
+} as any)
 const AppAppHrHrRoute = AppAppHrHrRouteImport.update({
   id: '/_hr',
   getParentRoute: () => AppAppHrRoute,
@@ -324,6 +337,11 @@ const AppAppAccountAccountProfileRoute =
     path: '/profile',
     getParentRoute: () => AppAppAccountAccountRoute,
   } as any)
+const AppAppMaintexAiAiIndexRoute = AppAppMaintexAiAiIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppAppMaintexAiAiRoute,
+} as any)
 const AppAppHrHrNotesLazyRoute = AppAppHrHrNotesLazyRouteImport.update({
   id: '/notes',
   path: '/notes',
@@ -351,19 +369,19 @@ const AppAppHrHrLeaveManagementLazyRoute =
       (d) => d.Route,
     ),
   )
+const AppAppHrHrEventsLazyRoute = AppAppHrHrEventsLazyRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => AppAppHrHrRoute,
+} as any).lazy(() =>
+  import('./routes/app/_app/hr/_hr/events.lazy').then((d) => d.Route),
+)
 const AppAppHrHrEmployeesLazyRoute = AppAppHrHrEmployeesLazyRouteImport.update({
   id: '/employees',
   path: '/employees',
   getParentRoute: () => AppAppHrHrRoute,
 } as any).lazy(() =>
   import('./routes/app/_app/hr/_hr/employees.lazy').then((d) => d.Route),
-)
-const AppAppHrHrCalendarLazyRoute = AppAppHrHrCalendarLazyRouteImport.update({
-  id: '/calendar',
-  path: '/calendar',
-  getParentRoute: () => AppAppHrHrRoute,
-} as any).lazy(() =>
-  import('./routes/app/_app/hr/_hr/calendar.lazy').then((d) => d.Route),
 )
 const AppAppHrHrAttendanceLazyRoute =
   AppAppHrHrAttendanceLazyRouteImport.update({
@@ -734,6 +752,12 @@ const AppAppAdminAdminSettingsSettingsAboutLazyRoute =
       (d) => d.Route,
     ),
   )
+const AppAppAccountAccountProfileProfileEditProfileRoute =
+  AppAppAccountAccountProfileProfileEditProfileRouteImport.update({
+    id: '/edit-profile',
+    path: '/edit-profile',
+    getParentRoute: () => AppAppAccountAccountProfileProfileRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/location-error': typeof LocationErrorRoute
@@ -753,6 +777,7 @@ export interface FileRoutesByFullPath {
   '/app/admin': typeof AppAppAdminAdminRouteWithChildren
   '/app/development': typeof AppAppDevelopmentDevelopmentRouteWithChildren
   '/app/hr': typeof AppAppHrHrRouteWithChildren
+  '/app/maintex-ai': typeof AppAppMaintexAiAiRouteWithChildren
   '/app/manager': typeof AppAppManagerManagerRouteWithChildren
   '/app/chats': typeof AppAppChatsIndexLazyRoute
   '/app/account/drive': typeof AppAppAccountAccountDriveLazyRoute
@@ -767,16 +792,18 @@ export interface FileRoutesByFullPath {
   '/app/development/tickets': typeof AppAppDevelopmentDevelopmentTicketsLazyRoute
   '/app/development/toolkit': typeof AppAppDevelopmentDevelopmentToolkitLazyRoute
   '/app/hr/attendance': typeof AppAppHrHrAttendanceLazyRoute
-  '/app/hr/calendar': typeof AppAppHrHrCalendarLazyRoute
   '/app/hr/employees': typeof AppAppHrHrEmployeesLazyRoute
+  '/app/hr/events': typeof AppAppHrHrEventsLazyRoute
   '/app/hr/leave-management': typeof AppAppHrHrLeaveManagementLazyRoute
   '/app/hr/manage-requests': typeof AppAppHrHrManageRequestsLazyRoute
   '/app/hr/notes': typeof AppAppHrHrNotesLazyRoute
+  '/app/maintex-ai/': typeof AppAppMaintexAiAiIndexRoute
   '/app/account/profile': typeof AppAppAccountAccountProfileProfileRouteWithChildren
   '/app/admin/configuration': typeof AppAppAdminAdminConfigurationConfigurationRouteWithChildren
   '/app/admin/settings': typeof AppAppAdminAdminSettingsSettingsRouteWithChildren
   '/app/admin/servers-db': typeof AppAppAdminAdminServersDbIndexRoute
   '/app/manager/tracking': typeof AppAppManagerManagerTrackingIndexRoute
+  '/app/account/profile/edit-profile': typeof AppAppAccountAccountProfileProfileEditProfileRoute
   '/app/admin/settings/about': typeof AppAppAdminAdminSettingsSettingsAboutLazyRoute
   '/app/admin/settings/amc': typeof AppAppAdminAdminSettingsSettingsAmcLazyRoute
   '/app/admin/settings/api-keys': typeof AppAppAdminAdminSettingsSettingsApiKeysLazyRoute
@@ -818,6 +845,7 @@ export interface FileRoutesByTo {
   '/app/admin': typeof AppAppAdminAdminRouteWithChildren
   '/app/development': typeof AppAppDevelopmentDevelopmentRouteWithChildren
   '/app/hr': typeof AppAppHrHrRouteWithChildren
+  '/app/maintex-ai': typeof AppAppMaintexAiAiIndexRoute
   '/app/manager': typeof AppAppManagerManagerRouteWithChildren
   '/app/chats': typeof AppAppChatsIndexLazyRoute
   '/app/account/drive': typeof AppAppAccountAccountDriveLazyRoute
@@ -832,8 +860,8 @@ export interface FileRoutesByTo {
   '/app/development/tickets': typeof AppAppDevelopmentDevelopmentTicketsLazyRoute
   '/app/development/toolkit': typeof AppAppDevelopmentDevelopmentToolkitLazyRoute
   '/app/hr/attendance': typeof AppAppHrHrAttendanceLazyRoute
-  '/app/hr/calendar': typeof AppAppHrHrCalendarLazyRoute
   '/app/hr/employees': typeof AppAppHrHrEmployeesLazyRoute
+  '/app/hr/events': typeof AppAppHrHrEventsLazyRoute
   '/app/hr/leave-management': typeof AppAppHrHrLeaveManagementLazyRoute
   '/app/hr/manage-requests': typeof AppAppHrHrManageRequestsLazyRoute
   '/app/hr/notes': typeof AppAppHrHrNotesLazyRoute
@@ -842,6 +870,7 @@ export interface FileRoutesByTo {
   '/app/admin/settings': typeof AppAppAdminAdminSettingsSettingsIndexLazyRoute
   '/app/admin/servers-db': typeof AppAppAdminAdminServersDbIndexRoute
   '/app/manager/tracking': typeof AppAppManagerManagerTrackingIndexRoute
+  '/app/account/profile/edit-profile': typeof AppAppAccountAccountProfileProfileEditProfileRoute
   '/app/admin/settings/about': typeof AppAppAdminAdminSettingsSettingsAboutLazyRoute
   '/app/admin/settings/amc': typeof AppAppAdminAdminSettingsSettingsAmcLazyRoute
   '/app/admin/settings/api-keys': typeof AppAppAdminAdminSettingsSettingsApiKeysLazyRoute
@@ -889,6 +918,8 @@ export interface FileRoutesById {
   '/app/_app/development/_development': typeof AppAppDevelopmentDevelopmentRouteWithChildren
   '/app/_app/hr': typeof AppAppHrRouteWithChildren
   '/app/_app/hr/_hr': typeof AppAppHrHrRouteWithChildren
+  '/app/_app/maintex-ai': typeof AppAppMaintexAiRouteWithChildren
+  '/app/_app/maintex-ai/_ai': typeof AppAppMaintexAiAiRouteWithChildren
   '/app/_app/manager': typeof AppAppManagerRouteWithChildren
   '/app/_app/manager/_manager': typeof AppAppManagerManagerRouteWithChildren
   '/app/_app/chats/': typeof AppAppChatsIndexLazyRoute
@@ -904,11 +935,12 @@ export interface FileRoutesById {
   '/app/_app/development/_development/tickets': typeof AppAppDevelopmentDevelopmentTicketsLazyRoute
   '/app/_app/development/_development/toolkit': typeof AppAppDevelopmentDevelopmentToolkitLazyRoute
   '/app/_app/hr/_hr/attendance': typeof AppAppHrHrAttendanceLazyRoute
-  '/app/_app/hr/_hr/calendar': typeof AppAppHrHrCalendarLazyRoute
   '/app/_app/hr/_hr/employees': typeof AppAppHrHrEmployeesLazyRoute
+  '/app/_app/hr/_hr/events': typeof AppAppHrHrEventsLazyRoute
   '/app/_app/hr/_hr/leave-management': typeof AppAppHrHrLeaveManagementLazyRoute
   '/app/_app/hr/_hr/manage-requests': typeof AppAppHrHrManageRequestsLazyRoute
   '/app/_app/hr/_hr/notes': typeof AppAppHrHrNotesLazyRoute
+  '/app/_app/maintex-ai/_ai/': typeof AppAppMaintexAiAiIndexRoute
   '/app/_app/account/_account/profile': typeof AppAppAccountAccountProfileRouteWithChildren
   '/app/_app/account/_account/profile/_profile': typeof AppAppAccountAccountProfileProfileRouteWithChildren
   '/app/_app/admin/_admin/configuration': typeof AppAppAdminAdminConfigurationRouteWithChildren
@@ -917,6 +949,7 @@ export interface FileRoutesById {
   '/app/_app/admin/_admin/settings/_settings': typeof AppAppAdminAdminSettingsSettingsRouteWithChildren
   '/app/_app/admin/_admin/servers-db/': typeof AppAppAdminAdminServersDbIndexRoute
   '/app/_app/manager/_manager/tracking/': typeof AppAppManagerManagerTrackingIndexRoute
+  '/app/_app/account/_account/profile/_profile/edit-profile': typeof AppAppAccountAccountProfileProfileEditProfileRoute
   '/app/_app/admin/_admin/settings/_settings/about': typeof AppAppAdminAdminSettingsSettingsAboutLazyRoute
   '/app/_app/admin/_admin/settings/_settings/amc': typeof AppAppAdminAdminSettingsSettingsAmcLazyRoute
   '/app/_app/admin/_admin/settings/_settings/api-keys': typeof AppAppAdminAdminSettingsSettingsApiKeysLazyRoute
@@ -961,6 +994,7 @@ export interface FileRouteTypes {
     | '/app/admin'
     | '/app/development'
     | '/app/hr'
+    | '/app/maintex-ai'
     | '/app/manager'
     | '/app/chats'
     | '/app/account/drive'
@@ -975,16 +1009,18 @@ export interface FileRouteTypes {
     | '/app/development/tickets'
     | '/app/development/toolkit'
     | '/app/hr/attendance'
-    | '/app/hr/calendar'
     | '/app/hr/employees'
+    | '/app/hr/events'
     | '/app/hr/leave-management'
     | '/app/hr/manage-requests'
     | '/app/hr/notes'
+    | '/app/maintex-ai/'
     | '/app/account/profile'
     | '/app/admin/configuration'
     | '/app/admin/settings'
     | '/app/admin/servers-db'
     | '/app/manager/tracking'
+    | '/app/account/profile/edit-profile'
     | '/app/admin/settings/about'
     | '/app/admin/settings/amc'
     | '/app/admin/settings/api-keys'
@@ -1026,6 +1062,7 @@ export interface FileRouteTypes {
     | '/app/admin'
     | '/app/development'
     | '/app/hr'
+    | '/app/maintex-ai'
     | '/app/manager'
     | '/app/chats'
     | '/app/account/drive'
@@ -1040,8 +1077,8 @@ export interface FileRouteTypes {
     | '/app/development/tickets'
     | '/app/development/toolkit'
     | '/app/hr/attendance'
-    | '/app/hr/calendar'
     | '/app/hr/employees'
+    | '/app/hr/events'
     | '/app/hr/leave-management'
     | '/app/hr/manage-requests'
     | '/app/hr/notes'
@@ -1050,6 +1087,7 @@ export interface FileRouteTypes {
     | '/app/admin/settings'
     | '/app/admin/servers-db'
     | '/app/manager/tracking'
+    | '/app/account/profile/edit-profile'
     | '/app/admin/settings/about'
     | '/app/admin/settings/amc'
     | '/app/admin/settings/api-keys'
@@ -1096,6 +1134,8 @@ export interface FileRouteTypes {
     | '/app/_app/development/_development'
     | '/app/_app/hr'
     | '/app/_app/hr/_hr'
+    | '/app/_app/maintex-ai'
+    | '/app/_app/maintex-ai/_ai'
     | '/app/_app/manager'
     | '/app/_app/manager/_manager'
     | '/app/_app/chats/'
@@ -1111,11 +1151,12 @@ export interface FileRouteTypes {
     | '/app/_app/development/_development/tickets'
     | '/app/_app/development/_development/toolkit'
     | '/app/_app/hr/_hr/attendance'
-    | '/app/_app/hr/_hr/calendar'
     | '/app/_app/hr/_hr/employees'
+    | '/app/_app/hr/_hr/events'
     | '/app/_app/hr/_hr/leave-management'
     | '/app/_app/hr/_hr/manage-requests'
     | '/app/_app/hr/_hr/notes'
+    | '/app/_app/maintex-ai/_ai/'
     | '/app/_app/account/_account/profile'
     | '/app/_app/account/_account/profile/_profile'
     | '/app/_app/admin/_admin/configuration'
@@ -1124,6 +1165,7 @@ export interface FileRouteTypes {
     | '/app/_app/admin/_admin/settings/_settings'
     | '/app/_app/admin/_admin/servers-db/'
     | '/app/_app/manager/_manager/tracking/'
+    | '/app/_app/account/_account/profile/_profile/edit-profile'
     | '/app/_app/admin/_admin/settings/_settings/about'
     | '/app/_app/admin/_admin/settings/_settings/amc'
     | '/app/_app/admin/_admin/settings/_settings/api-keys'
@@ -1205,6 +1247,13 @@ declare module '@tanstack/react-router' {
       path: '/manager'
       fullPath: '/app/manager'
       preLoaderRoute: typeof AppAppManagerRouteImport
+      parentRoute: typeof AppAppRoute
+    }
+    '/app/_app/maintex-ai': {
+      id: '/app/_app/maintex-ai'
+      path: '/maintex-ai'
+      fullPath: '/app/maintex-ai'
+      preLoaderRoute: typeof AppAppMaintexAiRouteImport
       parentRoute: typeof AppAppRoute
     }
     '/app/_app/hr': {
@@ -1319,6 +1368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAppManagerManagerRouteImport
       parentRoute: typeof AppAppManagerRoute
     }
+    '/app/_app/maintex-ai/_ai': {
+      id: '/app/_app/maintex-ai/_ai'
+      path: '/maintex-ai'
+      fullPath: '/app/maintex-ai'
+      preLoaderRoute: typeof AppAppMaintexAiAiRouteImport
+      parentRoute: typeof AppAppMaintexAiRoute
+    }
     '/app/_app/hr/_hr': {
       id: '/app/_app/hr/_hr'
       path: '/hr'
@@ -1368,6 +1424,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAppAccountAccountProfileRouteImport
       parentRoute: typeof AppAppAccountAccountRoute
     }
+    '/app/_app/maintex-ai/_ai/': {
+      id: '/app/_app/maintex-ai/_ai/'
+      path: '/'
+      fullPath: '/app/maintex-ai/'
+      preLoaderRoute: typeof AppAppMaintexAiAiIndexRouteImport
+      parentRoute: typeof AppAppMaintexAiAiRoute
+    }
     '/app/_app/hr/_hr/notes': {
       id: '/app/_app/hr/_hr/notes'
       path: '/notes'
@@ -1389,18 +1452,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAppHrHrLeaveManagementLazyRouteImport
       parentRoute: typeof AppAppHrHrRoute
     }
+    '/app/_app/hr/_hr/events': {
+      id: '/app/_app/hr/_hr/events'
+      path: '/events'
+      fullPath: '/app/hr/events'
+      preLoaderRoute: typeof AppAppHrHrEventsLazyRouteImport
+      parentRoute: typeof AppAppHrHrRoute
+    }
     '/app/_app/hr/_hr/employees': {
       id: '/app/_app/hr/_hr/employees'
       path: '/employees'
       fullPath: '/app/hr/employees'
       preLoaderRoute: typeof AppAppHrHrEmployeesLazyRouteImport
-      parentRoute: typeof AppAppHrHrRoute
-    }
-    '/app/_app/hr/_hr/calendar': {
-      id: '/app/_app/hr/_hr/calendar'
-      path: '/calendar'
-      fullPath: '/app/hr/calendar'
-      preLoaderRoute: typeof AppAppHrHrCalendarLazyRouteImport
       parentRoute: typeof AppAppHrHrRoute
     }
     '/app/_app/hr/_hr/attendance': {
@@ -1683,6 +1746,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAppAdminAdminSettingsSettingsAboutLazyRouteImport
       parentRoute: typeof AppAppAdminAdminSettingsSettingsRoute
     }
+    '/app/_app/account/_account/profile/_profile/edit-profile': {
+      id: '/app/_app/account/_account/profile/_profile/edit-profile'
+      path: '/edit-profile'
+      fullPath: '/app/account/profile/edit-profile'
+      preLoaderRoute: typeof AppAppAccountAccountProfileProfileEditProfileRouteImport
+      parentRoute: typeof AppAppAccountAccountProfileProfileRoute
+    }
   }
 }
 
@@ -1720,11 +1790,14 @@ const SupportRouteWithChildren =
   SupportRoute._addFileChildren(SupportRouteChildren)
 
 interface AppAppAccountAccountProfileProfileRouteChildren {
+  AppAppAccountAccountProfileProfileEditProfileRoute: typeof AppAppAccountAccountProfileProfileEditProfileRoute
   AppAppAccountAccountProfileProfileIndexLazyRoute: typeof AppAppAccountAccountProfileProfileIndexLazyRoute
 }
 
 const AppAppAccountAccountProfileProfileRouteChildren: AppAppAccountAccountProfileProfileRouteChildren =
   {
+    AppAppAccountAccountProfileProfileEditProfileRoute:
+      AppAppAccountAccountProfileProfileEditProfileRoute,
     AppAppAccountAccountProfileProfileIndexLazyRoute:
       AppAppAccountAccountProfileProfileIndexLazyRoute,
   }
@@ -1974,8 +2047,8 @@ const AppAppDevelopmentRouteWithChildren =
 
 interface AppAppHrHrRouteChildren {
   AppAppHrHrAttendanceLazyRoute: typeof AppAppHrHrAttendanceLazyRoute
-  AppAppHrHrCalendarLazyRoute: typeof AppAppHrHrCalendarLazyRoute
   AppAppHrHrEmployeesLazyRoute: typeof AppAppHrHrEmployeesLazyRoute
+  AppAppHrHrEventsLazyRoute: typeof AppAppHrHrEventsLazyRoute
   AppAppHrHrLeaveManagementLazyRoute: typeof AppAppHrHrLeaveManagementLazyRoute
   AppAppHrHrManageRequestsLazyRoute: typeof AppAppHrHrManageRequestsLazyRoute
   AppAppHrHrNotesLazyRoute: typeof AppAppHrHrNotesLazyRoute
@@ -1983,8 +2056,8 @@ interface AppAppHrHrRouteChildren {
 
 const AppAppHrHrRouteChildren: AppAppHrHrRouteChildren = {
   AppAppHrHrAttendanceLazyRoute: AppAppHrHrAttendanceLazyRoute,
-  AppAppHrHrCalendarLazyRoute: AppAppHrHrCalendarLazyRoute,
   AppAppHrHrEmployeesLazyRoute: AppAppHrHrEmployeesLazyRoute,
+  AppAppHrHrEventsLazyRoute: AppAppHrHrEventsLazyRoute,
   AppAppHrHrLeaveManagementLazyRoute: AppAppHrHrLeaveManagementLazyRoute,
   AppAppHrHrManageRequestsLazyRoute: AppAppHrHrManageRequestsLazyRoute,
   AppAppHrHrNotesLazyRoute: AppAppHrHrNotesLazyRoute,
@@ -2004,6 +2077,29 @@ const AppAppHrRouteChildren: AppAppHrRouteChildren = {
 
 const AppAppHrRouteWithChildren = AppAppHrRoute._addFileChildren(
   AppAppHrRouteChildren,
+)
+
+interface AppAppMaintexAiAiRouteChildren {
+  AppAppMaintexAiAiIndexRoute: typeof AppAppMaintexAiAiIndexRoute
+}
+
+const AppAppMaintexAiAiRouteChildren: AppAppMaintexAiAiRouteChildren = {
+  AppAppMaintexAiAiIndexRoute: AppAppMaintexAiAiIndexRoute,
+}
+
+const AppAppMaintexAiAiRouteWithChildren =
+  AppAppMaintexAiAiRoute._addFileChildren(AppAppMaintexAiAiRouteChildren)
+
+interface AppAppMaintexAiRouteChildren {
+  AppAppMaintexAiAiRoute: typeof AppAppMaintexAiAiRouteWithChildren
+}
+
+const AppAppMaintexAiRouteChildren: AppAppMaintexAiRouteChildren = {
+  AppAppMaintexAiAiRoute: AppAppMaintexAiAiRouteWithChildren,
+}
+
+const AppAppMaintexAiRouteWithChildren = AppAppMaintexAiRoute._addFileChildren(
+  AppAppMaintexAiRouteChildren,
 )
 
 interface AppAppManagerManagerRouteChildren {
@@ -2038,6 +2134,7 @@ interface AppAppRouteChildren {
   AppAppAdminRoute: typeof AppAppAdminRouteWithChildren
   AppAppDevelopmentRoute: typeof AppAppDevelopmentRouteWithChildren
   AppAppHrRoute: typeof AppAppHrRouteWithChildren
+  AppAppMaintexAiRoute: typeof AppAppMaintexAiRouteWithChildren
   AppAppManagerRoute: typeof AppAppManagerRouteWithChildren
   AppAppChatsIndexLazyRoute: typeof AppAppChatsIndexLazyRoute
 }
@@ -2050,6 +2147,7 @@ const AppAppRouteChildren: AppAppRouteChildren = {
   AppAppAdminRoute: AppAppAdminRouteWithChildren,
   AppAppDevelopmentRoute: AppAppDevelopmentRouteWithChildren,
   AppAppHrRoute: AppAppHrRouteWithChildren,
+  AppAppMaintexAiRoute: AppAppMaintexAiRouteWithChildren,
   AppAppManagerRoute: AppAppManagerRouteWithChildren,
   AppAppChatsIndexLazyRoute: AppAppChatsIndexLazyRoute,
 }

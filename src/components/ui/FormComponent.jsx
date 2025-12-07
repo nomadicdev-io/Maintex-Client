@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useCallback, useId, useRef, useState } from "react"
 import Dropzone from 'react-dropzone'
-import { FileSpreadsheet, HardDriveUpload, ImagePlus, ImageUp, XIcon } from "lucide-react"
+import { FileSpreadsheet, HardDriveUpload, ImagePlus, ImageUp, Search, XIcon } from "lucide-react"
 import {
     Select,
     SelectContent,
@@ -25,6 +25,11 @@ import { Spinner } from "@/components/ui/spinner"
 import ImageComponent from "./ImageComponent"
 import { AnimatePresence } from "motion/react"
 import FormLoader from "../loaders/FormLoader"
+import {
+    InputGroup,
+    InputGroupAddon,
+    InputGroupInput,
+  } from "@/components/ui/input-group"
 
 export const InputField = ({label, name, type, placeholder, value, onChange, error, isError, isLoading, isSuccess, readOnly = false, onBlur, disabled = false, autoFocus = false, autoComplete = 'off', className, classNames, startContent, endContent, ...props}) => {
     
@@ -563,6 +568,39 @@ export const AttachmentUploader = ({
       
             </div>
             {isError ? <p className="text-[0.65rem] text-red-500 px-2 mt-1 absolute bottom-0 left-0 translate-y-full">{error}</p> : null}
+        </div>
+    )
+}
+
+export const InputSearch = ({
+    name,
+    placeholder = 'Search...',
+    value,
+    onChange,
+    error,
+    isError,
+    readOnly = false,
+    onBlur,
+    disabled = false,
+    autoFocus = false,
+    className,
+    classNames,
+    results = 0,
+}) => {
+    return (
+        <div className={cn("grid w-full items-center relative", classNames?.wrapper, className)}>
+        <InputGroup>
+            <InputGroupInput placeholder={placeholder} value={value} onChange={onChange} error={error} isError={isError} readOnly={readOnly} onBlur={onBlur} disabled={disabled} autoFocus={autoFocus} name={name} className={cn("w-full", classNames?.input)} />
+            <InputGroupAddon>
+            <Search opacity={0.75}/>
+            </InputGroupAddon>
+            {
+                results.length > 0 ?
+                <InputGroupAddon align="inline-end">{results.length} results</InputGroupAddon>
+                :
+                null
+            }
+        </InputGroup>
         </div>
     )
 }

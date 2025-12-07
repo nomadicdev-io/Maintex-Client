@@ -127,6 +127,12 @@
         "location-access-required": "إذن الوصول إلى الموقع مطلوب",
         "location-access-required-description": "هذا التطبيق يتطلب بشكل صارم الوصول إلى موقع الجهاز للعمل. يرجى تمكين خدمات الموقع في إعدادات المتصفح أو الجهاز. بدون وصول الموقع، لن تتمكن من استخدام التطبيق.",
         "enable-location": "تمكين الموقع",
-        "active-countries": "الدول النشطة"
+        "active-countries": "الدول النشطة",
+        "events": "الأحداث",
+        "clients": "العملاء",
+        "business-development": "التنمية التجارية",
+        "terminal-logs": "سجلات الطرفية",
+        "login-to-terminal": "تسجيل الدخول إلى الطرفية",
+        "teams": "الفرق"
     }
 }

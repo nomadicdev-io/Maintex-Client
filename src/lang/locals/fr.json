@@ -127,6 +127,12 @@
         "location-access-required": "Accès à la localisation requis",
         "location-access-required-description": "Cette application nécessite strictement un accès à la localisation de votre appareil pour fonctionner. Veuillez activer les services de localisation dans les paramètres de votre navigateur ou de votre appareil. Sans accès à la localisation, vous ne pourrez pas utiliser l'application.",
         "enable-location": "Activer la Localisation",
-        "active-countries": "Pays Actifs"
+        "active-countries": "Pays Actifs",
+        "events": "Événements",
+        "clients": "Clients",   
+        "business-development": "Développement Commercial",
+        "terminal-logs": "Logs de Terminal",
+        "login-to-terminal": "Se connecter à Terminal",
+        "teams": "Équipes"
     }
 }

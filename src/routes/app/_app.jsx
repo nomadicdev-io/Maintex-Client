@@ -10,9 +10,10 @@ import { atom, useAtomValue } from 'jotai'
 import VoiceAgent from '../../components/sections/VoiceAgent'
 import useNetInfo from '@/hooks/useNetInfo'
 import NoInternet from '../../components/layouts/NoInternet'
-import { useSocket } from '../../context/SocketContext'
 import { authClient } from '../../auth'
 import { useGeoLocation } from '../../hooks/useGeoLocation'
+import { useEffect } from 'react'
+import AIAssistantModal from '../../components/ai/AIAssistantModal'
 
 export const Route = createFileRoute('/app/_app')({
   component: AppLayout,
@@ -31,12 +32,13 @@ function AppLayout() {
   const isVoiceAgent = useAtomValue(voiceAgentAtom)
   const {isOnline} = useNetInfo()
   const {context} = Route.useRouteContext()
-  const {sendMessage} = useSocket()
-  const {data} = authClient.useSession()
-  const {coords} = useGeoLocation()
+  const {getLocation} = useGeoLocation()
 
-  console.log('COORDS', coords)
-
+  useEffect(() => {
+    getLocation().then((coords) => {
+      console.log('COORDS', coords)
+    })
+  }, [])
 
   // useEffect(() => {
   //   if(data?.user) {
@@ -84,6 +86,8 @@ function AppLayout() {
     {
       !isOnline ? <NoInternet key={'no-internet'} /> : null
     }
+
+    <AIAssistantModal />
     </AnimatePresence>
     </>
   )

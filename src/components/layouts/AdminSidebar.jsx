@@ -1,5 +1,5 @@
 
-import { ChevronLeft, LayoutDashboard, MessagesSquare, CalendarDays, Users, CircleUser, Server, Package, FolderKanban, Megaphone, NotebookPen, Clock, DoorOpen, Settings, NotebookText, MapPinned, ListTree, FileCode, ChartNetwork, SquareTerminal, DatabaseBackup, MonitorSpeaker, Wrench, Columns3Cog, Ticket, WrenchIcon, FolderTree } from "lucide-react";
+import { ChevronLeft, LayoutDashboard, MessagesSquare, CalendarDays, Users, CircleUser, Server, Package, FolderKanban, Megaphone, NotebookPen, Clock, DoorOpen, Settings, NotebookText, MapPinned, ListTree, FileCode, ChartNetwork, SquareTerminal, DatabaseBackup, MonitorSpeaker, Wrench, Columns3Cog, Ticket, WrenchIcon, FolderTree, Hotel, Briefcase, Group, IdCard } from "lucide-react";
 
 import { Button } from "../ui/button"
 import { Link, useLocation, useRouter } from "@tanstack/react-router"
@@ -21,6 +21,7 @@ import { useAuthStore } from "@/hooks/useAuthStore"
 import { useTheme } from "next-themes"
 import { authClient } from "@/auth"
 import { useTranslation } from "react-i18next"
+import { RiGroupLine, RiTeamLine } from "@remixicon/react";
 
 export default function AdminSidebar() {
 
@@ -57,18 +58,40 @@ export default function AdminSidebar() {
                 }
             ]
         },
+        // {
+        //     label: "Teamify",
+        //     role: ['admin', 'hr', 'developer', 'employee'],
+        //     items: [
+        //         {
+        //             id: 'nav-24',
+        //             label: t("projects"),
+        //             href: "/app/teamify/projects",
+        //             icon: <FolderKanban />,
+        //             exact: false,
+        //             users: 'employee'
+        //         }
+        //     ]
+        // },
         {
-            label: "Teamify",
-            role: ['admin', 'hr', 'developer', 'employee'],
+            label: t("business-development"),
+            role: ['admin', 'hr', 'developer', 'manager'],
             items: [
                 {
-                    id: 'nav-24',
-                    label: t("projects"),
-                    href: "/app/teamify/projects",
-                    icon: <FolderKanban />,
+                    id: 'nav-44.22',
+                    label: t("clients"),
+                    href: "/app/business-development/clients",
+                    icon: <Hotel />,
                     exact: false,
-                    users: 'employee'
-                }
+                    users: 'manager'
+                },
+                {
+                    id: 'nav-44.23',
+                    label: t("projects"),
+                    href: "/app/business-development/projects",
+                    icon: <Briefcase />,
+                    exact: false,
+                    users: 'manager'
+                },
             ]
         },
         {
@@ -76,15 +99,25 @@ export default function AdminSidebar() {
             role: ['admin', 'hr', 'developer', 'employee'],
             items: [
                 {
-                    id: 'nav-11.22',
-                    label: t("tracking"),
-                    href: "/app/manager/tracking",
-                    icon: <MapPinned />,
+                    id: 'nav-11.90',
+                    label: t("teams"),
+                    href: "/app/manager/teams",
+                    icon: <Users />,
                     exact: false,
                     users: 'user'
                 },
+                {
+                    id: 'nav-11.22',
+                    label: t("tracking"),
+                    href: "/app/service/tracking",
+                    icon: <MapPinned />,
+                    exact: false,
+                    users: 'user'
+                }
+                
             ]
         },
+        
         {
             label: t("hr"),
             role: ['admin', 'hr', 'developer'],
@@ -101,7 +134,7 @@ export default function AdminSidebar() {
                     id: 'nav-11.1',
                     label: t("employees"),
                     href: "/app/hr/employees",
-                    icon: <Users />,
+                    icon: <IdCard />,
                     exact: false,
                     users: 'user'
                 },
@@ -131,8 +164,8 @@ export default function AdminSidebar() {
                 },
                 {
                     id: 'nav-11.4',
-                    label: t("calendar"),
-                    href: "/app/hr/calendar",
+                    label: t("events"),
+                    href: "/app/hr/events",
                     icon: <CalendarDays />,
                     exact: false,
                     users: 'user'
@@ -164,14 +197,6 @@ export default function AdminSidebar() {
                     label: t("requests"),
                     href: "/app/account/requests",
                     icon: <NotebookPen />,
-                    exact: false,
-                    users: 'user'
-                },
-                {   
-                    id: 'nav-10.1',
-                    label: t("projects"),
-                    href: "/app/account/projects",
-                    icon: <FolderKanban />,
                     exact: false,
                     users: 'user'
                 },

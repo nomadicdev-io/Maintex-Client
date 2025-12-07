@@ -127,7 +127,13 @@
         "location-access-required": "Location Access Required",
         "location-access-required-description": "This application strictly requires access to your device's location to function. Please enable location services in your browser or device settings. Without location access, you will not be able to use the app.",
         "enable-location": "Enable Location",
-        "active-countries": "Active Countries"
+        "active-countries": "Active Countries",
+        "events": "Events",
+        "clients": "Clients",
+        "business-development": "Business Development",
+        "terminal-logs": "Terminal Logs",
+        "login-to-terminal": "Login to Terminal",
+        "teams": "Teams"
         
     }
 }

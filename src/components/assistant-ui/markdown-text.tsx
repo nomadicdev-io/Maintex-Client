@@ -19,7 +19,7 @@ const MarkdownTextImpl = () => {
   return (
     <MarkdownTextPrimitive
       remarkPlugins={[remarkGfm]}
-      className="aui-md"
+      className="aui-md text-lg bg-bg-100/20 rounded-2xl p-6 leading-1.75"
       components={defaultComponents}
     />
   );
@@ -124,7 +124,7 @@ const defaultComponents = memoizeMarkdownComponents({
   p: ({ className, ...props }) => (
     <p
       className={cn(
-        "aui-md-p mt-5 mb-5 leading-7 first:mt-0 last:mb-0",
+        "aui-md-p mt-5 text-lg leading-[1.75] first:mt-0 last:mb-0 text-text/75",
         className,
       )}
       {...props}

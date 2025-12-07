@@ -282,20 +282,31 @@ function HeaderUser(){
 
 function HeaderAIChatBot(){
 
-  const {toggle} = useAI()
+  // const {toggle} = useAI()
+  const router = useRouter()
+
+  const handleAIChatBot = () => {
+    router.navigate({to: '/app/maintex-ai'})
+  }
 
   return (
-    <Tooltip variant="secondary">
-      <TooltipTrigger asChild>
-        <Button size="icon" variant="defaultIcon" onClick={toggle}>
-          <Bot/>
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent side="bottom">
-        Maintex AI
-      </TooltipContent>
-    </Tooltip>
+    <Button size="icon" variant="defaultIcon" onClick={handleAIChatBot}>
+      <Bot/>
+    </Button>
   )
+
+  // return (
+  //   <Tooltip variant="secondary">
+  //     <TooltipTrigger asChild>
+  //       <Button size="icon" variant="defaultIcon" onClick={toggle}>
+  //         <Bot/>
+  //       </Button>
+  //     </TooltipTrigger>
+  //     <TooltipContent side="bottom">
+  //       Maintex AI
+  //     </TooltipContent>
+  //   </Tooltip>
+  // )
 }
 
 

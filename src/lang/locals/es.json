@@ -127,6 +127,12 @@
         "location-access-required": "Acceso a la ubicación requerido",
         "location-access-required-description": "Esta aplicación requiere estrictamente acceso a la ubicación del dispositivo para funcionar. Por favor, habilite los servicios de ubicación en las configuraciones del navegador o del dispositivo. Sin acceso a la ubicación, no podrá usar la aplicación.",
         "enable-location": "Habilitar Ubicación",
-        "active-countries": "Países Activos"
+        "active-countries": "Países Activos",
+        "events": "Eventos",
+        "clients": "Clientes",
+        "business-development": "Desarrollo de Negocios",
+        "terminal-logs": "Logs de Terminal",
+        "login-to-terminal": "Iniciar sesión en Terminal",
+        "teams": "Equipos"
     }
 }

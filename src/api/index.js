@@ -298,6 +298,113 @@ const orbitAI = {
     },
 }
 
-export { orbitAI };
+export { orbitAI, activityLogger };
 
 export default orbit;
+
+const activityLogger = {
+    subscribe: (callbacks = {}) => {
+        // Convert HTTP/HTTPS URL to WebSocket URL
+        const docsUrl = import.meta.env.VITE_DOCS_URL || '';
+        const wsUrl = docsUrl
+            .replace(/^http:/, 'ws:')
+            .replace(/^https:/, 'wss:');
+        
+        if (!wsUrl) {
+            console.error('VITE_DOCS_URL is not defined');
+            callbacks.onError && callbacks.onError(new Error('WebSocket URL is not configured'));
+            return null;
+        }
+
+        let ws = null;
+        let reconnectAttempts = 0;
+        const maxReconnectAttempts = 5;
+        let reconnectTimeout = null;
+        let isManualClose = false;
+
+        const connect = () => {
+            try {
+                ws = new WebSocket(wsUrl);
+
+                ws.onopen = () => {
+                    reconnectAttempts = 0;
+                    console.log('%cActivity Logger WebSocket Connected: ' + new Date().toISOString(), 'background: green; color: #fafafa; font-weight: bold; font-size: 12px; padding:8px; border-radius: 4px;');
+                    callbacks.onConnect && callbacks.onConnect();
+                };
+
+                ws.onmessage = (event) => {
+                    try {
+                        const data = JSON.parse(event.data);
+                        callbacks.onMessage && callbacks.onMessage(data);
+                    } catch {
+                        // If parsing fails, pass raw data
+                        callbacks.onMessage && callbacks.onMessage(event.data);
+                    }
+                };
+
+                ws.onerror = (error) => {
+                    console.error('Activity Logger WebSocket error:', error);
+                    callbacks.onError && callbacks.onError(error);
+                };
+
+                ws.onclose = (event) => {
+                    console.log('Activity Logger WebSocket closed:', event.code, event.reason);
+                    callbacks.onClose && callbacks.onClose(event);
+                    
+                    // Auto-reconnect if not manually closed and haven't exceeded max attempts
+                    if (!isManualClose && reconnectAttempts < maxReconnectAttempts) {
+                        reconnectAttempts++;
+                        const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000); // Exponential backoff, max 30s
+                        console.log(`Reconnecting in ${delay}ms... (attempt ${reconnectAttempts}/${maxReconnectAttempts})`);
+                        reconnectTimeout = setTimeout(() => {
+                            connect();
+                        }, delay);
+                    } else if (reconnectAttempts >= maxReconnectAttempts) {
+                        console.error('Max reconnection attempts reached');
+                        callbacks.onMaxReconnectAttempts && callbacks.onMaxReconnectAttempts();
+                    }
+                };
+            } catch (error) {
+                console.error('Failed to create WebSocket connection:', error);
+                callbacks.onError && callbacks.onError(error);
+            }
+        };
+
+        // Start connection
+        connect();
+
+        // Return unsubscribe function
+        return {
+            unsubscribe: () => {
+                isManualClose = true;
+                if (reconnectTimeout) {
+                    clearTimeout(reconnectTimeout);
+                    reconnectTimeout = null;
+                }
+                if (ws) {
+                    ws.close();
+                    ws = null;
+                }
+            },
+            send: (message) => {
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(typeof message === 'string' ? message : JSON.stringify(message));
+                } else {
+                    console.warn('Activity Logger WebSocket not connected, message not sent');
+                    callbacks.onError && callbacks.onError(new Error('WebSocket not connected'));
+                }
+            },
+            isConnected: () => {
+                return ws && ws.readyState === WebSocket.OPEN;
+            },
+            reconnect: () => {
+                isManualClose = false;
+                reconnectAttempts = 0;
+                if (ws) {
+                    ws.close();
+                }
+                connect();
+            }
+        };
+    }
+}

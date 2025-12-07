@@ -228,7 +228,7 @@ function RouteComponent() {
   return (
     <div className="flex h-full w-full overflow-hidden bg-gradient-to-br from-background via-background to-muted/20">
       {/* Left Sidebar - Conversations List */}
-      <div className="w-full md:w-80 lg:w-96 border-r border-border/50 bg-card/80 backdrop-blur-sm flex flex-col shadow-xl">
+      <div className="bg-bg-100/50 w-full md:w-80 lg:w-96 border-r border-border/50 bg-card/80 backdrop-blur-sm flex flex-col shadow-xl">
         {/* Header */}
         <div className="p-4 border-b border-border/50 bg-gradient-to-r from-transparent via-muted/10 to-transparent">
           <div className="flex items-center justify-between mb-4">
@@ -252,7 +252,7 @@ function RouteComponent() {
 
         {/* Conversations List */}
         <ScrollArea className="flex-1">
-          <div className="p-2 space-y-1">
+          <div className="p-4">
             {filteredConversations.map((conversation) => (
               <div
                 key={conversation.id}
@@ -408,8 +408,8 @@ function RouteComponent() {
                         className={cn(
                           "max-w-[70%] md:max-w-[60%] rounded-2xl px-4 py-2.5 shadow-sm transition-all duration-200 hover:shadow-md",
                           message.isOwn
-                            ? "bg-gradient-to-br from-primary to-primary/90 text-primary-foreground rounded-tr-sm ring-1 ring-primary/20"
-                            : "bg-gradient-to-br from-muted to-muted/80 text-foreground rounded-tl-sm border border-border/50"
+                            ? "bg-gradient-to-br from-bg to-bg-300 text-primary-foreground rounded-tr-sm ring-1 ring-primary/20"
+                            : "bg-gradient-to-br from-bg to-bg-300 text-foreground rounded-tl-sm border border-border/50"
                         )}
                       >
                         {!message.isOwn && (
