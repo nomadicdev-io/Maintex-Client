@@ -31,6 +31,13 @@ import { ArrowUpDown, Printer, RefreshCw } from 'lucide-react'
 
 export const Route = createLazyFileRoute('/app/_app/hr/_hr/employees')({
   component: RouteComponent,
+  head: ()=> ({
+    meta: [
+      {
+        title: "Employees & User Management | Maintex Pro "
+      } 
+    ]
+  })
 })
 
 function RouteComponent() {

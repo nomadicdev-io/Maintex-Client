@@ -3,6 +3,13 @@ import DashboardBanner from '@/components/sections/DashboardBanner'
 
 export const Route = createLazyFileRoute('/app/_app/account/_account/projects')({
   component: RouteComponent,
+  head: ()=> ({
+    meta: [
+      {
+        title: "My Projects & Workspaces | Maintex Pro "
+      } 
+    ]
+  })
 })
 
 function RouteComponent() {

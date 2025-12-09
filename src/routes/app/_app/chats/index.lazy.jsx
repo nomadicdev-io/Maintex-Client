@@ -48,6 +48,13 @@ if (typeof document !== 'undefined') {
 
 export const Route = createLazyFileRoute('/app/_app/chats/')({
   component: RouteComponent,
+  head: ()=> ({
+    meta: [
+      {
+        title: "Chats | Maintex Pro "
+      } 
+    ]
+  })
 })
 
 // Static data for users/groups

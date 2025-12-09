@@ -271,26 +271,26 @@ const orbitAI = {
                     ...options?.headers
                 },
                 ...options
-            }).json();
-            if(response.error) throw response
-            callback && callback.onSuccess(response);
+            })
 
+            if(response.error) throw response
+           
             const reader = response.body.getReader();
-            const decoder = new TextDecoder();
-            let done = false;
-          
-            console.log(reader);
-            while (!done) {
-              const { value, done: streamDone } = await reader.read();
-              done = streamDone;
-              if (value) {
-                const chunk = decoder.decode(value, { stream: true });
-                console.log('Received chunk:', chunk);
-                callback && callback.onStream(chunk);
-              }
+            const decoder = new TextDecoder('utf-8');  // For converting Uint8Array to text
+
+            try {
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    callback?.onStream(decoder.decode(value, { stream: true }))
+
+                    // const chunk = decoder.decode(value, { stream: true }); 
+                    // callback?.onUIStream(chunk.toString('utf-8')) 
+                }
+            } finally {
+                reader.releaseLock();  // Clean up
             }
-          
-            return response;
         }catch(error){
             callback && callback.onError(error);
             return error;

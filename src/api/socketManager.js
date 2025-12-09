@@ -158,6 +158,12 @@ class SocketManager {
     }
     
     if (!this.subscriptions.has(channel)) {
+      this.send({
+        event: 'subscribe',
+        data: {
+          channel: channel
+        }
+      })
       this.subscriptions.set(channel, new Set());
     }
     

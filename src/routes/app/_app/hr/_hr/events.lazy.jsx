@@ -8,6 +8,13 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 
 export const Route = createLazyFileRoute('/app/_app/hr/_hr/events')({
   component: RouteComponent,
+  head: ()=> ({
+    meta: [
+      {
+        title: "Events & Schedules | Maintex Pro "
+      } 
+    ]
+  })
 })
 
 function RouteComponent() {

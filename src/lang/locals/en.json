@@ -151,6 +151,15 @@
         "name": "Name",
         "value": "Value",
         "permissions": "Permissions",
-        "files-manager": "Files Manager"
+        "files-manager": "Files Manager",
+        "outlets": "Outlets",
+        "task-management": "Task Management",
+        "work-orders": "Work Orders",
+        "schedules": "Schedules",
+        "reports": "Reports",
+        "enquiries": "Enquiries",
+        "log-out": "Log Out",
+        "edit-profile": "Edit Profile",
+        "ai-sdk": "AI SDK"
     }
 }

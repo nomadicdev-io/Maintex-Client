@@ -3,8 +3,10 @@ import { authClient } from '@auth'
 import ProfileInfo from '@/components/sections/profile/ProfileInfo'
 import DashboardBanner from '@/components/sections/DashboardBanner'
 import { Separator } from '@/components/ui/separator'
-import { UploadCloud, FolderPlus, Search, MoreVertical, Folder, UserPen } from 'lucide-react'
+import {LogOutIcon, UserPen } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useTranslation } from 'react-i18next'
+import { useAuthStore } from '@/hooks/useAuthStore'
 
 export const Route = createLazyFileRoute('/app/_app/account/_account/profile/_profile/')({
   component: RouteComponent,
@@ -21,6 +23,8 @@ function RouteComponent() {
 
   const { data, refetch } = authClient.useSession()
   const router = useRouter()
+  const { t } = useTranslation()
+  const logout = useAuthStore((state) => state.logout)
 
   const quickStats = [
     {
@@ -218,10 +222,16 @@ function RouteComponent() {
         description='Manage your account and profile settings here.'
         className='supports-[backdrop-filter]:bg-bg/40'
       >
-        <Button variant='shade' onClick={() => router.navigate({ to: '/app/account/profile/edit-profile' })}>
-          <UserPen />
-          <span>Edit Profile</span>
-        </Button>
+        <div className='flex gap-2'>
+          <Button variant='shade' onClick={() => router.navigate({ to: '/app/account/profile/edit-profile' })}>
+            <UserPen />
+            <span>{t('edit-profile')}</span>
+          </Button>
+          <Button variant='shade' onClick={logout}>
+            <LogOutIcon />
+            <span>{t('log-out')}</span>
+          </Button>
+        </div>
       </DashboardBanner>
 
       {data?.user ? (

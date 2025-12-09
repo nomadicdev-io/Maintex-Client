@@ -168,6 +168,13 @@ const storageBreakdown = [
 
 export const Route = createLazyFileRoute('/app/_app/account/_account/drive')({
   component: RouteComponent,
+  head: ()=> ({
+    meta: [
+      {
+        title: "My Drive | Maintex Pro "
+      } 
+    ]
+  })
 })
 
 function RouteComponent() {

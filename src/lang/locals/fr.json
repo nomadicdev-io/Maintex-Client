@@ -151,6 +151,15 @@
         "name": "Nom",
         "value": "Valeur",
         "permissions": "Permissions",
-        "files-manager": "Gestionnaire de fichiers"
+        "files-manager": "Gestionnaire de fichiers",
+        "outlets": "Outlets",
+        "task-management": "Gestion des Tâches",
+        "work-orders": "Ordres de Travail",
+        "schedules": "Programmes",
+        "reports": "Report",
+        "enquiries": "Enquiries",
+        "log-out": "Se déconnecter",
+        "edit-profile": "Modifier le profil",
+        "ai-sdk": "AI SDK"
     }
 }

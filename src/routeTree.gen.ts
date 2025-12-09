@@ -25,14 +25,17 @@ import { Route as SupportSupportContactUsRouteImport } from './routes/_support/s
 import { Route as AuthAuthVerifyEmailRouteImport } from './routes/_auth/auth/verify-email'
 import { Route as AuthAuthPasswordResetRouteImport } from './routes/_auth/auth/password-reset'
 import { Route as AuthAuthJoinRouteImport } from './routes/_auth/auth/join'
+import { Route as AppAppServiceServiceRouteImport } from './routes/app/_app/service/_service'
 import { Route as AppAppManagerManagerRouteImport } from './routes/app/_app/manager/_manager'
 import { Route as AppAppMaintexAiAiRouteImport } from './routes/app/_app/maintex-ai/_ai'
 import { Route as AppAppHrHrRouteImport } from './routes/app/_app/hr/_hr'
 import { Route as AppAppDevelopmentDevelopmentRouteImport } from './routes/app/_app/development/_development'
+import { Route as AppAppBusinessDevelopmentBusinessDevelopmentRouteImport } from './routes/app/_app/business-development/_business-development'
 import { Route as AppAppAdminAdminRouteImport } from './routes/app/_app/admin/_admin'
 import { Route as AppAppAccountAccountRouteImport } from './routes/app/_app/account/_account'
 import { Route as AppAppMaintexAiAiIndexRouteImport } from './routes/app/_app/maintex-ai/_ai/index'
 import { Route as AppAppDevelopmentDevelopmentFilesManagerRouteImport } from './routes/app/_app/development/_development/files-manager'
+import { Route as AppAppDevelopmentDevelopmentAiSdkRouteImport } from './routes/app/_app/development/_development/ai-sdk'
 import { Route as AppAppManagerManagerTrackingIndexRouteImport } from './routes/app/_app/manager/_manager/tracking/index'
 import { Route as AppAppAdminAdminServersDbIndexRouteImport } from './routes/app/_app/admin/_admin/servers-db/index'
 import { Route as AppAppAdminAdminSettingsSettingsRouteImport } from './routes/app/_app/admin/_admin/settings/_settings'
@@ -42,10 +45,14 @@ import { Route as AppAppAdminAdminConfigurationConfigurationIndexRouteImport } f
 import { Route as AppAppAccountAccountProfileProfileEditProfileRouteImport } from './routes/app/_app/account/_account/profile/_profile/edit-profile'
 
 const AppRouteImport = createFileRoute('/app')()
+const AppAppServiceRouteImport = createFileRoute('/app/_app/service')()
 const AppAppManagerRouteImport = createFileRoute('/app/_app/manager')()
 const AppAppMaintexAiRouteImport = createFileRoute('/app/_app/maintex-ai')()
 const AppAppHrRouteImport = createFileRoute('/app/_app/hr')()
 const AppAppDevelopmentRouteImport = createFileRoute('/app/_app/development')()
+const AppAppBusinessDevelopmentRouteImport = createFileRoute(
+  '/app/_app/business-development',
+)()
 const AppAppAdminRouteImport = createFileRoute('/app/_app/admin')()
 const AppAppAccountRouteImport = createFileRoute('/app/_app/account')()
 const AppAppAnnouncementsLazyRouteImport = createFileRoute(
@@ -60,6 +67,24 @@ const AppAppAdminAdminConfigurationRouteImport = createFileRoute(
 )()
 const AppAppAccountAccountProfileRouteImport = createFileRoute(
   '/app/_app/account/_account/profile',
+)()
+const AppAppServiceServiceWorkOrdersLazyRouteImport = createFileRoute(
+  '/app/_app/service/_service/work-orders',
+)()
+const AppAppServiceServiceTrackingLazyRouteImport = createFileRoute(
+  '/app/_app/service/_service/tracking',
+)()
+const AppAppServiceServiceTeamsLazyRouteImport = createFileRoute(
+  '/app/_app/service/_service/teams',
+)()
+const AppAppServiceServiceSchedulesLazyRouteImport = createFileRoute(
+  '/app/_app/service/_service/schedules',
+)()
+const AppAppServiceServiceEnquiriesLazyRouteImport = createFileRoute(
+  '/app/_app/service/_service/enquiries',
+)()
+const AppAppHrHrReportsLazyRouteImport = createFileRoute(
+  '/app/_app/hr/_hr/reports',
 )()
 const AppAppHrHrNotesLazyRouteImport = createFileRoute(
   '/app/_app/hr/_hr/notes',
@@ -91,6 +116,24 @@ const AppAppDevelopmentDevelopmentTerminalLazyRouteImport = createFileRoute(
 const AppAppDevelopmentDevelopmentRepositoriesLazyRouteImport = createFileRoute(
   '/app/_app/development/_development/repositories',
 )()
+const AppAppBusinessDevelopmentBusinessDevelopmentTaskManagementLazyRouteImport =
+  createFileRoute(
+    '/app/_app/business-development/_business-development/task-management',
+  )()
+const AppAppBusinessDevelopmentBusinessDevelopmentProjectsLazyRouteImport =
+  createFileRoute(
+    '/app/_app/business-development/_business-development/projects',
+  )()
+const AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRouteImport =
+  createFileRoute(
+    '/app/_app/business-development/_business-development/outlets',
+  )()
+const AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRouteImport =
+  createFileRoute(
+    '/app/_app/business-development/_business-development/clients',
+  )()
+const AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRouteImport =
+  createFileRoute('/app/_app/business-development/_business-development/amc')()
 const AppAppAdminAdminDocsLazyLazyRouteImport = createFileRoute(
   '/app/_app/admin/_admin/docs',
 )()
@@ -204,6 +247,11 @@ const AppAppRoute = AppAppRouteImport.update({
   id: '/_app',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAppServiceRoute = AppAppServiceRouteImport.update({
+  id: '/service',
+  path: '/service',
+  getParentRoute: () => AppAppRoute,
+} as any)
 const AppAppManagerRoute = AppAppManagerRouteImport.update({
   id: '/manager',
   path: '/manager',
@@ -224,6 +272,12 @@ const AppAppDevelopmentRoute = AppAppDevelopmentRouteImport.update({
   path: '/development',
   getParentRoute: () => AppAppRoute,
 } as any)
+const AppAppBusinessDevelopmentRoute =
+  AppAppBusinessDevelopmentRouteImport.update({
+    id: '/business-development',
+    path: '/business-development',
+    getParentRoute: () => AppAppRoute,
+  } as any)
 const AppAppAdminRoute = AppAppAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -295,6 +349,10 @@ const AppAppChatsIndexLazyRoute = AppAppChatsIndexLazyRouteImport.update({
 } as any).lazy(() =>
   import('./routes/app/_app/chats/index.lazy').then((d) => d.Route),
 )
+const AppAppServiceServiceRoute = AppAppServiceServiceRouteImport.update({
+  id: '/_service',
+  getParentRoute: () => AppAppServiceRoute,
+} as any)
 const AppAppManagerManagerRoute = AppAppManagerManagerRouteImport.update({
   id: '/_manager',
   getParentRoute: () => AppAppManagerRoute,
@@ -311,6 +369,11 @@ const AppAppDevelopmentDevelopmentRoute =
   AppAppDevelopmentDevelopmentRouteImport.update({
     id: '/_development',
     getParentRoute: () => AppAppDevelopmentRoute,
+  } as any)
+const AppAppBusinessDevelopmentBusinessDevelopmentRoute =
+  AppAppBusinessDevelopmentBusinessDevelopmentRouteImport.update({
+    id: '/_business-development',
+    getParentRoute: () => AppAppBusinessDevelopmentRoute,
   } as any)
 const AppAppAdminAdminRoute = AppAppAdminAdminRouteImport.update({
   id: '/_admin',
@@ -343,6 +406,63 @@ const AppAppMaintexAiAiIndexRoute = AppAppMaintexAiAiIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppAppMaintexAiAiRoute,
 } as any)
+const AppAppServiceServiceWorkOrdersLazyRoute =
+  AppAppServiceServiceWorkOrdersLazyRouteImport.update({
+    id: '/work-orders',
+    path: '/work-orders',
+    getParentRoute: () => AppAppServiceServiceRoute,
+  } as any).lazy(() =>
+    import('./routes/app/_app/service/_service/work-orders.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AppAppServiceServiceTrackingLazyRoute =
+  AppAppServiceServiceTrackingLazyRouteImport.update({
+    id: '/tracking',
+    path: '/tracking',
+    getParentRoute: () => AppAppServiceServiceRoute,
+  } as any).lazy(() =>
+    import('./routes/app/_app/service/_service/tracking.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AppAppServiceServiceTeamsLazyRoute =
+  AppAppServiceServiceTeamsLazyRouteImport.update({
+    id: '/teams',
+    path: '/teams',
+    getParentRoute: () => AppAppServiceServiceRoute,
+  } as any).lazy(() =>
+    import('./routes/app/_app/service/_service/teams.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AppAppServiceServiceSchedulesLazyRoute =
+  AppAppServiceServiceSchedulesLazyRouteImport.update({
+    id: '/schedules',
+    path: '/schedules',
+    getParentRoute: () => AppAppServiceServiceRoute,
+  } as any).lazy(() =>
+    import('./routes/app/_app/service/_service/schedules.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AppAppServiceServiceEnquiriesLazyRoute =
+  AppAppServiceServiceEnquiriesLazyRouteImport.update({
+    id: '/enquiries',
+    path: '/enquiries',
+    getParentRoute: () => AppAppServiceServiceRoute,
+  } as any).lazy(() =>
+    import('./routes/app/_app/service/_service/enquiries.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AppAppHrHrReportsLazyRoute = AppAppHrHrReportsLazyRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppAppHrHrRoute,
+} as any).lazy(() =>
+  import('./routes/app/_app/hr/_hr/reports.lazy').then((d) => d.Route),
+)
 const AppAppHrHrNotesLazyRoute = AppAppHrHrNotesLazyRouteImport.update({
   id: '/notes',
   path: '/notes',
@@ -432,6 +552,58 @@ const AppAppDevelopmentDevelopmentRepositoriesLazyRoute =
       (d) => d.Route,
     ),
   )
+const AppAppBusinessDevelopmentBusinessDevelopmentTaskManagementLazyRoute =
+  AppAppBusinessDevelopmentBusinessDevelopmentTaskManagementLazyRouteImport.update(
+    {
+      id: '/task-management',
+      path: '/task-management',
+      getParentRoute: () => AppAppBusinessDevelopmentBusinessDevelopmentRoute,
+    } as any,
+  ).lazy(() =>
+    import('./routes/app/_app/business-development/_business-development/task-management.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AppAppBusinessDevelopmentBusinessDevelopmentProjectsLazyRoute =
+  AppAppBusinessDevelopmentBusinessDevelopmentProjectsLazyRouteImport.update({
+    id: '/projects',
+    path: '/projects',
+    getParentRoute: () => AppAppBusinessDevelopmentBusinessDevelopmentRoute,
+  } as any).lazy(() =>
+    import('./routes/app/_app/business-development/_business-development/projects.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRoute =
+  AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRouteImport.update({
+    id: '/outlets',
+    path: '/outlets',
+    getParentRoute: () => AppAppBusinessDevelopmentBusinessDevelopmentRoute,
+  } as any).lazy(() =>
+    import('./routes/app/_app/business-development/_business-development/outlets.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRoute =
+  AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRouteImport.update({
+    id: '/clients',
+    path: '/clients',
+    getParentRoute: () => AppAppBusinessDevelopmentBusinessDevelopmentRoute,
+  } as any).lazy(() =>
+    import('./routes/app/_app/business-development/_business-development/clients.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRoute =
+  AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRouteImport.update({
+    id: '/amc',
+    path: '/amc',
+    getParentRoute: () => AppAppBusinessDevelopmentBusinessDevelopmentRoute,
+  } as any).lazy(() =>
+    import('./routes/app/_app/business-development/_business-development/amc.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 const AppAppAdminAdminDocsLazyLazyRoute =
   AppAppAdminAdminDocsLazyLazyRouteImport.update({
     id: '/docs',
@@ -504,6 +676,12 @@ const AppAppDevelopmentDevelopmentFilesManagerRoute =
     path: '/files-manager',
     getParentRoute: () => AppAppDevelopmentDevelopmentRoute,
   } as any)
+const AppAppDevelopmentDevelopmentAiSdkRoute =
+  AppAppDevelopmentDevelopmentAiSdkRouteImport.update({
+    id: '/ai-sdk',
+    path: '/ai-sdk',
+    getParentRoute: () => AppAppDevelopmentDevelopmentRoute,
+  } as any)
 const AppAppManagerManagerTrackingIndexRoute =
   AppAppManagerManagerTrackingIndexRouteImport.update({
     id: '/tracking/',
@@ -547,9 +725,9 @@ const AppAppAccountAccountProfileProfileIndexLazyRoute =
     path: '/',
     getParentRoute: () => AppAppAccountAccountProfileProfileRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/account/_account/profile/_profile/index.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/account/_account/profile/_profile/index.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminConfigurationConfigurationIndexRoute =
   AppAppAdminAdminConfigurationConfigurationIndexRouteImport.update({
@@ -563,9 +741,9 @@ const AppAppAdminAdminSettingsSettingsUploadLazyRoute =
     path: '/upload',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/upload.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/upload.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsTranslationsLocalizationLazyRoute =
   AppAppAdminAdminSettingsSettingsTranslationsLocalizationLazyRouteImport.update(
@@ -575,9 +753,9 @@ const AppAppAdminAdminSettingsSettingsTranslationsLocalizationLazyRoute =
       getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
     } as any,
   ).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/translations-localization.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/translations-localization.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsSmtpLazyRoute =
   AppAppAdminAdminSettingsSettingsSmtpLazyRouteImport.update({
@@ -595,9 +773,9 @@ const AppAppAdminAdminSettingsSettingsSecurityLazyRoute =
     path: '/security',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/security.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/security.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsRoleManagementLazyRoute =
   AppAppAdminAdminSettingsSettingsRoleManagementLazyRouteImport.update({
@@ -605,9 +783,9 @@ const AppAppAdminAdminSettingsSettingsRoleManagementLazyRoute =
     path: '/role-management',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/role-management.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/role-management.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsPaymentsBillingLazyRoute =
   AppAppAdminAdminSettingsSettingsPaymentsBillingLazyRouteImport.update({
@@ -615,9 +793,9 @@ const AppAppAdminAdminSettingsSettingsPaymentsBillingLazyRoute =
     path: '/payments-billing',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/payments-billing.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/payments-billing.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsNotificationsLazyRoute =
   AppAppAdminAdminSettingsSettingsNotificationsLazyRouteImport.update({
@@ -625,9 +803,9 @@ const AppAppAdminAdminSettingsSettingsNotificationsLazyRoute =
     path: '/notifications',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/notifications.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/notifications.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsMobileAppsLazyRoute =
   AppAppAdminAdminSettingsSettingsMobileAppsLazyRouteImport.update({
@@ -635,9 +813,9 @@ const AppAppAdminAdminSettingsSettingsMobileAppsLazyRoute =
     path: '/mobile-apps',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/mobile-apps.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/mobile-apps.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsMetaDataLazyRoute =
   AppAppAdminAdminSettingsSettingsMetaDataLazyRouteImport.update({
@@ -645,9 +823,9 @@ const AppAppAdminAdminSettingsSettingsMetaDataLazyRoute =
     path: '/meta-data',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/meta-data.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/meta-data.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsLogSettingsLazyRoute =
   AppAppAdminAdminSettingsSettingsLogSettingsLazyRouteImport.update({
@@ -655,9 +833,9 @@ const AppAppAdminAdminSettingsSettingsLogSettingsLazyRoute =
     path: '/log-settings',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/log-settings.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/log-settings.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsLicenseLazyRoute =
   AppAppAdminAdminSettingsSettingsLicenseLazyRouteImport.update({
@@ -665,9 +843,9 @@ const AppAppAdminAdminSettingsSettingsLicenseLazyRoute =
     path: '/license',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/license.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/license.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsLanguagesRegionLazyRoute =
   AppAppAdminAdminSettingsSettingsLanguagesRegionLazyRouteImport.update({
@@ -675,9 +853,9 @@ const AppAppAdminAdminSettingsSettingsLanguagesRegionLazyRoute =
     path: '/languages-region',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/languages-region.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/languages-region.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsHelpSupportLazyRoute =
   AppAppAdminAdminSettingsSettingsHelpSupportLazyRouteImport.update({
@@ -685,9 +863,9 @@ const AppAppAdminAdminSettingsSettingsHelpSupportLazyRoute =
     path: '/help-support',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/help-support.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/help-support.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsDriveLazyRoute =
   AppAppAdminAdminSettingsSettingsDriveLazyRouteImport.update({
@@ -705,9 +883,9 @@ const AppAppAdminAdminSettingsSettingsCompaniesLazyRoute =
     path: '/companies',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/companies.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/companies.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsBackupLazyRoute =
   AppAppAdminAdminSettingsSettingsBackupLazyRouteImport.update({
@@ -715,9 +893,9 @@ const AppAppAdminAdminSettingsSettingsBackupLazyRoute =
     path: '/backup',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/backup.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/backup.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsAppearanceThemeLazyRoute =
   AppAppAdminAdminSettingsSettingsAppearanceThemeLazyRouteImport.update({
@@ -725,9 +903,9 @@ const AppAppAdminAdminSettingsSettingsAppearanceThemeLazyRoute =
     path: '/appearance-theme',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/appearance-theme.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/appearance-theme.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsApiKeysLazyRoute =
   AppAppAdminAdminSettingsSettingsApiKeysLazyRouteImport.update({
@@ -735,9 +913,9 @@ const AppAppAdminAdminSettingsSettingsApiKeysLazyRoute =
     path: '/api-keys',
     getParentRoute: () => AppAppAdminAdminSettingsSettingsRoute,
   } as any).lazy(() =>
-    import(
-      './routes/app/_app/admin/_admin/settings/_settings/api-keys.lazy'
-    ).then((d) => d.Route),
+    import('./routes/app/_app/admin/_admin/settings/_settings/api-keys.lazy').then(
+      (d) => d.Route,
+    ),
   )
 const AppAppAdminAdminSettingsSettingsAmcLazyRoute =
   AppAppAdminAdminSettingsSettingsAmcLazyRouteImport.update({
@@ -782,11 +960,14 @@ export interface FileRoutesByFullPath {
   '/app/': typeof AppAppIndexRoute
   '/app/account': typeof AppAppAccountAccountRouteWithChildren
   '/app/admin': typeof AppAppAdminAdminRouteWithChildren
+  '/app/business-development': typeof AppAppBusinessDevelopmentBusinessDevelopmentRouteWithChildren
   '/app/development': typeof AppAppDevelopmentDevelopmentRouteWithChildren
   '/app/hr': typeof AppAppHrHrRouteWithChildren
   '/app/maintex-ai': typeof AppAppMaintexAiAiRouteWithChildren
   '/app/manager': typeof AppAppManagerManagerRouteWithChildren
+  '/app/service': typeof AppAppServiceServiceRouteWithChildren
   '/app/chats': typeof AppAppChatsIndexLazyRoute
+  '/app/development/ai-sdk': typeof AppAppDevelopmentDevelopmentAiSdkRoute
   '/app/development/files-manager': typeof AppAppDevelopmentDevelopmentFilesManagerRoute
   '/app/account/drive': typeof AppAppAccountAccountDriveLazyRoute
   '/app/account/projects': typeof AppAppAccountAccountProjectsLazyRoute
@@ -795,6 +976,11 @@ export interface FileRoutesByFullPath {
   '/app/admin/api-keys': typeof AppAppAdminAdminApiKeysLazyRoute
   '/app/admin/backup': typeof AppAppAdminAdminBackupLazyRoute
   '/app/admin/docs': typeof AppAppAdminAdminDocsLazyLazyRoute
+  '/app/business-development/amc': typeof AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRoute
+  '/app/business-development/clients': typeof AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRoute
+  '/app/business-development/outlets': typeof AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRoute
+  '/app/business-development/projects': typeof AppAppBusinessDevelopmentBusinessDevelopmentProjectsLazyRoute
+  '/app/business-development/task-management': typeof AppAppBusinessDevelopmentBusinessDevelopmentTaskManagementLazyRoute
   '/app/development/repositories': typeof AppAppDevelopmentDevelopmentRepositoriesLazyRoute
   '/app/development/terminal': typeof AppAppDevelopmentDevelopmentTerminalLazyRoute
   '/app/development/tickets': typeof AppAppDevelopmentDevelopmentTicketsLazyRoute
@@ -805,6 +991,12 @@ export interface FileRoutesByFullPath {
   '/app/hr/leave-management': typeof AppAppHrHrLeaveManagementLazyRoute
   '/app/hr/manage-requests': typeof AppAppHrHrManageRequestsLazyRoute
   '/app/hr/notes': typeof AppAppHrHrNotesLazyRoute
+  '/app/hr/reports': typeof AppAppHrHrReportsLazyRoute
+  '/app/service/enquiries': typeof AppAppServiceServiceEnquiriesLazyRoute
+  '/app/service/schedules': typeof AppAppServiceServiceSchedulesLazyRoute
+  '/app/service/teams': typeof AppAppServiceServiceTeamsLazyRoute
+  '/app/service/tracking': typeof AppAppServiceServiceTrackingLazyRoute
+  '/app/service/work-orders': typeof AppAppServiceServiceWorkOrdersLazyRoute
   '/app/maintex-ai/': typeof AppAppMaintexAiAiIndexRoute
   '/app/account/profile': typeof AppAppAccountAccountProfileProfileRouteWithChildren
   '/app/admin/configuration': typeof AppAppAdminAdminConfigurationConfigurationRouteWithChildren
@@ -851,11 +1043,14 @@ export interface FileRoutesByTo {
   '/app/announcements': typeof AppAppAnnouncementsLazyRoute
   '/app/account': typeof AppAppAccountAccountRouteWithChildren
   '/app/admin': typeof AppAppAdminAdminRouteWithChildren
+  '/app/business-development': typeof AppAppBusinessDevelopmentBusinessDevelopmentRouteWithChildren
   '/app/development': typeof AppAppDevelopmentDevelopmentRouteWithChildren
   '/app/hr': typeof AppAppHrHrRouteWithChildren
   '/app/maintex-ai': typeof AppAppMaintexAiAiIndexRoute
   '/app/manager': typeof AppAppManagerManagerRouteWithChildren
+  '/app/service': typeof AppAppServiceServiceRouteWithChildren
   '/app/chats': typeof AppAppChatsIndexLazyRoute
+  '/app/development/ai-sdk': typeof AppAppDevelopmentDevelopmentAiSdkRoute
   '/app/development/files-manager': typeof AppAppDevelopmentDevelopmentFilesManagerRoute
   '/app/account/drive': typeof AppAppAccountAccountDriveLazyRoute
   '/app/account/projects': typeof AppAppAccountAccountProjectsLazyRoute
@@ -864,6 +1059,11 @@ export interface FileRoutesByTo {
   '/app/admin/api-keys': typeof AppAppAdminAdminApiKeysLazyRoute
   '/app/admin/backup': typeof AppAppAdminAdminBackupLazyRoute
   '/app/admin/docs': typeof AppAppAdminAdminDocsLazyLazyRoute
+  '/app/business-development/amc': typeof AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRoute
+  '/app/business-development/clients': typeof AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRoute
+  '/app/business-development/outlets': typeof AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRoute
+  '/app/business-development/projects': typeof AppAppBusinessDevelopmentBusinessDevelopmentProjectsLazyRoute
+  '/app/business-development/task-management': typeof AppAppBusinessDevelopmentBusinessDevelopmentTaskManagementLazyRoute
   '/app/development/repositories': typeof AppAppDevelopmentDevelopmentRepositoriesLazyRoute
   '/app/development/terminal': typeof AppAppDevelopmentDevelopmentTerminalLazyRoute
   '/app/development/tickets': typeof AppAppDevelopmentDevelopmentTicketsLazyRoute
@@ -874,6 +1074,12 @@ export interface FileRoutesByTo {
   '/app/hr/leave-management': typeof AppAppHrHrLeaveManagementLazyRoute
   '/app/hr/manage-requests': typeof AppAppHrHrManageRequestsLazyRoute
   '/app/hr/notes': typeof AppAppHrHrNotesLazyRoute
+  '/app/hr/reports': typeof AppAppHrHrReportsLazyRoute
+  '/app/service/enquiries': typeof AppAppServiceServiceEnquiriesLazyRoute
+  '/app/service/schedules': typeof AppAppServiceServiceSchedulesLazyRoute
+  '/app/service/teams': typeof AppAppServiceServiceTeamsLazyRoute
+  '/app/service/tracking': typeof AppAppServiceServiceTrackingLazyRoute
+  '/app/service/work-orders': typeof AppAppServiceServiceWorkOrdersLazyRoute
   '/app/account/profile': typeof AppAppAccountAccountProfileProfileIndexLazyRoute
   '/app/admin/configuration': typeof AppAppAdminAdminConfigurationConfigurationIndexRoute
   '/app/admin/settings': typeof AppAppAdminAdminSettingsSettingsIndexLazyRoute
@@ -923,6 +1129,8 @@ export interface FileRoutesById {
   '/app/_app/account/_account': typeof AppAppAccountAccountRouteWithChildren
   '/app/_app/admin': typeof AppAppAdminRouteWithChildren
   '/app/_app/admin/_admin': typeof AppAppAdminAdminRouteWithChildren
+  '/app/_app/business-development': typeof AppAppBusinessDevelopmentRouteWithChildren
+  '/app/_app/business-development/_business-development': typeof AppAppBusinessDevelopmentBusinessDevelopmentRouteWithChildren
   '/app/_app/development': typeof AppAppDevelopmentRouteWithChildren
   '/app/_app/development/_development': typeof AppAppDevelopmentDevelopmentRouteWithChildren
   '/app/_app/hr': typeof AppAppHrRouteWithChildren
@@ -931,7 +1139,10 @@ export interface FileRoutesById {
   '/app/_app/maintex-ai/_ai': typeof AppAppMaintexAiAiRouteWithChildren
   '/app/_app/manager': typeof AppAppManagerRouteWithChildren
   '/app/_app/manager/_manager': typeof AppAppManagerManagerRouteWithChildren
+  '/app/_app/service': typeof AppAppServiceRouteWithChildren
+  '/app/_app/service/_service': typeof AppAppServiceServiceRouteWithChildren
   '/app/_app/chats/': typeof AppAppChatsIndexLazyRoute
+  '/app/_app/development/_development/ai-sdk': typeof AppAppDevelopmentDevelopmentAiSdkRoute
   '/app/_app/development/_development/files-manager': typeof AppAppDevelopmentDevelopmentFilesManagerRoute
   '/app/_app/account/_account/drive': typeof AppAppAccountAccountDriveLazyRoute
   '/app/_app/account/_account/projects': typeof AppAppAccountAccountProjectsLazyRoute
@@ -940,6 +1151,11 @@ export interface FileRoutesById {
   '/app/_app/admin/_admin/api-keys': typeof AppAppAdminAdminApiKeysLazyRoute
   '/app/_app/admin/_admin/backup': typeof AppAppAdminAdminBackupLazyRoute
   '/app/_app/admin/_admin/docs': typeof AppAppAdminAdminDocsLazyLazyRoute
+  '/app/_app/business-development/_business-development/amc': typeof AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRoute
+  '/app/_app/business-development/_business-development/clients': typeof AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRoute
+  '/app/_app/business-development/_business-development/outlets': typeof AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRoute
+  '/app/_app/business-development/_business-development/projects': typeof AppAppBusinessDevelopmentBusinessDevelopmentProjectsLazyRoute
+  '/app/_app/business-development/_business-development/task-management': typeof AppAppBusinessDevelopmentBusinessDevelopmentTaskManagementLazyRoute
   '/app/_app/development/_development/repositories': typeof AppAppDevelopmentDevelopmentRepositoriesLazyRoute
   '/app/_app/development/_development/terminal': typeof AppAppDevelopmentDevelopmentTerminalLazyRoute
   '/app/_app/development/_development/tickets': typeof AppAppDevelopmentDevelopmentTicketsLazyRoute
@@ -950,6 +1166,12 @@ export interface FileRoutesById {
   '/app/_app/hr/_hr/leave-management': typeof AppAppHrHrLeaveManagementLazyRoute
   '/app/_app/hr/_hr/manage-requests': typeof AppAppHrHrManageRequestsLazyRoute
   '/app/_app/hr/_hr/notes': typeof AppAppHrHrNotesLazyRoute
+  '/app/_app/hr/_hr/reports': typeof AppAppHrHrReportsLazyRoute
+  '/app/_app/service/_service/enquiries': typeof AppAppServiceServiceEnquiriesLazyRoute
+  '/app/_app/service/_service/schedules': typeof AppAppServiceServiceSchedulesLazyRoute
+  '/app/_app/service/_service/teams': typeof AppAppServiceServiceTeamsLazyRoute
+  '/app/_app/service/_service/tracking': typeof AppAppServiceServiceTrackingLazyRoute
+  '/app/_app/service/_service/work-orders': typeof AppAppServiceServiceWorkOrdersLazyRoute
   '/app/_app/maintex-ai/_ai/': typeof AppAppMaintexAiAiIndexRoute
   '/app/_app/account/_account/profile': typeof AppAppAccountAccountProfileRouteWithChildren
   '/app/_app/account/_account/profile/_profile': typeof AppAppAccountAccountProfileProfileRouteWithChildren
@@ -1002,11 +1224,14 @@ export interface FileRouteTypes {
     | '/app/'
     | '/app/account'
     | '/app/admin'
+    | '/app/business-development'
     | '/app/development'
     | '/app/hr'
     | '/app/maintex-ai'
     | '/app/manager'
+    | '/app/service'
     | '/app/chats'
+    | '/app/development/ai-sdk'
     | '/app/development/files-manager'
     | '/app/account/drive'
     | '/app/account/projects'
@@ -1015,6 +1240,11 @@ export interface FileRouteTypes {
     | '/app/admin/api-keys'
     | '/app/admin/backup'
     | '/app/admin/docs'
+    | '/app/business-development/amc'
+    | '/app/business-development/clients'
+    | '/app/business-development/outlets'
+    | '/app/business-development/projects'
+    | '/app/business-development/task-management'
     | '/app/development/repositories'
     | '/app/development/terminal'
     | '/app/development/tickets'
@@ -1025,6 +1255,12 @@ export interface FileRouteTypes {
     | '/app/hr/leave-management'
     | '/app/hr/manage-requests'
     | '/app/hr/notes'
+    | '/app/hr/reports'
+    | '/app/service/enquiries'
+    | '/app/service/schedules'
+    | '/app/service/teams'
+    | '/app/service/tracking'
+    | '/app/service/work-orders'
     | '/app/maintex-ai/'
     | '/app/account/profile'
     | '/app/admin/configuration'
@@ -1071,11 +1307,14 @@ export interface FileRouteTypes {
     | '/app/announcements'
     | '/app/account'
     | '/app/admin'
+    | '/app/business-development'
     | '/app/development'
     | '/app/hr'
     | '/app/maintex-ai'
     | '/app/manager'
+    | '/app/service'
     | '/app/chats'
+    | '/app/development/ai-sdk'
     | '/app/development/files-manager'
     | '/app/account/drive'
     | '/app/account/projects'
@@ -1084,6 +1323,11 @@ export interface FileRouteTypes {
     | '/app/admin/api-keys'
     | '/app/admin/backup'
     | '/app/admin/docs'
+    | '/app/business-development/amc'
+    | '/app/business-development/clients'
+    | '/app/business-development/outlets'
+    | '/app/business-development/projects'
+    | '/app/business-development/task-management'
     | '/app/development/repositories'
     | '/app/development/terminal'
     | '/app/development/tickets'
@@ -1094,6 +1338,12 @@ export interface FileRouteTypes {
     | '/app/hr/leave-management'
     | '/app/hr/manage-requests'
     | '/app/hr/notes'
+    | '/app/hr/reports'
+    | '/app/service/enquiries'
+    | '/app/service/schedules'
+    | '/app/service/teams'
+    | '/app/service/tracking'
+    | '/app/service/work-orders'
     | '/app/account/profile'
     | '/app/admin/configuration'
     | '/app/admin/settings'
@@ -1142,6 +1392,8 @@ export interface FileRouteTypes {
     | '/app/_app/account/_account'
     | '/app/_app/admin'
     | '/app/_app/admin/_admin'
+    | '/app/_app/business-development'
+    | '/app/_app/business-development/_business-development'
     | '/app/_app/development'
     | '/app/_app/development/_development'
     | '/app/_app/hr'
@@ -1150,7 +1402,10 @@ export interface FileRouteTypes {
     | '/app/_app/maintex-ai/_ai'
     | '/app/_app/manager'
     | '/app/_app/manager/_manager'
+    | '/app/_app/service'
+    | '/app/_app/service/_service'
     | '/app/_app/chats/'
+    | '/app/_app/development/_development/ai-sdk'
     | '/app/_app/development/_development/files-manager'
     | '/app/_app/account/_account/drive'
     | '/app/_app/account/_account/projects'
@@ -1159,6 +1414,11 @@ export interface FileRouteTypes {
     | '/app/_app/admin/_admin/api-keys'
     | '/app/_app/admin/_admin/backup'
     | '/app/_app/admin/_admin/docs'
+    | '/app/_app/business-development/_business-development/amc'
+    | '/app/_app/business-development/_business-development/clients'
+    | '/app/_app/business-development/_business-development/outlets'
+    | '/app/_app/business-development/_business-development/projects'
+    | '/app/_app/business-development/_business-development/task-management'
     | '/app/_app/development/_development/repositories'
     | '/app/_app/development/_development/terminal'
     | '/app/_app/development/_development/tickets'
@@ -1169,6 +1429,12 @@ export interface FileRouteTypes {
     | '/app/_app/hr/_hr/leave-management'
     | '/app/_app/hr/_hr/manage-requests'
     | '/app/_app/hr/_hr/notes'
+    | '/app/_app/hr/_hr/reports'
+    | '/app/_app/service/_service/enquiries'
+    | '/app/_app/service/_service/schedules'
+    | '/app/_app/service/_service/teams'
+    | '/app/_app/service/_service/tracking'
+    | '/app/_app/service/_service/work-orders'
     | '/app/_app/maintex-ai/_ai/'
     | '/app/_app/account/_account/profile'
     | '/app/_app/account/_account/profile/_profile'
@@ -1255,6 +1521,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAppRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/_app/service': {
+      id: '/app/_app/service'
+      path: '/service'
+      fullPath: '/app/service'
+      preLoaderRoute: typeof AppAppServiceRouteImport
+      parentRoute: typeof AppAppRoute
+    }
     '/app/_app/manager': {
       id: '/app/_app/manager'
       path: '/manager'
@@ -1281,6 +1554,13 @@ declare module '@tanstack/react-router' {
       path: '/development'
       fullPath: '/app/development'
       preLoaderRoute: typeof AppAppDevelopmentRouteImport
+      parentRoute: typeof AppAppRoute
+    }
+    '/app/_app/business-development': {
+      id: '/app/_app/business-development'
+      path: '/business-development'
+      fullPath: '/app/business-development'
+      preLoaderRoute: typeof AppAppBusinessDevelopmentRouteImport
       parentRoute: typeof AppAppRoute
     }
     '/app/_app/admin': {
@@ -1374,6 +1654,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAppChatsIndexLazyRouteImport
       parentRoute: typeof AppAppRoute
     }
+    '/app/_app/service/_service': {
+      id: '/app/_app/service/_service'
+      path: '/service'
+      fullPath: '/app/service'
+      preLoaderRoute: typeof AppAppServiceServiceRouteImport
+      parentRoute: typeof AppAppServiceRoute
+    }
     '/app/_app/manager/_manager': {
       id: '/app/_app/manager/_manager'
       path: '/manager'
@@ -1401,6 +1688,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/development'
       preLoaderRoute: typeof AppAppDevelopmentDevelopmentRouteImport
       parentRoute: typeof AppAppDevelopmentRoute
+    }
+    '/app/_app/business-development/_business-development': {
+      id: '/app/_app/business-development/_business-development'
+      path: '/business-development'
+      fullPath: '/app/business-development'
+      preLoaderRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentRouteImport
+      parentRoute: typeof AppAppBusinessDevelopmentRoute
     }
     '/app/_app/admin/_admin': {
       id: '/app/_app/admin/_admin'
@@ -1443,6 +1737,48 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/maintex-ai/'
       preLoaderRoute: typeof AppAppMaintexAiAiIndexRouteImport
       parentRoute: typeof AppAppMaintexAiAiRoute
+    }
+    '/app/_app/service/_service/work-orders': {
+      id: '/app/_app/service/_service/work-orders'
+      path: '/work-orders'
+      fullPath: '/app/service/work-orders'
+      preLoaderRoute: typeof AppAppServiceServiceWorkOrdersLazyRouteImport
+      parentRoute: typeof AppAppServiceServiceRoute
+    }
+    '/app/_app/service/_service/tracking': {
+      id: '/app/_app/service/_service/tracking'
+      path: '/tracking'
+      fullPath: '/app/service/tracking'
+      preLoaderRoute: typeof AppAppServiceServiceTrackingLazyRouteImport
+      parentRoute: typeof AppAppServiceServiceRoute
+    }
+    '/app/_app/service/_service/teams': {
+      id: '/app/_app/service/_service/teams'
+      path: '/teams'
+      fullPath: '/app/service/teams'
+      preLoaderRoute: typeof AppAppServiceServiceTeamsLazyRouteImport
+      parentRoute: typeof AppAppServiceServiceRoute
+    }
+    '/app/_app/service/_service/schedules': {
+      id: '/app/_app/service/_service/schedules'
+      path: '/schedules'
+      fullPath: '/app/service/schedules'
+      preLoaderRoute: typeof AppAppServiceServiceSchedulesLazyRouteImport
+      parentRoute: typeof AppAppServiceServiceRoute
+    }
+    '/app/_app/service/_service/enquiries': {
+      id: '/app/_app/service/_service/enquiries'
+      path: '/enquiries'
+      fullPath: '/app/service/enquiries'
+      preLoaderRoute: typeof AppAppServiceServiceEnquiriesLazyRouteImport
+      parentRoute: typeof AppAppServiceServiceRoute
+    }
+    '/app/_app/hr/_hr/reports': {
+      id: '/app/_app/hr/_hr/reports'
+      path: '/reports'
+      fullPath: '/app/hr/reports'
+      preLoaderRoute: typeof AppAppHrHrReportsLazyRouteImport
+      parentRoute: typeof AppAppHrHrRoute
     }
     '/app/_app/hr/_hr/notes': {
       id: '/app/_app/hr/_hr/notes'
@@ -1514,6 +1850,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAppDevelopmentDevelopmentRepositoriesLazyRouteImport
       parentRoute: typeof AppAppDevelopmentDevelopmentRoute
     }
+    '/app/_app/business-development/_business-development/task-management': {
+      id: '/app/_app/business-development/_business-development/task-management'
+      path: '/task-management'
+      fullPath: '/app/business-development/task-management'
+      preLoaderRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentTaskManagementLazyRouteImport
+      parentRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentRoute
+    }
+    '/app/_app/business-development/_business-development/projects': {
+      id: '/app/_app/business-development/_business-development/projects'
+      path: '/projects'
+      fullPath: '/app/business-development/projects'
+      preLoaderRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentProjectsLazyRouteImport
+      parentRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentRoute
+    }
+    '/app/_app/business-development/_business-development/outlets': {
+      id: '/app/_app/business-development/_business-development/outlets'
+      path: '/outlets'
+      fullPath: '/app/business-development/outlets'
+      preLoaderRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRouteImport
+      parentRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentRoute
+    }
+    '/app/_app/business-development/_business-development/clients': {
+      id: '/app/_app/business-development/_business-development/clients'
+      path: '/clients'
+      fullPath: '/app/business-development/clients'
+      preLoaderRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRouteImport
+      parentRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentRoute
+    }
+    '/app/_app/business-development/_business-development/amc': {
+      id: '/app/_app/business-development/_business-development/amc'
+      path: '/amc'
+      fullPath: '/app/business-development/amc'
+      preLoaderRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRouteImport
+      parentRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentRoute
+    }
     '/app/_app/admin/_admin/docs': {
       id: '/app/_app/admin/_admin/docs'
       path: '/docs'
@@ -1568,6 +1939,13 @@ declare module '@tanstack/react-router' {
       path: '/files-manager'
       fullPath: '/app/development/files-manager'
       preLoaderRoute: typeof AppAppDevelopmentDevelopmentFilesManagerRouteImport
+      parentRoute: typeof AppAppDevelopmentDevelopmentRoute
+    }
+    '/app/_app/development/_development/ai-sdk': {
+      id: '/app/_app/development/_development/ai-sdk'
+      path: '/ai-sdk'
+      fullPath: '/app/development/ai-sdk'
+      preLoaderRoute: typeof AppAppDevelopmentDevelopmentAiSdkRouteImport
       parentRoute: typeof AppAppDevelopmentDevelopmentRoute
     }
     '/app/_app/manager/_manager/tracking/': {
@@ -2029,7 +2407,50 @@ const AppAppAdminRouteWithChildren = AppAppAdminRoute._addFileChildren(
   AppAppAdminRouteChildren,
 )
 
+interface AppAppBusinessDevelopmentBusinessDevelopmentRouteChildren {
+  AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRoute
+  AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRoute
+  AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRoute
+  AppAppBusinessDevelopmentBusinessDevelopmentProjectsLazyRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentProjectsLazyRoute
+  AppAppBusinessDevelopmentBusinessDevelopmentTaskManagementLazyRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentTaskManagementLazyRoute
+}
+
+const AppAppBusinessDevelopmentBusinessDevelopmentRouteChildren: AppAppBusinessDevelopmentBusinessDevelopmentRouteChildren =
+  {
+    AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRoute:
+      AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRoute,
+    AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRoute:
+      AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRoute,
+    AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRoute:
+      AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRoute,
+    AppAppBusinessDevelopmentBusinessDevelopmentProjectsLazyRoute:
+      AppAppBusinessDevelopmentBusinessDevelopmentProjectsLazyRoute,
+    AppAppBusinessDevelopmentBusinessDevelopmentTaskManagementLazyRoute:
+      AppAppBusinessDevelopmentBusinessDevelopmentTaskManagementLazyRoute,
+  }
+
+const AppAppBusinessDevelopmentBusinessDevelopmentRouteWithChildren =
+  AppAppBusinessDevelopmentBusinessDevelopmentRoute._addFileChildren(
+    AppAppBusinessDevelopmentBusinessDevelopmentRouteChildren,
+  )
+
+interface AppAppBusinessDevelopmentRouteChildren {
+  AppAppBusinessDevelopmentBusinessDevelopmentRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentRouteWithChildren
+}
+
+const AppAppBusinessDevelopmentRouteChildren: AppAppBusinessDevelopmentRouteChildren =
+  {
+    AppAppBusinessDevelopmentBusinessDevelopmentRoute:
+      AppAppBusinessDevelopmentBusinessDevelopmentRouteWithChildren,
+  }
+
+const AppAppBusinessDevelopmentRouteWithChildren =
+  AppAppBusinessDevelopmentRoute._addFileChildren(
+    AppAppBusinessDevelopmentRouteChildren,
+  )
+
 interface AppAppDevelopmentDevelopmentRouteChildren {
+  AppAppDevelopmentDevelopmentAiSdkRoute: typeof AppAppDevelopmentDevelopmentAiSdkRoute
   AppAppDevelopmentDevelopmentFilesManagerRoute: typeof AppAppDevelopmentDevelopmentFilesManagerRoute
   AppAppDevelopmentDevelopmentRepositoriesLazyRoute: typeof AppAppDevelopmentDevelopmentRepositoriesLazyRoute
   AppAppDevelopmentDevelopmentTerminalLazyRoute: typeof AppAppDevelopmentDevelopmentTerminalLazyRoute
@@ -2039,6 +2460,8 @@ interface AppAppDevelopmentDevelopmentRouteChildren {
 
 const AppAppDevelopmentDevelopmentRouteChildren: AppAppDevelopmentDevelopmentRouteChildren =
   {
+    AppAppDevelopmentDevelopmentAiSdkRoute:
+      AppAppDevelopmentDevelopmentAiSdkRoute,
     AppAppDevelopmentDevelopmentFilesManagerRoute:
       AppAppDevelopmentDevelopmentFilesManagerRoute,
     AppAppDevelopmentDevelopmentRepositoriesLazyRoute:
@@ -2075,6 +2498,7 @@ interface AppAppHrHrRouteChildren {
   AppAppHrHrLeaveManagementLazyRoute: typeof AppAppHrHrLeaveManagementLazyRoute
   AppAppHrHrManageRequestsLazyRoute: typeof AppAppHrHrManageRequestsLazyRoute
   AppAppHrHrNotesLazyRoute: typeof AppAppHrHrNotesLazyRoute
+  AppAppHrHrReportsLazyRoute: typeof AppAppHrHrReportsLazyRoute
 }
 
 const AppAppHrHrRouteChildren: AppAppHrHrRouteChildren = {
@@ -2084,6 +2508,7 @@ const AppAppHrHrRouteChildren: AppAppHrHrRouteChildren = {
   AppAppHrHrLeaveManagementLazyRoute: AppAppHrHrLeaveManagementLazyRoute,
   AppAppHrHrManageRequestsLazyRoute: AppAppHrHrManageRequestsLazyRoute,
   AppAppHrHrNotesLazyRoute: AppAppHrHrNotesLazyRoute,
+  AppAppHrHrReportsLazyRoute: AppAppHrHrReportsLazyRoute,
 }
 
 const AppAppHrHrRouteWithChildren = AppAppHrHrRoute._addFileChildren(
@@ -2149,16 +2574,52 @@ const AppAppManagerRouteWithChildren = AppAppManagerRoute._addFileChildren(
   AppAppManagerRouteChildren,
 )
 
+interface AppAppServiceServiceRouteChildren {
+  AppAppServiceServiceEnquiriesLazyRoute: typeof AppAppServiceServiceEnquiriesLazyRoute
+  AppAppServiceServiceSchedulesLazyRoute: typeof AppAppServiceServiceSchedulesLazyRoute
+  AppAppServiceServiceTeamsLazyRoute: typeof AppAppServiceServiceTeamsLazyRoute
+  AppAppServiceServiceTrackingLazyRoute: typeof AppAppServiceServiceTrackingLazyRoute
+  AppAppServiceServiceWorkOrdersLazyRoute: typeof AppAppServiceServiceWorkOrdersLazyRoute
+}
+
+const AppAppServiceServiceRouteChildren: AppAppServiceServiceRouteChildren = {
+  AppAppServiceServiceEnquiriesLazyRoute:
+    AppAppServiceServiceEnquiriesLazyRoute,
+  AppAppServiceServiceSchedulesLazyRoute:
+    AppAppServiceServiceSchedulesLazyRoute,
+  AppAppServiceServiceTeamsLazyRoute: AppAppServiceServiceTeamsLazyRoute,
+  AppAppServiceServiceTrackingLazyRoute: AppAppServiceServiceTrackingLazyRoute,
+  AppAppServiceServiceWorkOrdersLazyRoute:
+    AppAppServiceServiceWorkOrdersLazyRoute,
+}
+
+const AppAppServiceServiceRouteWithChildren =
+  AppAppServiceServiceRoute._addFileChildren(AppAppServiceServiceRouteChildren)
+
+interface AppAppServiceRouteChildren {
+  AppAppServiceServiceRoute: typeof AppAppServiceServiceRouteWithChildren
+}
+
+const AppAppServiceRouteChildren: AppAppServiceRouteChildren = {
+  AppAppServiceServiceRoute: AppAppServiceServiceRouteWithChildren,
+}
+
+const AppAppServiceRouteWithChildren = AppAppServiceRoute._addFileChildren(
+  AppAppServiceRouteChildren,
+)
+
 interface AppAppRouteChildren {
   AppAppTestRoute: typeof AppAppTestRoute
   AppAppAnnouncementsLazyRoute: typeof AppAppAnnouncementsLazyRoute
   AppAppIndexRoute: typeof AppAppIndexRoute
   AppAppAccountRoute: typeof AppAppAccountRouteWithChildren
   AppAppAdminRoute: typeof AppAppAdminRouteWithChildren
+  AppAppBusinessDevelopmentRoute: typeof AppAppBusinessDevelopmentRouteWithChildren
   AppAppDevelopmentRoute: typeof AppAppDevelopmentRouteWithChildren
   AppAppHrRoute: typeof AppAppHrRouteWithChildren
   AppAppMaintexAiRoute: typeof AppAppMaintexAiRouteWithChildren
   AppAppManagerRoute: typeof AppAppManagerRouteWithChildren
+  AppAppServiceRoute: typeof AppAppServiceRouteWithChildren
   AppAppChatsIndexLazyRoute: typeof AppAppChatsIndexLazyRoute
 }
 
@@ -2168,10 +2629,12 @@ const AppAppRouteChildren: AppAppRouteChildren = {
   AppAppIndexRoute: AppAppIndexRoute,
   AppAppAccountRoute: AppAppAccountRouteWithChildren,
   AppAppAdminRoute: AppAppAdminRouteWithChildren,
+  AppAppBusinessDevelopmentRoute: AppAppBusinessDevelopmentRouteWithChildren,
   AppAppDevelopmentRoute: AppAppDevelopmentRouteWithChildren,
   AppAppHrRoute: AppAppHrRouteWithChildren,
   AppAppMaintexAiRoute: AppAppMaintexAiRouteWithChildren,
   AppAppManagerRoute: AppAppManagerRouteWithChildren,
+  AppAppServiceRoute: AppAppServiceRouteWithChildren,
   AppAppChatsIndexLazyRoute: AppAppChatsIndexLazyRoute,
 }
 

@@ -29,6 +29,13 @@ import { cn } from '@/lib/utils'
 
 export const Route = createLazyFileRoute('/app/_app/announcements')({
   component: RouteComponent,
+  head: ()=> ({
+    meta: [
+      {
+        title: "Announcements | Maintex Pro "
+      } 
+    ]
+  })
 })
 
 // Mock data - replace with actual API calls

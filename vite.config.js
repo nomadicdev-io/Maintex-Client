@@ -51,6 +51,14 @@ export default defineConfig({
   },
   server: {
     port: 8808,
+    proxy: {
+      '/api/chat': {
+        target: 'http://localhost:8880',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/v1\/ai/, ''),
+      },
+    },
   },
   preview: {
     port: 8808,

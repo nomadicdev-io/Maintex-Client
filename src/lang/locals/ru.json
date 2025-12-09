@@ -151,6 +151,15 @@
         "name": "Имя",
         "value": "Значение",
         "permissions": "Права",
-        "files-manager": "Менеджер файлов"
+        "files-manager": "Менеджер файлов",
+        "outlets": "Outlets",
+        "task-management": "Управление задачами",
+        "work-orders": "Рабочие заказы",
+        "schedules": "Расписания",
+        "reports": "Отчеты",
+        "enquiries": "Запросы",
+        "log-out": "Выйти",
+        "edit-profile": "Редактировать профиль",
+        "ai-sdk": "AI SDK"
     }
 }

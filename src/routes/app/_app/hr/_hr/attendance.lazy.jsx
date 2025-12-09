@@ -380,6 +380,13 @@ function AttendanceManagementSection() {
 
 export const Route = createLazyFileRoute('/app/_app/hr/_hr/attendance')({
   component: RouteComponent,
+  head: ()=> ({
+    meta: [
+      {
+        title: "Employee Attendance | Maintex Pro "
+      } 
+    ]
+  })
 })
 
 function RouteComponent() {

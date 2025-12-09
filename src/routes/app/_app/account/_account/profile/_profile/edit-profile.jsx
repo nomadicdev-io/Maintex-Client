@@ -5,6 +5,13 @@ export const Route = createFileRoute(
   '/app/_app/account/_account/profile/_profile/edit-profile',
 )({
   component: RouteComponent,
+  head: ()=> ({
+    meta: [
+      {
+        title: "Edit Profile | Maintex Pro "
+      } 
+    ]
+  })
 })
 
 function RouteComponent() {

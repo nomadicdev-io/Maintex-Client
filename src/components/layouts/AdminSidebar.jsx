@@ -1,5 +1,5 @@
 
-import { ChevronLeft, LayoutDashboard, MessagesSquare, CalendarDays, Users, CircleUser, Server, Package, FolderKanban, Megaphone, NotebookPen, Clock, DoorOpen, Settings, NotebookText, MapPinned, ListTree, FileCode, ChartNetwork, SquareTerminal, DatabaseBackup, MonitorSpeaker, Wrench, Columns3Cog, Ticket, WrenchIcon, FolderTree, Hotel, Briefcase, Group, IdCard, FolderClosed } from "lucide-react";
+import { ChevronLeft, LayoutDashboard, MessagesSquare, CalendarDays, Users, CircleUser, Server, Package, FolderKanban, Megaphone, NotebookPen, Clock, DoorOpen, Settings, NotebookText, MapPinned, ListTree, FileCode, ChartNetwork, SquareTerminal, DatabaseBackup, MonitorSpeaker, Wrench, Columns3Cog, Ticket, WrenchIcon, FolderTree, Hotel, Briefcase, Group, IdCard, FolderClosed, ClipboardList, ClockArrowUp, ChartCandlestick, ListTodo, Store, MegaphoneIcon, Notebook, Receipt, MessageCircleCode } from "lucide-react";
 
 import { Button } from "../ui/button"
 import { Link, useLocation, useRouter } from "@tanstack/react-router"
@@ -85,10 +85,34 @@ export default function AdminSidebar() {
                     users: 'manager'
                 },
                 {
+                    id: 'nav-44.27',
+                    label: t("outlets"),
+                    href: "/app/business-development/outlets",
+                    icon: <Store />,
+                    exact: false,
+                    users: 'manager'
+                },
+                {
                     id: 'nav-44.23',
                     label: t("projects"),
                     href: "/app/business-development/projects",
                     icon: <Briefcase />,
+                    exact: false,
+                    users: 'manager'
+                },
+                {
+                    id: 'nav-44.231',
+                    label: t("amc"),
+                    href: "/app/business-development/amc",
+                    icon: <Receipt />,
+                    exact: false,
+                    users: 'manager'
+                },
+                {
+                    id: 'nav-44.288',
+                    label: t("task-management"),
+                    href: "/app/business-development/task-management",
+                    icon: <ListTodo />,
                     exact: false,
                     users: 'manager'
                 },
@@ -99,9 +123,25 @@ export default function AdminSidebar() {
             role: ['admin', 'hr', 'developer', 'employee'],
             items: [
                 {
+                    id: 'nav-11.91',
+                    label: t("work-orders"),
+                    href: "/app/service/work-orders",
+                    icon: <ClipboardList />,
+                    exact: false,
+                    users: 'user'
+                },
+                {
+                    id: 'nav-11.92',
+                    label: t("schedules"),
+                    href: "/app/service/schedules",
+                    icon: <ClockArrowUp />,
+                    exact: false,
+                    users: 'user'
+                },
+                {
                     id: 'nav-11.90',
                     label: t("teams"),
-                    href: "/app/manager/teams",
+                    href: "/app/service/teams",
                     icon: <Users />,
                     exact: false,
                     users: 'user'
@@ -113,7 +153,16 @@ export default function AdminSidebar() {
                     icon: <MapPinned />,
                     exact: false,
                     users: 'user'
-                }
+                },
+                {
+                    id: 'nav-11.88',
+                    label: t("enquiries"),
+                    href: "/app/service/enquiries",
+                    icon: <Notebook />,
+                    exact: false,
+                    users: 'user'
+                },
+              
                 
             ]
         },
@@ -175,6 +224,14 @@ export default function AdminSidebar() {
                     label: t("manage-requests"),
                     href: "/app/hr/manage-requests",
                     icon: <ListTree />,
+                    exact: false,
+                    users: 'user'
+                },
+                {
+                    id: 'nav-11.65',
+                    label: t("reports"),
+                    href: "/app/hr/reports",
+                    icon: <ChartCandlestick />,
                     exact: false,
                     users: 'user'
                 }
@@ -277,6 +334,12 @@ export default function AdminSidebar() {
                     label: t("toolkit"),
                     href: "/app/development/toolkit",
                     icon: <WrenchIcon />,
+                },
+                {
+                    id: 'nav-133.77',
+                    label: t("ai-sdk"),
+                    href: "/app/development/ai-sdk",
+                    icon: <MessageCircleCode />,
                 },
                 {
                     id: 'nav-18.1',
@@ -510,6 +573,7 @@ function SidebarSignOut(){
     const router = useRouter()
     const queryClient = useQueryClient()
     const logout = useAuthStore((state) => state.logout)
+    const {t} = useTranslation()
 
     const handleSignOut = async() => {
         setIsLoading(true)
@@ -529,9 +593,9 @@ function SidebarSignOut(){
 
     return (
         <div className="relative w-full h-12  border-t border-border">
-            <button onClick={handleSignOut} title="Sign Out" aria-label="Sign Out" className="flex items-center gap-3 w-full h-full cursor-pointer text-text/70 px-8 hover:bg-text/20 transition-all [&_svg]:w-5 [&_svg]:h-5 duration-300 [&_svg]:text-text/60 hover:!text-text hover:[&_svg]:text-text">
+            <button onClick={handleSignOut} title={t('log-out')} aria-label={t('log-out')} className="flex items-center gap-3 w-full h-full cursor-pointer text-text/70 px-8 hover:bg-text/20 transition-all [&_svg]:w-5 [&_svg]:h-5 duration-300 [&_svg]:text-text/60 hover:!text-text hover:[&_svg]:text-text">
                 <IoMdLogOut className="size-4" />
-                <span className="text-sm font-medium">Sign Out</span>
+                <span className="text-sm font-medium">{t('log-out')}</span>
                 {
                     isLoading && <HashLoader size={20} color="#EF4852" />
                 }
@@ -546,7 +610,8 @@ function MiniSidebarSignOut(){
     const router = useRouter()
     const queryClient = useQueryClient()
     const logout = useAuthStore((state) => state.logout)
-
+    const {t} = useTranslation()
+    
     const handleSignOut = async() => {
         setIsLoading(true)
         try{
@@ -568,7 +633,7 @@ function MiniSidebarSignOut(){
         <Tooltip variant="secondary">
             <TooltipTrigger disabled={isLoading} onClick={handleSignOut}>
                 <div className="relative w-full h-12  border-t border-border">
-                    <span  title="Sign Out" aria-label="Sign Out" className="flex items-center  gap-3 w-full h-full cursor-pointer px-5 hover:bg-text/20 hover:text-text transition-all duration-300 text-text/60">                
+                    <span  title={t('log-out')} aria-label={t('log-out')} className="flex items-center  gap-3 w-full h-full cursor-pointer px-5 hover:bg-text/20 hover:text-text transition-all duration-300 text-text/60">                
                         {
                             isLoading ? <HashLoader size={20} color="#EF4852" /> : <IoMdLogOut className="size-5 " />
                         }
@@ -576,7 +641,7 @@ function MiniSidebarSignOut(){
                 </div>
             </TooltipTrigger>
             <TooltipContent side="right">
-                Sign Out
+                {t('log-out')}
             </TooltipContent>
         </Tooltip>
         

@@ -4,6 +4,13 @@ import FetchEmpty from '../../../../../components/fetch/FetchEmpty'
 
 export const Route = createLazyFileRoute('/app/_app/hr/_hr/leave-management')({
   component: RouteComponent,
+  head: ()=> ({
+    meta: [
+      {
+        title: "Leave Management | Maintex Pro "
+      } 
+    ]
+  })
 })
 
 function RouteComponent() {

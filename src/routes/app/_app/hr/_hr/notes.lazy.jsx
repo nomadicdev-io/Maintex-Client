@@ -12,6 +12,13 @@ import { Input } from '@/components/ui/input'
 
 export const Route = createLazyFileRoute('/app/_app/hr/_hr/notes')({
   component: RouteComponent,
+  head: ()=> ({
+    meta: [
+      {
+        title: "Notes & Checklists | Maintex Pro "
+      } 
+    ]
+  })
 })
 
 function RouteComponent() {

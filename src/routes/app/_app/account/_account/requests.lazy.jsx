@@ -6,7 +6,14 @@ import FetchEmpty from '../../../../../components/fetch/FetchEmpty'
 
 export const Route = createLazyFileRoute('/app/_app/account/_account/requests')(
   {
-    component: RouteComponent,
+    component: RouteComponent,  
+    head: ()=> ({
+      meta: [
+        {
+          title: "My Requests | Maintex Pro "
+        } 
+      ]
+    })
   },
 )
 

@@ -218,12 +218,12 @@ function HeaderUser(){
             <div className="relative w-9 h-9 rounded-full overflow-hidden">
             {
               session?.user?.image?.key ?
-              <ImageComponent imageKey={session?.user?.image?.key} bucket={session?.user?.image?.bucket} alt="Profile Avatar" />
+              <ImageComponent imageKey={session?.user?.image?.key} bucket={session?.user?.image?.bucket} alt="Profile Avatar" className="w-full h-full object-cover" />
               :
               <img src={resolvedTheme === 'dark' ? '/user-avatar-dark.png' : '/user-avatar-light.png'} alt="Profile Avatar" className="w-full h-full object-cover" />
             }
             </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col flex-1">
             <p className="text-sm font-semibold leading-4 max-w-[10rem] truncate">{session?.user?.name}</p>
             <p className="text-xs font-medium text-gray-500 capitalize mt-1">{session?.user?.role}</p>
           </div>

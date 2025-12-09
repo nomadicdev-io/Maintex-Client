@@ -1,5 +1,5 @@
 import { createAuthClient } from "better-auth/react"
-import { twoFactorClient, adminClient, inferAdditionalFields } from "better-auth/client/plugins"
+import { twoFactorClient, adminClient, inferAdditionalFields, jwtClient } from "better-auth/client/plugins"
 import orbit from "../api"
 import i18n from "../lang"
 
@@ -8,6 +8,7 @@ export const authClient = createAuthClient({
     plugins: [
       twoFactorClient(),
       adminClient(),
+      jwtClient(),
       inferAdditionalFields({
         user: {
           image:      { type: "object", required: false },
