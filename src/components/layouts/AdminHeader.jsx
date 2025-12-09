@@ -214,8 +214,8 @@ function HeaderUser(){
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex items-center gap-3 h-full w-55 border-s border-border px-3 cursor-pointer transition-all duration-300 hover:bg-text/3 group">
-            <div className="relative w-9 h-9 rounded-full overflow-hidden">
+        <div className="flex items-center gap-3 h-full min-w-45 max-w-75 border-s border-border px-3 cursor-pointer transition-all duration-300 hover:bg-text/3 group">
+            <div className="relative w-9 h-9 inline-flex rounded-full overflow-hidden">
             {
               session?.user?.image?.key ?
               <ImageComponent imageKey={session?.user?.image?.key} bucket={session?.user?.image?.bucket} alt="Profile Avatar" className="w-full h-full object-cover" />
@@ -224,7 +224,7 @@ function HeaderUser(){
             }
             </div>
           <div className="flex flex-col flex-1">
-            <p className="text-sm font-semibold leading-4 max-w-[10rem] truncate">{session?.user?.name}</p>
+            <p className="text-sm font-semibold leading-4 max-w-[10rem] truncate w-full">{session?.user?.name}</p>
             <p className="text-xs font-medium text-gray-500 capitalize mt-1">{session?.user?.role}</p>
           </div>
           <RxCaretSort size={24} className="text-gray-700 ms-1 group-hover:text-primary"/>

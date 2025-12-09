@@ -160,6 +160,9 @@
         "enquiries": "Enquiries",
         "log-out": "Se déconnecter",
         "edit-profile": "Modifier le profil",
-        "ai-sdk": "AI SDK"
+        "ai-sdk": "AI SDK",
+        "select-model": "Sélectionner le Modèle",
+        "web_search": "Rechercher sur le Web",
+        "advanced_mode": "Mode Avancé"
     }
 }

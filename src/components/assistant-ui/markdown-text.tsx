@@ -19,7 +19,7 @@ const MarkdownTextImpl = () => {
   return (
     <MarkdownTextPrimitive
       remarkPlugins={[remarkGfm]}
-      className="aui-md text-lg bg-bg-100/20 rounded-2xl p-6 leading-1.75"
+      className="aui-md text-lg py-1 leading-[1.75]"
       components={defaultComponents}
     />
   );
@@ -147,13 +147,19 @@ const defaultComponents = memoizeMarkdownComponents({
   ),
   ul: ({ className, ...props }) => (
     <ul
-      className={cn("aui-md-ul my-5 ml-6 list-disc [&>li]:mt-2", className)}
+      className={cn("aui-md-ul my-5 ml-6 list-disc space-y-2", className)}
       {...props}
     />
   ),
   ol: ({ className, ...props }) => (
     <ol
-      className={cn("aui-md-ol my-5 ml-6 list-decimal [&>li]:mt-2", className)}
+      className={cn("aui-md-ol my-5 ml-6 list-decimal space-y-2", className)}
+      {...props}
+    />
+  ),
+  li: ({ className, ...props }) => (
+    <li
+      className={cn("aui-md-li leading-[1.75] text-lg", className)}
       {...props}
     />
   ),

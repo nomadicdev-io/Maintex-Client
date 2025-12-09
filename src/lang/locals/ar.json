@@ -160,6 +160,9 @@
         "enquiries": "الاستفسارات",
         "log-out": "تسجيل الخروج",
         "edit-profile": "تعديل الملف الشخصي",
-        "ai-sdk": "AI SDK"
+        "ai-sdk": "AI SDK",
+        "select-model": "اختر النموزج",
+        "web_search": "البحث في الويب",
+        "advanced_mode": "الوضع المتقدم"
     }
 }

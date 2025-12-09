@@ -160,6 +160,9 @@
         "enquiries": "Запросы",
         "log-out": "Выйти",
         "edit-profile": "Редактировать профиль",
-        "ai-sdk": "AI SDK"
+        "ai-sdk": "AI SDK",
+        "select-model": "Выбрать модель",
+        "web_search": "Поиск в Интернете",
+        "advanced_mode": "Расширенный режим"
     }
 }
