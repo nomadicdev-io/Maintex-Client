@@ -2,7 +2,6 @@ import { HeadContent, Outlet, createRootRouteWithContext } from '@tanstack/react
 import PageNotFound from '@components/layouts/PageNotFound'
 import RootLayout from '@components/layouts/RootLayout'
 import PageLoader from '@/components/loaders/PageLoader'
-import { SocketProvider } from '@context/SocketContext'
 import { Toaster } from "@/components/ui/sonner"
 import orbit from '../api'
 import { ErrorBoundary } from "react-error-boundary";
@@ -13,6 +12,14 @@ import DevTools from '../components/ui/DevTools'
 import { HotkeysProvider } from 'react-hotkeys-hook'
 import { useEffect } from 'react'
 import { useGeoLocation } from '../hooks/useGeoLocation'
+import SocketManager from '../api/socketManager'
+import APIManager from '../api/beta'
+
+export const socketManager = new SocketManager({
+  url: import.meta.env.VITE_SOCKET_URL,
+});
+
+export const apiManager = new APIManager()
 
 export const Route = createRootRouteWithContext()({
   component: RootLayoutComponent,
@@ -74,7 +81,6 @@ function RootLayoutComponent() {
   return (
     <HotkeysProvider initiallyActiveScopes={['settings']}>
       <HeadContent />
-      <SocketProvider url={import.meta.env.VITE_NODE_ENV === 'development' ? 'ws://localhost:8880/app/socket' : 'wss://api.maintex.pro/app/socket'}>
         <RootLayout>
           <ErrorBoundary FallbackComponent={(props) => <FetchError {...props} context={loaderData}/>} onError={(error) => {console.log(error)}}>
             <Outlet />
@@ -82,7 +88,6 @@ function RootLayoutComponent() {
         </RootLayout>
       <Toaster offset={'5rem'} />
       {import.meta.env.VITE_DEBUG === 'true' && <DevTools /> }
-      </SocketProvider>
-      </HotkeysProvider>
+    </HotkeysProvider>
   )
 }

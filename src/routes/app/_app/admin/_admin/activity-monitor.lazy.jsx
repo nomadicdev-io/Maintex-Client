@@ -1,11 +1,11 @@
-import { createLazyFileRoute, useLocation } from '@tanstack/react-router'
+import { createLazyFileRoute } from '@tanstack/react-router'
 import DashboardBanner from '@components/sections/DashboardBanner'
 import { useRef, useEffect } from 'react';
 import * as tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import { useTheme } from 'next-themes';
 import { Globe } from "@/components/ui/globe"
-import { GitFork, Globe2, Globe2Icon, GlobeIcon, Group, Logs, MapIcon, Monitor, Users2, Clock, MapPin, Server, User, Smartphone, Laptop, Terminal, SquareTerminal } from 'lucide-react';
+import { GitFork, Globe2Icon, Users2, Clock, Server, User, Smartphone, Laptop, Terminal, Group } from 'lucide-react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
@@ -15,8 +15,6 @@ import FetchError from '@/components/fetch/FetchError';
 import RouteLoader from '@/components/loaders/RouteLoader';
 import { Activity } from 'react';
 import { ScrollArea } from "@/components/ui/scroll-area"
-import Footer from '../../../../../components/layouts/Footer';
-import { Badge } from '@/components/ui/badge';
 import { DotBadge } from '@/components/ui/dot-badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -27,9 +25,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import useWebSocket from 'react-use-websocket';
-import { useGeoLocation } from '../../../../../hooks/useGeoLocation';
-import { authClient } from '../../../../../auth';
+import { socketManager } from '../../../../__root';
+import { atom, useAtom } from 'jotai';
+import { LazyLog, ScrollFollow } from "@melloware/react-logviewer";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet"
+
+
+const viewFullLogsAtom = atom(false)
 
 export const Route = createLazyFileRoute('/app/_app/admin/_admin/activity-monitor')({
   component: RouteComponent,
@@ -38,58 +46,7 @@ export const Route = createLazyFileRoute('/app/_app/admin/_admin/activity-monito
 function RouteComponent() {
 
   const {t} = useTranslation()
-  const coords = useGeoLocation(state => state.coords)
-  const {data: auth} = authClient.useSession()
-
-  const {
-    sendMessage,
-    sendJsonMessage,
-    lastMessage,
-    lastJsonMessage,
-    readyState,
-    getWebSocket,
-  } = useWebSocket('ws://localhost:8880/app/socket/admin', {
-    onOpen: () => {
-      console.log('opened')
-
-      sendMessage({
-        type: 'register-user',
-        data: {
-          user: {
-            coords: coords,
-            id: auth.user.id,
-            name: auth.user.name,
-            email: auth.user.email,
-            digitalID: auth.user.digitalID,
-            uuid: auth.user.uuid,
-            role: auth.user.role,
-            image: auth.user.image,
-          },
-        },
-      })
-    },
-    onMessage: (event) => {
-      console.log('message', JSON.parse(event.data))
-    },
-    shouldReconnect: () => true,
-    reconnectInterval: 1000,
-    reconnectAttempts: 5,
-  });
-
-  useEffect(() => {
-
-    console
-    if(auth) {
-      sendMessage({
-        type: 'register-user',
-        data: {
-          user: {
-            coords: coords,
-          },
-        },
-      })
-    }
-  }, [auth || readyState])
+  const [view, setView] = useAtom(viewFullLogsAtom)
 
   const {data, isLoading, isError, error, isRefetching} = useQuery({
     queryKey: ['admin-activity-monitor',],
@@ -116,6 +73,22 @@ function RouteComponent() {
     }
   })
 
+  useEffect(() => {
+    // Store the callback reference
+    const handleActivityLogs = (data) => {
+      console.log('ACTIVITY LOGS', data)
+      // TODO: Update state or refetch data when activity logs are received
+    }
+    
+    // Subscribe and get unsubscribe function
+    const unsubscribe = socketManager.subscribe('activity-logs', handleActivityLogs)
+    
+    // Return cleanup function
+    return () => {
+      unsubscribe()
+    }
+  }, [])
+
   if(isLoading) return <FetchLoader key="fetch-loader" />
 
   if(isError) return <FetchError key="fetch-error" error={error} />
@@ -124,13 +97,9 @@ function RouteComponent() {
     <div className='relative w-full h-full flex flex-col overflow-hidden'>
       <DashboardBanner title={t('activity-monitor')} description={t('activity-monitor-description')}>
         <div className="relative flex flex-row items-center gap-2">
-          <Button variant="whiteShade">
+          <Button variant="shade" onClick={() => setView(true)}>
              <GitFork size={14}  />
-            <span>View Logs</span>
-          </Button>
-          <Button variant="shade">
-            <Terminal size={16} />
-            <span>Terminal</span>
+            <span>{t('view-full-logs')}</span>
           </Button>
         </div>
       </DashboardBanner>
@@ -140,6 +109,7 @@ function RouteComponent() {
         </div>
         <div className="relative w-full flex flex-1 min-h-0 border-b border-border">
           <ActivityLogs data={data?.data}/>
+          {/* <ActivityLogger data={data?.data}/> */}
           <ActiveUsers />
           {/* <ActiveCountries /> */}
         </div>
@@ -147,6 +117,9 @@ function RouteComponent() {
           <RouteLoader key="refetch-loader" />
         </Activity>
       </ScrollArea>
+      <Activity mode={view ? 'visible' : 'hidden'}>
+        <ViewFullLogs />
+      </Activity>
     </div>
   )
 }
@@ -186,7 +159,7 @@ function LogMap() {
   }, [resolvedTheme])
 
   return (
-    <div className='relative w-full flex items-center justify-between h-110 border-b border-border'>
+    <div className='relative w-full flex items-center justify-between h-120 border-b border-border'>
 
       <div className="relative w-full h-full flex-1">
         <div
@@ -195,7 +168,7 @@ function LogMap() {
         />
       </div>
 
-      <div className='relative w-110 h-110 flex flex-col bg-bgborder-s border-s-border overflow-hidden'>
+      <div className='relative w-120 h-120 flex flex-col bg-bgborder-s border-s-border overflow-hidden'>
         <img src="/bg-login.png" alt="Background Image" className="absolute inset-0 w-full h-full object-cover scale-120 opacity-70" />
         <div className="relative w-full h-full flex flex-1 items-center justify-center">
           <Globe />
@@ -206,6 +179,8 @@ function LogMap() {
 }
 
 function ActivityLogs({data}) {
+
+  const {t} = useTranslation()
 
   const getMethodVariant = (method) => {
     switch(method) {
@@ -242,13 +217,33 @@ function ActivityLogs({data}) {
 
   return (
     <div className='relative w-full flex flex-col flex-1 min-h-0 border-b border-border overflow-hidden'>
-      {/* <div className='relative w-full flex items-center justify-between px-5 py-3 border-b border-border bg-bg-300/50 shrink-0'>
+      <div className='relative w-full flex items-center justify-between px-5 py-3 border-b border-border bg-bg-300/50 shrink-0'>
         <h2 className='text-base flex items-center gap-2 font-semibold text-text/70'>
           <Group size={16} className='text-text'/>
           <span>{t('activity-logs')}</span>
         </h2>
-      </div> */}
-      <div className='relative w-full flex flex-1 min-h-0 flex-col overflow-hidden'>
+      </div>
+      <ScrollArea className="relative w-full h-[40rem] border-y border-border">
+        <div className="relative w-full flex-1 border-y border-border">
+          <div className="relative w-full h-full flex flex-col overflow-hidden">
+          {data?.map((log, index) => (
+            <div key={log._id} className="relative gap-2 items-center w-full grid grid-cols-[auto_auto_auto_auto_auto_1.5fr_1fr] border-b border-border font-mono text-sm">
+              <span className="w-10 h-10 flex items-center justify-center bg-bg-100/50">{index + 1}</span>
+              <div className="inline-block truncate">
+                <span className="text-black bg-white">{log.timestamp}</span>
+              </div>
+              <div className="inline-block truncate">{getMethodVariant(log.method)}</div>
+              <div className="inline-block truncate">{log.url}</div>
+              <div className="inline-block truncate"><span className="text-amber-500">{log.ip}</span></div>
+              <div className="inline-block truncate"><span className="text-teal-500">{log.userId}</span></div>
+              <div className="inline-block truncate pe-2">{log.userAgent}</div>
+            </div>
+          ))}
+          </div>
+        </div>
+      </ScrollArea>
+  
+      {/* <div className='relative w-full flex flex-1 min-h-0 flex-col overflow-hidden'>
         {(!data || data.length === 0) ? (
           <div className="flex items-center justify-center py-12 text-text/50">
             <span className="text-base">No activity logs available</span>
@@ -315,7 +310,6 @@ function ActivityLogs({data}) {
 
                     <TableCell>
                       <div className="flex items-center gap-2 min-w-0">
-                        {/* {getDeviceIcon(log.userAgent)} */}
                         <span className="text-xs text-text/60 truncate" title={log.userAgent}>
                           {log.userAgent ? (log.userAgent.length > 50 ? `${log.userAgent.substring(0, 50)}...` : log.userAgent) : 'N/A'}
                         </span>
@@ -340,7 +334,20 @@ function ActivityLogs({data}) {
             </Table>
           </div>
         )}
-      </div>
+      </div> */}
+    </div>
+  )
+}
+
+function ActivityLogger() {
+  return (
+    <div className='relative w-full flex flex-col flex-1 h-300 border-b border-border overflow-hidden'>
+      <ScrollFollow
+        startFollowing={true}
+        render={({ follow, onScroll }) => (
+            <LazyLog url={import.meta.env.VITE_API_BASE_URL + '/app/logs'} stream follow={follow} onScroll={onScroll} />
+        )}
+      />
     </div>
   )
 }
@@ -350,7 +357,7 @@ function ActiveUsers() {
   const {t} = useTranslation()
 
   return (
-    <div className='relative border-s border-s-border flex flex-col w-110 border-b border-border border-t'>
+    <div className='relative border-s border-s-border flex flex-col w-120 border-b border-border border-t'>
       <div className='relative w-full flex items-center justify-between px-5 py-3 border-b border-border bg-bg-300/50 shrink-0'>
         <h2 className='text-base flex items-center gap-2 font-semibold text-text/70'>
           <Users2 size={16} className='text-text'/>
@@ -378,5 +385,36 @@ function ActiveCountries() {
 
       </div>
     </div>
+  )
+}
+
+function ViewFullLogs() {
+
+  const [open, setOpen] = useAtom(viewFullLogsAtom)
+  const {t} = useTranslation()
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetContent className="min-w-[50rem] max-w-[50rem]">
+        <SheetHeader>
+          <SheetTitle>{t('application-logs')}</SheetTitle>
+          <SheetDescription>{t('watch_the_application_logs_in_real_time')}</SheetDescription>
+        </SheetHeader>
+        
+        <ScrollFollow
+          startFollowing={true}
+          render={({ follow, onScroll }) => (
+              <LazyLog 
+              enableHotKeys={true}
+              enableSearch={true}
+              enableBasicAutocompletion={true}
+              enableLiveAutocompletion={true}
+              enableSnippets={true}
+              enableBasicSuggestions={true}
+              url={import.meta.env.VITE_API_BASE_URL + '/app/logs'} stream follow={follow} onScroll={onScroll} />
+          )}
+        />
+      </SheetContent>
+    </Sheet>
   )
 }

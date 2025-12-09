@@ -1,5 +1,5 @@
 
-import { ChevronLeft, LayoutDashboard, MessagesSquare, CalendarDays, Users, CircleUser, Server, Package, FolderKanban, Megaphone, NotebookPen, Clock, DoorOpen, Settings, NotebookText, MapPinned, ListTree, FileCode, ChartNetwork, SquareTerminal, DatabaseBackup, MonitorSpeaker, Wrench, Columns3Cog, Ticket, WrenchIcon, FolderTree, Hotel, Briefcase, Group, IdCard } from "lucide-react";
+import { ChevronLeft, LayoutDashboard, MessagesSquare, CalendarDays, Users, CircleUser, Server, Package, FolderKanban, Megaphone, NotebookPen, Clock, DoorOpen, Settings, NotebookText, MapPinned, ListTree, FileCode, ChartNetwork, SquareTerminal, DatabaseBackup, MonitorSpeaker, Wrench, Columns3Cog, Ticket, WrenchIcon, FolderTree, Hotel, Briefcase, Group, IdCard, FolderClosed } from "lucide-react";
 
 import { Button } from "../ui/button"
 import { Link, useLocation, useRouter } from "@tanstack/react-router"
@@ -213,7 +213,7 @@ export default function AdminSidebar() {
         },
         {
             label: t("admin"),
-            role: ['admin'],
+            role: ['admin','developer'],
             items: [
                 {
                     id: 'nav-15',
@@ -283,6 +283,12 @@ export default function AdminSidebar() {
                     label: t("terminal"),
                     href: "/app/development/terminal",
                     icon: <SquareTerminal />
+                },
+                {
+                    id: 'nav-18.190',
+                    label: t("files-manager"),
+                    href: "/app/development/files-manager",
+                    icon: <FolderClosed />
                 },
                 {
                     id: 'nav-133.8',

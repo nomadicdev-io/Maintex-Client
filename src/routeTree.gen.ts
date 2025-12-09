@@ -32,6 +32,7 @@ import { Route as AppAppDevelopmentDevelopmentRouteImport } from './routes/app/_
 import { Route as AppAppAdminAdminRouteImport } from './routes/app/_app/admin/_admin'
 import { Route as AppAppAccountAccountRouteImport } from './routes/app/_app/account/_account'
 import { Route as AppAppMaintexAiAiIndexRouteImport } from './routes/app/_app/maintex-ai/_ai/index'
+import { Route as AppAppDevelopmentDevelopmentFilesManagerRouteImport } from './routes/app/_app/development/_development/files-manager'
 import { Route as AppAppManagerManagerTrackingIndexRouteImport } from './routes/app/_app/manager/_manager/tracking/index'
 import { Route as AppAppAdminAdminServersDbIndexRouteImport } from './routes/app/_app/admin/_admin/servers-db/index'
 import { Route as AppAppAdminAdminSettingsSettingsRouteImport } from './routes/app/_app/admin/_admin/settings/_settings'
@@ -497,6 +498,12 @@ const AppAppAccountAccountDriveLazyRoute =
       (d) => d.Route,
     ),
   )
+const AppAppDevelopmentDevelopmentFilesManagerRoute =
+  AppAppDevelopmentDevelopmentFilesManagerRouteImport.update({
+    id: '/files-manager',
+    path: '/files-manager',
+    getParentRoute: () => AppAppDevelopmentDevelopmentRoute,
+  } as any)
 const AppAppManagerManagerTrackingIndexRoute =
   AppAppManagerManagerTrackingIndexRouteImport.update({
     id: '/tracking/',
@@ -780,6 +787,7 @@ export interface FileRoutesByFullPath {
   '/app/maintex-ai': typeof AppAppMaintexAiAiRouteWithChildren
   '/app/manager': typeof AppAppManagerManagerRouteWithChildren
   '/app/chats': typeof AppAppChatsIndexLazyRoute
+  '/app/development/files-manager': typeof AppAppDevelopmentDevelopmentFilesManagerRoute
   '/app/account/drive': typeof AppAppAccountAccountDriveLazyRoute
   '/app/account/projects': typeof AppAppAccountAccountProjectsLazyRoute
   '/app/account/requests': typeof AppAppAccountAccountRequestsLazyRoute
@@ -848,6 +856,7 @@ export interface FileRoutesByTo {
   '/app/maintex-ai': typeof AppAppMaintexAiAiIndexRoute
   '/app/manager': typeof AppAppManagerManagerRouteWithChildren
   '/app/chats': typeof AppAppChatsIndexLazyRoute
+  '/app/development/files-manager': typeof AppAppDevelopmentDevelopmentFilesManagerRoute
   '/app/account/drive': typeof AppAppAccountAccountDriveLazyRoute
   '/app/account/projects': typeof AppAppAccountAccountProjectsLazyRoute
   '/app/account/requests': typeof AppAppAccountAccountRequestsLazyRoute
@@ -923,6 +932,7 @@ export interface FileRoutesById {
   '/app/_app/manager': typeof AppAppManagerRouteWithChildren
   '/app/_app/manager/_manager': typeof AppAppManagerManagerRouteWithChildren
   '/app/_app/chats/': typeof AppAppChatsIndexLazyRoute
+  '/app/_app/development/_development/files-manager': typeof AppAppDevelopmentDevelopmentFilesManagerRoute
   '/app/_app/account/_account/drive': typeof AppAppAccountAccountDriveLazyRoute
   '/app/_app/account/_account/projects': typeof AppAppAccountAccountProjectsLazyRoute
   '/app/_app/account/_account/requests': typeof AppAppAccountAccountRequestsLazyRoute
@@ -997,6 +1007,7 @@ export interface FileRouteTypes {
     | '/app/maintex-ai'
     | '/app/manager'
     | '/app/chats'
+    | '/app/development/files-manager'
     | '/app/account/drive'
     | '/app/account/projects'
     | '/app/account/requests'
@@ -1065,6 +1076,7 @@ export interface FileRouteTypes {
     | '/app/maintex-ai'
     | '/app/manager'
     | '/app/chats'
+    | '/app/development/files-manager'
     | '/app/account/drive'
     | '/app/account/projects'
     | '/app/account/requests'
@@ -1139,6 +1151,7 @@ export interface FileRouteTypes {
     | '/app/_app/manager'
     | '/app/_app/manager/_manager'
     | '/app/_app/chats/'
+    | '/app/_app/development/_development/files-manager'
     | '/app/_app/account/_account/drive'
     | '/app/_app/account/_account/projects'
     | '/app/_app/account/_account/requests'
@@ -1549,6 +1562,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/account/drive'
       preLoaderRoute: typeof AppAppAccountAccountDriveLazyRouteImport
       parentRoute: typeof AppAppAccountAccountRoute
+    }
+    '/app/_app/development/_development/files-manager': {
+      id: '/app/_app/development/_development/files-manager'
+      path: '/files-manager'
+      fullPath: '/app/development/files-manager'
+      preLoaderRoute: typeof AppAppDevelopmentDevelopmentFilesManagerRouteImport
+      parentRoute: typeof AppAppDevelopmentDevelopmentRoute
     }
     '/app/_app/manager/_manager/tracking/': {
       id: '/app/_app/manager/_manager/tracking/'
@@ -2010,6 +2030,7 @@ const AppAppAdminRouteWithChildren = AppAppAdminRoute._addFileChildren(
 )
 
 interface AppAppDevelopmentDevelopmentRouteChildren {
+  AppAppDevelopmentDevelopmentFilesManagerRoute: typeof AppAppDevelopmentDevelopmentFilesManagerRoute
   AppAppDevelopmentDevelopmentRepositoriesLazyRoute: typeof AppAppDevelopmentDevelopmentRepositoriesLazyRoute
   AppAppDevelopmentDevelopmentTerminalLazyRoute: typeof AppAppDevelopmentDevelopmentTerminalLazyRoute
   AppAppDevelopmentDevelopmentTicketsLazyRoute: typeof AppAppDevelopmentDevelopmentTicketsLazyRoute
@@ -2018,6 +2039,8 @@ interface AppAppDevelopmentDevelopmentRouteChildren {
 
 const AppAppDevelopmentDevelopmentRouteChildren: AppAppDevelopmentDevelopmentRouteChildren =
   {
+    AppAppDevelopmentDevelopmentFilesManagerRoute:
+      AppAppDevelopmentDevelopmentFilesManagerRoute,
     AppAppDevelopmentDevelopmentRepositoriesLazyRoute:
       AppAppDevelopmentDevelopmentRepositoriesLazyRoute,
     AppAppDevelopmentDevelopmentTerminalLazyRoute:

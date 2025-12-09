@@ -133,6 +133,24 @@
         "business-development": "التنمية التجارية",
         "terminal-logs": "سجلات الطرفية",
         "login-to-terminal": "تسجيل الدخول إلى الطرفية",
-        "teams": "الفرق"
+        "teams": "الفرق",
+        "add-new-role": "إضافة نوع جديد",
+        "update-role-details": "تحديث تفاصيل النوع",
+        "update-role-details-description": "تحديث تفاصيل النوع هنا.",
+        "add-new-role-description": "أكمل النموزج لإضافة تفاصيل النوع الجديد.",
+        "role-name": "اسم النوع",
+        "role-name-is-required": "اسم النوع مطلوب.",
+        "role-value": "قيمة النوع",
+        "role-value-is-required": "قيمة النوع مطلوبة.",
+        "role-description": "وصف النوع",
+        "role-description-is-required": "وصف النوع مطلوب.",
+        "view-logs": "عرض السجلات",
+        "view-full-logs": "عرض جميع السجلات",
+        "watch_the_application_logs_in_real_time": "مشاهدة السجلات التطبيق في الوقت الحقيقي.",
+        "application-logs": "سجلات التطبيق",
+        "name": "الاسم",
+        "value": "القيمة",
+        "permissions": "الصلاحيات",
+        "files-manager": "مدير الملفات"
     }
 }

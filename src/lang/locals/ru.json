@@ -133,6 +133,24 @@
         "business-development": "Развитие бизнеса",
         "terminal-logs": "Журналы терминала",
         "login-to-terminal": "Войти в терминал", 
-        "teams": "Команды"
+        "teams": "Команды",
+        "add-new-role": "Добавить новый роль",
+        "update-role-details": "Обновить детали роли",
+        "update-role-details-description": "Обновите детали роли здесь.",
+        "add-new-role-description": "Заполните форму для добавления новых деталей роли.",
+        "role-name": "Имя роли",
+        "role-name-is-required": "Имя роли обязательно.",
+        "role-value": "Значение роли",
+        "role-value-is-required": "Значение роли обязательно.",
+        "role-description": "Описание роли",
+        "role-description-is-required": "Описание роли обязательно.",
+        "view-logs": "Просмотр журналов",
+        "view-full-logs": "Просмотр всех журналов",
+        "watch_the_application_logs_in_real_time": "Просмотр журналов приложения в реальном времени.",
+        "application-logs": "Журналы приложения",
+        "name": "Имя",
+        "value": "Значение",
+        "permissions": "Права",
+        "files-manager": "Менеджер файлов"
     }
 }

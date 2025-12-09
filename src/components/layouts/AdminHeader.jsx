@@ -122,8 +122,6 @@ function HeaderVoiceAgent(){
   )
 }
 
-
-
 function HeaderNotifications(){
 
   const setNotificationSheet = useSetAtom(notificationSheetAtom)
@@ -278,8 +276,6 @@ function HeaderUser(){
   )
 }
 
-
-
 function HeaderAIChatBot(){
 
   // const {toggle} = useAI()
@@ -308,7 +304,6 @@ function HeaderAIChatBot(){
   //   </Tooltip>
   // )
 }
-
 
 function HeaderDocumentGenerator(){
 

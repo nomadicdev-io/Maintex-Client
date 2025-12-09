@@ -315,7 +315,7 @@ function CompaniesTable({data, onRefetch}) {
     <div className="relative grid grid-cols-2 gap-5 w-full">
       {
         data?.map((item) => (
-          <CompanyItem key={item.id} item={item} onRefetch={onRefetch} />
+          <CompanyItem key={item?._id} item={item} onRefetch={onRefetch} />
         ))
       }
     </div>

@@ -9,6 +9,7 @@ import { atom, useAtom } from 'jotai'
 import { UserPlus } from 'lucide-react'
 import orbit from '@/api'
 import jobTitles from '@/store/jobTitles.json'
+import { authClient } from '../../auth'
 
 const createUserModalAtom = atom(false)
 
@@ -55,8 +56,10 @@ export default function CreateUserModal({ onRefetch }) {
           designation: value.designation,
         }
 
-        const res = await orbit.post({ url: `admin/users/create`, data: reqData })
-        if (!res?.status || res?.error) throw res
+        const res = await authClient.admin.createUser(reqData)
+
+        if(res?.error) throw res
+
         toast.success('Employee created successfully')
         form.reset()
         setModel(false)

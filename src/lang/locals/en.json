@@ -133,7 +133,24 @@
         "business-development": "Business Development",
         "terminal-logs": "Terminal Logs",
         "login-to-terminal": "Login to Terminal",
-        "teams": "Teams"
-        
+        "teams": "Teams",
+        "add-new-role": "Add New Role",
+        "update-role-details": "Update Role Details",
+        "update-role-details-description": "Update the role details here.",
+        "add-new-role-description": "Complete the form to add a new role details.",
+        "role-name": "Role Name",
+        "role-name-is-required": "Role name is required.",
+        "role-value": "Role Value",
+        "role-value-is-required": "Role value is required.",
+        "role-description": "Role Description",
+        "role-description-is-required": "Role description is required.",
+        "view-logs": "View Logs",
+        "view-full-logs": "View Full Logs",
+        "watch_the_application_logs_in_real_time": "Watch the application logs in real time.",
+        "application-logs": "Application Logs",
+        "name": "Name",
+        "value": "Value",
+        "permissions": "Permissions",
+        "files-manager": "Files Manager"
     }
 }

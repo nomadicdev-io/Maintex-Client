@@ -14,6 +14,7 @@ import { authClient } from '../../auth'
 import { useGeoLocation } from '../../hooks/useGeoLocation'
 import { useEffect } from 'react'
 import AIAssistantModal from '../../components/ai/AIAssistantModal'
+import { socketManager } from '../__root'
 
 export const Route = createFileRoute('/app/_app')({
   component: AppLayout,
@@ -33,32 +34,40 @@ function AppLayout() {
   const {isOnline} = useNetInfo()
   const {context} = Route.useRouteContext()
   const {getLocation} = useGeoLocation()
+  const {data: session} = authClient.useSession()
+  const coords = useGeoLocation(state => state.coords)
 
   useEffect(() => {
-    getLocation().then((coords) => {
-      console.log('COORDS', coords)
-    })
+    getLocation()
   }, [])
 
-  // useEffect(() => {
-  //   if(data?.user) {
-  //     sendMessage({
-  //       type: 'register-user',
-  //       data: {
-  //         user: {
-  //           id: data.user.id,
-  //           name: data.user.name,
-  //           email: data.user.email,
-  //           digitalID: data.user.digitalID,
-  //           uuid: data.user.uuid,
-  //           role: data.user.role,
-  //         },
-  //         latitude: coords?.latitude,
-  //         longitude: coords?.longitude,
-  //       },
-  //     })
-  //   }
-  // }, [data?.user])
+  useEffect(()=> {
+
+    if(session?.user) {
+      socketManager.send('register-user', {
+        id: session?.user?.id,
+        user: {
+          name: session?.user?.name,
+          email: session?.user?.email,
+          digitalID: session?.user?.digitalID,
+          uuid: session?.user?.uuid,
+          role: session?.user?.role,
+        },
+        coords: {
+          latitude: coords?.latitude || null,
+          longitude: coords?.longitude || null,
+        },
+        placetform: 'Maintex Web'
+      })
+    }
+
+    return () => {
+      socketManager.send('unregister-user', {
+        user: session?.user?.id || null,
+      })
+    }
+
+  }, [session])
 
   // if(!isGeolocationAvailable) return <FetchLocationError />
 
@@ -87,7 +96,7 @@ function AppLayout() {
       !isOnline ? <NoInternet key={'no-internet'} /> : null
     }
 
-    <AIAssistantModal />
+    {/* <AIAssistantModal /> */}
     </AnimatePresence>
     </>
   )

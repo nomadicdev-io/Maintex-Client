@@ -34,7 +34,7 @@ const apiCollection = ky.create({
         'X-App-OS': navigator?.userAgentData?.platform || navigator?.platform,  
         'Accept': 'application/json',
     },
-});
+})
 
 const apiCollectionAI = ky.create({
     prefixUrl: import.meta.env.VITE_API_AI_URL,
