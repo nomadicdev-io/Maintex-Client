@@ -58,3 +58,8 @@
   
   --color-dark: #1a1a1a;
 }
+
+body {
+  --chart-1: var(--color-text);
+  --chart-2: var(--color-text-300);
+}

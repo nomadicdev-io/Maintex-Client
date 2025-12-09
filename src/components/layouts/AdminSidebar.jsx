@@ -84,14 +84,14 @@ export default function AdminSidebar() {
                     exact: false,
                     users: 'manager'
                 },
-                {
-                    id: 'nav-44.27',
-                    label: t("outlets"),
-                    href: "/app/business-development/outlets",
-                    icon: <Store />,
-                    exact: false,
-                    users: 'manager'
-                },
+                // {
+                //     id: 'nav-44.27',
+                //     label: t("outlets"),
+                //     href: "/app/business-development/outlets",
+                //     icon: <Store />,
+                //     exact: false,
+                //     users: 'manager'
+                // },
                 {
                     id: 'nav-44.23',
                     label: t("projects"),

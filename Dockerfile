@@ -3,16 +3,11 @@ FROM oven/bun:latest as build
 
 WORKDIR /app
 
-# Ensure Tailwind uses the JS implementation for compatibility
-ENV TAILWIND_DISABLE_OXIDE=1
-# Skip TanStack route generation during container builds (pre-generated in repo)
-ENV ENABLE_TANSTACK_ROUTE_GENERATION=false
-
 # Copy package files
-COPY package.json bun.lock* ./
+COPY package.json bun.lockb* ./
 
 # Install dependencies
-RUN bun install --frozen-lockfile 
+RUN bun install --frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .

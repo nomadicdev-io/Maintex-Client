@@ -44,8 +44,11 @@ export default function InviteUserModal({ onRefetch }) {
           role: value.role,
         }
 
-        const res = await orbit.post({ url: `admin/users/invite`, data: reqData })
+        const res = await orbit.post({ url: `hr/invite/user`, data: reqData })
         if (!res?.status || res?.error) throw res
+
+        console.log(res)
+
         toast.success('User invited successfully')
         form.reset()
         setModel(false)

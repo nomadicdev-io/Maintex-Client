@@ -1,6 +1,6 @@
 services:
   client:
-    container_name: maintex-client
+    container_name: maintex-client-beta
     build:
       context: .
       dockerfile: Dockerfile
