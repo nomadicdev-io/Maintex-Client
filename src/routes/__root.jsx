@@ -12,14 +12,9 @@ import DevTools from '../components/ui/DevTools'
 import { HotkeysProvider } from 'react-hotkeys-hook'
 import { useEffect } from 'react'
 import { useGeoLocation } from '../hooks/useGeoLocation'
-import SocketManager from '../api/socketManager'
-import APIManager from '../api/beta'
+import StorageAPI from '../api/storage'
 
-export const socketManager = new SocketManager({
-  url: import.meta.env.VITE_SOCKET_URL,
-});
-
-export const apiManager = new APIManager()
+export const storageAPI = new StorageAPI()
 
 export const Route = createRootRouteWithContext()({
   component: RootLayoutComponent,

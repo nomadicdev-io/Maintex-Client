@@ -164,6 +164,13 @@
         "select-model": "Seleziona il Modello",
         "web_search": "Cerca sul Web",
         "advanced_mode": "Modo Avanzato",
-        "download-digital-id": "Scarica l'ID Digitale"
+        "download-digital-id": "Scarica l'ID Digitale",
+        "personal-info": "Informazioni Personali",
+        "company-profile": "Informazioni della Società",
+        "education": "Educazione",
+        "experience": "Esperienza",
+        "documents": "Documenti",
+        "security": "Sicurezza",
+        "recent-activity": "Attività Recente"
     }
 }

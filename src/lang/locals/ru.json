@@ -164,6 +164,13 @@
         "select-model": "Выбрать модель",
         "web_search": "Поиск в Интернете",
         "advanced_mode": "Расширенный режим",
-        "download-digital-id": "Скачать цифровой идентификатор"
+        "download-digital-id": "Скачать цифровой идентификатор",
+        "personal-info": "Личная информация",
+        "company-profile": "Компания",
+        "education": "Образование",
+        "experience": "Опыт",
+        "documents": "Документы",
+        "security": "Безопасность",
+        "recent-activity": "Последняя активность"
     }
 }

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router'
 import DashboardBanner from '../../../../../components/sections/DashboardBanner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -30,9 +30,9 @@ import {
 } from '@/components/ui/card'
 import DefaultFormModal from '../../../../../components/ui/DefaultFormModal'
 import { useForm } from '@tanstack/react-form'
-import { InputField, TextareaField } from '@/components/ui/FormComponent'
+import { InputField, TextareaField, InputSelect } from '@/components/ui/FormComponent'
 import SearchBar from '../../../../../components/ui/SearchBar'
-import { FolderPlus } from 'lucide-react'
+import { ChevronRight, FolderPlus, Router } from 'lucide-react'
 
 const MOCK_CLIENTS = [
   {
@@ -95,17 +95,18 @@ function RouteComponent() {
   const [isFormLoading, setIsFormLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
+  const router = useRouter()
 
   const form = useForm({
     defaultValues: {
-      name: '',
       clientId: '',
+      name: '',
       country: '',
       email: '',
       phone: '',
-      website: '',
+      sector: '',
+      type: '',
       address: '',
-      company: '',
     },
     onSubmit: async ({ value }) => {
       setIsFormLoading(true)
@@ -217,28 +218,6 @@ function RouteComponent() {
                 className="grid w-full grid-cols-2 gap-x-5 gap-y-6 p-5"
               >
                 <form.Field
-                  name="name"
-                  validators={{
-                    onChange: ({ value }) => (value ? undefined : 'Name is required'),
-                  }}
-                >
-                  {(field) => (
-                    <InputField
-                      label="Client name"
-                      name="name"
-                      type="text"
-                      placeholder="Enter client name"
-                      className="col-span-2"
-                      value={field.state.value}
-                      onChange={(event) => field.handleChange(event.target.value)}
-                      error={field?.state?.meta?.errors?.join(', ')}
-                      isError={field?.state?.meta?.errors?.length > 0}
-                      autoFocus
-                    />
-                  )}
-                </form.Field>
-
-                <form.Field
                   name="clientId"
                   validators={{
                     onChange: ({ value }) => (value ? undefined : 'Client ID is required'),
@@ -254,19 +233,51 @@ function RouteComponent() {
                       onChange={(event) => field.handleChange(event.target.value)}
                       error={field?.state?.meta?.errors?.join(', ')}
                       isError={field?.state?.meta?.errors?.length > 0}
+                      autoFocus
                     />
                   )}
                 </form.Field>
 
-                <form.Field name="company">
+                <form.Field
+                  name="email"
+                  validators={{
+                    onChange: ({ value }) =>
+                      value && value.includes('@') ? undefined : 'Valid email is required',
+                  }}
+                >
                   {(field) => (
                     <InputField
-                      label="Company"
-                      name="company"
-                      type="text"
-                      placeholder="Company or organization"
+                      label="Email address"
+                      name="email"
+                      type="email"
+                      placeholder="name@company.com"
                       value={field.state.value}
                       onChange={(event) => field.handleChange(event.target.value)}
+                      error={field?.state?.meta?.errors?.join(', ')}
+                      isError={field?.state?.meta?.errors?.length > 0}
+                      className="col-span-1"
+                    />
+                  )}
+                </form.Field>
+
+
+                <form.Field
+                  name="name"
+                  validators={{
+                    onChange: ({ value }) => (value ? undefined : 'Name is required'),
+                  }}
+                >
+                  {(field) => (
+                    <InputField
+                      label="Client / concept name"
+                      name="name"
+                      type="text"
+                      placeholder="Enter client or concept name"
+                      className="col-span-2"
+                      value={field.state.value}
+                      onChange={(event) => field.handleChange(event.target.value)}
+                      error={field?.state?.meta?.errors?.join(', ')}
+                      isError={field?.state?.meta?.errors?.length > 0}
                     />
                   )}
                 </form.Field>
@@ -284,28 +295,6 @@ function RouteComponent() {
                   )}
                 </form.Field>
 
-                <form.Field
-                  name="email"
-                  validators={{
-                    onChange: ({ value }) =>
-                      value && value.includes('@') ? undefined : 'Valid email is required',
-                  }}
-                >
-                  {(field) => (
-                    <InputField
-                      label="Email"
-                      name="email"
-                      type="email"
-                      placeholder="name@company.com"
-                      value={field.state.value}
-                      onChange={(event) => field.handleChange(event.target.value)}
-                      error={field?.state?.meta?.errors?.join(', ')}
-                      isError={field?.state?.meta?.errors?.length > 0}
-                      className="col-span-2"
-                    />
-                  )}
-                </form.Field>
-
                 <form.Field name="phone">
                   {(field) => (
                     <InputField
@@ -319,15 +308,31 @@ function RouteComponent() {
                   )}
                 </form.Field>
 
-                <form.Field name="website">
+                <form.Field name="sector">
                   {(field) => (
                     <InputField
-                      label="Website"
-                      name="website"
-                      type="url"
-                      placeholder="https://"
+                      label="Sector"
+                      name="sector"
+                      type="text"
+                      placeholder="Industry or sector"
                       value={field.state.value}
                       onChange={(event) => field.handleChange(event.target.value)}
+                    />
+                  )}
+                </form.Field>
+
+                <form.Field name="type">
+                  {(field) => (
+                    <InputSelect
+                      label="Type"
+                      placeholder="Select type"
+                      value={field.state.value}
+                      onChange={field.handleChange}
+                      options={[
+                        { label: 'AMC', value: 'amc' },
+                        { label: 'Project', value: 'project' },
+                        { label: 'Other', value: 'other' },
+                      ]}
                     />
                   )}
                 </form.Field>
@@ -388,6 +393,7 @@ function RouteComponent() {
                           <TableHead className="text-[11px] font-semibold uppercase tracking-[0.18em] text-text/60">
                             Status
                           </TableHead>
+                          <TableHead></TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -451,6 +457,11 @@ function RouteComponent() {
                               >
                                 {client.status.charAt(0).toUpperCase() + client.status.slice(1)}
                               </Badge>
+                            </TableCell>
+                            <TableCell className="py-4">
+                              <Button variant="outline" size="icon" onClick={() => router.navigate({to: '/app/business-development/client-details'})}>
+                                <ChevronRight />
+                              </Button>
                             </TableCell>
                           </TableRow>
                         ))}

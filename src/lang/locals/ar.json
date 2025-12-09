@@ -164,6 +164,13 @@
         "select-model": "اختر النموزج",
         "web_search": "البحث في الويب",
         "advanced_mode": "الوضع المتقدم",
-        "download-digital-id": "تحميل الملف الرقمي"
+        "download-digital-id": "تحميل الملف الرقمي",
+        "personal-info": "المعلومات الشخصية",
+        "company-profile": "المعلومات الشركية",
+        "education": "التعليم",
+        "experience": "الخبرة",
+        "documents": "المستندات",
+        "security": "الأمان",
+        "recent-activity": "النشاط الأخير"
     }
 }

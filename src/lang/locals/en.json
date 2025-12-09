@@ -164,6 +164,13 @@
         "select-model": "Select Model",
         "web_search": "Web Search",
         "advanced_mode": "Advanced Mode",
-        "download-digital-id": "Download Digital ID"
+        "download-digital-id": "Download Digital ID",
+        "personal-info": "Personal Info",
+        "company-profile": "Company Profile",
+        "education": "Education",
+        "experience": "Experience",
+        "documents": "Documents",
+        "security": "Security",
+        "recent-activity": "Recent Activity"
     }
 }

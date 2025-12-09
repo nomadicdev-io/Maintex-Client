@@ -36,6 +36,7 @@ import { Route as AppAppAccountAccountRouteImport } from './routes/app/_app/acco
 import { Route as AppAppMaintexAiAiIndexRouteImport } from './routes/app/_app/maintex-ai/_ai/index'
 import { Route as AppAppDevelopmentDevelopmentFilesManagerRouteImport } from './routes/app/_app/development/_development/files-manager'
 import { Route as AppAppDevelopmentDevelopmentAiSdkRouteImport } from './routes/app/_app/development/_development/ai-sdk'
+import { Route as AppAppBusinessDevelopmentBusinessDevelopmentClientDetailsRouteImport } from './routes/app/_app/business-development/_business-development/client-details'
 import { Route as AppAppManagerManagerTrackingIndexRouteImport } from './routes/app/_app/manager/_manager/tracking/index'
 import { Route as AppAppAdminAdminServersDbIndexRouteImport } from './routes/app/_app/admin/_admin/servers-db/index'
 import { Route as AppAppAdminAdminSettingsSettingsRouteImport } from './routes/app/_app/admin/_admin/settings/_settings'
@@ -682,6 +683,12 @@ const AppAppDevelopmentDevelopmentAiSdkRoute =
     path: '/ai-sdk',
     getParentRoute: () => AppAppDevelopmentDevelopmentRoute,
   } as any)
+const AppAppBusinessDevelopmentBusinessDevelopmentClientDetailsRoute =
+  AppAppBusinessDevelopmentBusinessDevelopmentClientDetailsRouteImport.update({
+    id: '/client-details',
+    path: '/client-details',
+    getParentRoute: () => AppAppBusinessDevelopmentBusinessDevelopmentRoute,
+  } as any)
 const AppAppManagerManagerTrackingIndexRoute =
   AppAppManagerManagerTrackingIndexRouteImport.update({
     id: '/tracking/',
@@ -967,6 +974,7 @@ export interface FileRoutesByFullPath {
   '/app/manager': typeof AppAppManagerManagerRouteWithChildren
   '/app/service': typeof AppAppServiceServiceRouteWithChildren
   '/app/chats': typeof AppAppChatsIndexLazyRoute
+  '/app/business-development/client-details': typeof AppAppBusinessDevelopmentBusinessDevelopmentClientDetailsRoute
   '/app/development/ai-sdk': typeof AppAppDevelopmentDevelopmentAiSdkRoute
   '/app/development/files-manager': typeof AppAppDevelopmentDevelopmentFilesManagerRoute
   '/app/account/drive': typeof AppAppAccountAccountDriveLazyRoute
@@ -1050,6 +1058,7 @@ export interface FileRoutesByTo {
   '/app/manager': typeof AppAppManagerManagerRouteWithChildren
   '/app/service': typeof AppAppServiceServiceRouteWithChildren
   '/app/chats': typeof AppAppChatsIndexLazyRoute
+  '/app/business-development/client-details': typeof AppAppBusinessDevelopmentBusinessDevelopmentClientDetailsRoute
   '/app/development/ai-sdk': typeof AppAppDevelopmentDevelopmentAiSdkRoute
   '/app/development/files-manager': typeof AppAppDevelopmentDevelopmentFilesManagerRoute
   '/app/account/drive': typeof AppAppAccountAccountDriveLazyRoute
@@ -1142,6 +1151,7 @@ export interface FileRoutesById {
   '/app/_app/service': typeof AppAppServiceRouteWithChildren
   '/app/_app/service/_service': typeof AppAppServiceServiceRouteWithChildren
   '/app/_app/chats/': typeof AppAppChatsIndexLazyRoute
+  '/app/_app/business-development/_business-development/client-details': typeof AppAppBusinessDevelopmentBusinessDevelopmentClientDetailsRoute
   '/app/_app/development/_development/ai-sdk': typeof AppAppDevelopmentDevelopmentAiSdkRoute
   '/app/_app/development/_development/files-manager': typeof AppAppDevelopmentDevelopmentFilesManagerRoute
   '/app/_app/account/_account/drive': typeof AppAppAccountAccountDriveLazyRoute
@@ -1231,6 +1241,7 @@ export interface FileRouteTypes {
     | '/app/manager'
     | '/app/service'
     | '/app/chats'
+    | '/app/business-development/client-details'
     | '/app/development/ai-sdk'
     | '/app/development/files-manager'
     | '/app/account/drive'
@@ -1314,6 +1325,7 @@ export interface FileRouteTypes {
     | '/app/manager'
     | '/app/service'
     | '/app/chats'
+    | '/app/business-development/client-details'
     | '/app/development/ai-sdk'
     | '/app/development/files-manager'
     | '/app/account/drive'
@@ -1405,6 +1417,7 @@ export interface FileRouteTypes {
     | '/app/_app/service'
     | '/app/_app/service/_service'
     | '/app/_app/chats/'
+    | '/app/_app/business-development/_business-development/client-details'
     | '/app/_app/development/_development/ai-sdk'
     | '/app/_app/development/_development/files-manager'
     | '/app/_app/account/_account/drive'
@@ -1948,6 +1961,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAppDevelopmentDevelopmentAiSdkRouteImport
       parentRoute: typeof AppAppDevelopmentDevelopmentRoute
     }
+    '/app/_app/business-development/_business-development/client-details': {
+      id: '/app/_app/business-development/_business-development/client-details'
+      path: '/client-details'
+      fullPath: '/app/business-development/client-details'
+      preLoaderRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentClientDetailsRouteImport
+      parentRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentRoute
+    }
     '/app/_app/manager/_manager/tracking/': {
       id: '/app/_app/manager/_manager/tracking/'
       path: '/tracking'
@@ -2408,6 +2428,7 @@ const AppAppAdminRouteWithChildren = AppAppAdminRoute._addFileChildren(
 )
 
 interface AppAppBusinessDevelopmentBusinessDevelopmentRouteChildren {
+  AppAppBusinessDevelopmentBusinessDevelopmentClientDetailsRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentClientDetailsRoute
   AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRoute
   AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRoute
   AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRoute: typeof AppAppBusinessDevelopmentBusinessDevelopmentOutletsLazyRoute
@@ -2417,6 +2438,8 @@ interface AppAppBusinessDevelopmentBusinessDevelopmentRouteChildren {
 
 const AppAppBusinessDevelopmentBusinessDevelopmentRouteChildren: AppAppBusinessDevelopmentBusinessDevelopmentRouteChildren =
   {
+    AppAppBusinessDevelopmentBusinessDevelopmentClientDetailsRoute:
+      AppAppBusinessDevelopmentBusinessDevelopmentClientDetailsRoute,
     AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRoute:
       AppAppBusinessDevelopmentBusinessDevelopmentAmcLazyRoute,
     AppAppBusinessDevelopmentBusinessDevelopmentClientsLazyRoute:

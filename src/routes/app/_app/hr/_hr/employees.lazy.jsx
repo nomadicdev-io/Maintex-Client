@@ -67,132 +67,6 @@ function RouteComponent() {
     placeholderData: (previousData) => previousData ?? { total: 0, users: [] },
   })
 
-  console.log(data)
-
-  const users = data?.users ?? []
-  const total = data?.total ?? users.length
-
-  const [searchTerm, setSearchTerm] = useState('')
-  const [roleFilter, setRoleFilter] = useState('all')
-  const [statusFilter, setStatusFilter] = useState('all')
-  const [sortKey, setSortKey] = useState('name')
-  const [sortOrder, setSortOrder] = useState('asc')
-
-  const roles = useMemo(() => {
-    return Array.from(
-      new Set(users.map((user) => user?.role).filter(Boolean))
-    ).sort((a, b) => String(a).localeCompare(String(b)))
-  }, [users])
-
-  const statuses = useMemo(() => {
-    return Array.from(
-      new Set(users.map((user) => user?.status).filter(Boolean))
-    ).sort((a, b) => String(a).localeCompare(String(b)))
-  }, [users])
-
-  const filteredUsers = useMemo(() => {
-    const normalizedSearch = searchTerm.trim().toLowerCase()
-
-    const getSortValue = (user) => {
-      switch (sortKey) {
-        case 'email':
-          return (user?.email ?? '').toLowerCase()
-        case 'role':
-          return (user?.role ?? '').toLowerCase()
-        case 'status':
-          return (user?.status ?? '').toLowerCase()
-        case 'createdAt':
-        case 'updatedAt':
-          return user?.[sortKey] ? new Date(user[sortKey]).getTime() : 0
-        case 'name':
-        default:
-          return (user?.name ?? '').toLowerCase()
-      }
-    }
-
-    return [...users]
-      .filter((user) => {
-        if (!normalizedSearch) return true
-        const haystack = [
-          user?.name,
-          user?.email,
-          user?.digitalID,
-          user?.uuid,
-        ]
-          .filter(Boolean)
-          .join(' ')
-          .toLowerCase()
-        return haystack.includes(normalizedSearch)
-      })
-      .filter((user) => {
-        if (roleFilter === 'all') return true
-        return user?.role === roleFilter
-      })
-      .filter((user) => {
-        if (statusFilter === 'all') return true
-        return user?.status === statusFilter
-      })
-      .sort((a, b) => {
-        const valueA = getSortValue(a)
-        const valueB = getSortValue(b)
-
-        if (typeof valueA === 'number' && typeof valueB === 'number') {
-          return sortOrder === 'asc' ? valueA - valueB : valueB - valueA
-        }
-
-        return sortOrder === 'asc'
-          ? String(valueA).localeCompare(String(valueB))
-          : String(valueB).localeCompare(String(valueA))
-      })
-  }, [users, searchTerm, roleFilter, statusFilter, sortKey, sortOrder])
-
-  const handleSort = (key) => {
-    setSortOrder((prev) => (sortKey === key && prev === 'asc' ? 'desc' : 'asc'))
-    setSortKey(key)
-  }
-
-  const getSortIndicatorClass = (key) => {
-    if (sortKey !== key) return 'text-text/40'
-    return sortOrder === 'asc' ? 'text-text' : 'text-text rotate-180'
-  }
-
-  const formatDate = (value) => {
-    if (!value) return '—'
-    const date = new Date(value)
-    if (Number.isNaN(date.getTime())) return '—'
-    return new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    }).format(date)
-  }
-
-  const getInitials = (value, fallback) => {
-    if (value) {
-      const parts = value.split(' ').filter(Boolean)
-      if (parts.length >= 2) {
-        return `${parts[0][0] ?? ''}${parts[parts.length - 1][0] ?? ''}`.toUpperCase()
-      }
-      return value.slice(0, 2).toUpperCase()
-    }
-    return (fallback ?? '?').slice(0, 2).toUpperCase()
-  }
-
-  const resolveImageSrc = (image) => {
-    if (!image) return undefined
-    if (typeof image === 'string') return image
-    if (image?.url) return image.url
-    if (image?.key) return image.key
-    return undefined
-  }
-
-  const formatLabel = (value) => {
-    if (!value) return '—'
-    return String(value)
-      .split(/[\s_-]+/)
-      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-      .join(' ')
-  }
 
   return (
     <div className="flex h-full w-full flex-col">
@@ -215,104 +89,12 @@ function RouteComponent() {
         </div>
       </DashboardBanner>
 
-      <div className="flex-1 overflow-hidden px-6 pb-6">
+      {/* <div className="flex-1 overflow-hidden px-6 pb-6">
         <Card className="h-full border-0">
-          <CardHeader className="border-b border-border/60 pb-4 px-0">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div className="space-y-1">
-                <CardTitle className="text-lg text-text">User directory</CardTitle>
-                <CardDescription>
-                  {isLoading
-                    ? 'Fetching employees…'
-                    : `${filteredUsers.length} of ${total} ${
-                        total === 1 ? 'user' : 'users'
-                      }`}
-                </CardDescription>
-              </div>
-              <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center md:w-auto">
-                <Input
-                  id="employee-search"
-                  placeholder="Search name, email, or ID"
-                  value={searchTerm}
-                  onChange={(event) => setSearchTerm(event.target.value)}
-                  className="w-full sm:w-56"
-                />
-                <Select value={roleFilter} onValueChange={setRoleFilter}>
-                  <SelectTrigger className="w-full sm:w-44">
-                    <SelectValue placeholder="All roles" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All roles</SelectItem>
-                    {roles.map((role) => (
-                      <SelectItem key={role} value={role}>
-                        {formatLabel(role)}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-full sm:w-44">
-                    <SelectValue placeholder="All statuses" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All statuses</SelectItem>
-                    {statuses.map((status) => (
-                      <SelectItem key={status} value={status}>
-                        {formatLabel(status)}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button
-                  variant="outline"
-                  className="gap-2"
-                  onClick={() => refetch()}
-                  disabled={isRefetching || isLoading}
-                >
-                  <RefreshCw className={`size-4 ${isRefetching ? 'animate-spin' : ''}`} />
-                  Refresh
-                </Button>
-              </div>
-            </div>
-          </CardHeader>
-
           <CardContent className="flex h-full flex-col p-0 px-0">
-            {isError ? (
-              <div className="flex flex-1 flex-col items-center justify-center gap-3 p-10 text-center">
-                <p className="text-base font-semibold text-text">
-                  We couldn’t load employees right now.
-                </p>
-                <p className="text-sm text-text/60">
-                  {error?.message ?? 'Please try again in a moment.'}
-                </p>
-                <Button size="sm" onClick={() => refetch()}>
-                  Try again
-                </Button>
-              </div>
-            ) : isLoading ? (
-              <div className="flex flex-1 items-center justify-center p-10 text-sm text-text/60">
-                Loading user directory…
-              </div>
-            ) : data?.length === 0 ? (
-              <div className="flex flex-1 flex-col items-center justify-center gap-3 p-10 text-center text-sm text-text/60">
-                <p className="text-base font-medium text-text">No users found.</p>
-                <p className="text-xs text-text/50">
-                  Adjust your filters or clear the search to see more results.
-                </p>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => {
-                    setSearchTerm('')
-                    setRoleFilter('all')
-                    setStatusFilter('all')
-                  }}
-                >
-                  Reset filters
-                </Button>
-              </div>
-            ) : (
-              <ScrollArea className="h-full" scrollHideDelay={240}>
+            {
+              data?.map((user) => (
+                <ScrollArea className="h-full" scrollHideDelay={240}>
                 <div className="min-w-full px-0">
                   <div className="overflow-x-auto">
                     <Table>
@@ -334,11 +116,10 @@ function RouteComponent() {
                             <button
                               type="button"
                               className="flex items-center gap-2"
-                              onClick={() => handleSort('email')}
                             >
                               Email
-                              <ArrowUpDown
-                                className={`size-3 transition-transform ${getSortIndicatorClass('email')}`}
+                              <ArrowUpDown  
+                                className={`size-3 transition-transform `}
                               />
                             </button>
                           </TableHead>
@@ -346,11 +127,10 @@ function RouteComponent() {
                             <button
                               type="button"
                               className="flex items-center gap-2"
-                              onClick={() => handleSort('role')}
                             >
                               Role
                               <ArrowUpDown
-                                className={`size-3 transition-transform ${getSortIndicatorClass('role')}`}
+                                className={`size-3 transition-transform `}
                               />
                             </button>
                           </TableHead>
@@ -358,11 +138,10 @@ function RouteComponent() {
                             <button
                               type="button"
                               className="flex items-center gap-2"
-                              onClick={() => handleSort('status')}
                             >
                               Status
                               <ArrowUpDown
-                                className={`size-3 transition-transform ${getSortIndicatorClass('status')}`}
+                                className={`size-3 transition-transform `}
                               />
                             </button>
                           </TableHead>
@@ -370,11 +149,10 @@ function RouteComponent() {
                             <button
                               type="button"
                               className="flex items-center gap-2"
-                              onClick={() => handleSort('createdAt')}
                             >
                               Created
                               <ArrowUpDown
-                                className={`size-3 transition-transform ${getSortIndicatorClass('createdAt')}`}
+                                className={`size-3 transition-transform `}
                               />
                             </button>
                           </TableHead>
@@ -382,11 +160,10 @@ function RouteComponent() {
                             <button
                               type="button"
                               className="flex items-center gap-2"
-                              onClick={() => handleSort('updatedAt')}
                             >
                               Updated
                               <ArrowUpDown
-                                className={`size-3 transition-transform ${getSortIndicatorClass('updatedAt')}`}
+                                className={`size-3 transition-transform `}
                               />
                             </button>
                           </TableHead>
@@ -405,11 +182,11 @@ function RouteComponent() {
                               <div className="flex items-center gap-3">
                                 <Avatar className="size-10 border border-border/50">
                                   <AvatarImage
-                                    src={resolveImageSrc(user?.image)}
+                                    src={user?.image}
                                     alt={user?.name ?? user?.email ?? 'User avatar'}
                                   />
                                   <AvatarFallback className="bg-bg-300/30 text-xs font-medium text-text">
-                                    {getInitials(user?.name, user?.email)}
+                                    {user?.name?.charAt(0) ?? user?.email?.charAt(0) ?? 'U'}
                                   </AvatarFallback>
                                 </Avatar>
                                 <div className="space-y-1">
@@ -440,21 +217,21 @@ function RouteComponent() {
                               </div>
                             </TableCell>
                             <TableCell className="whitespace-nowrap py-4 text-sm text-text/80">
-                              {formatLabel(user?.role)}
+                              {user?.role}
                             </TableCell>
                             <TableCell className="py-4">
                               <Badge
                                 variant="outline"
                                 className="rounded-full border-border/70 px-3 text-[11px] uppercase tracking-[0.2em] text-text/65"
                               >
-                                {formatLabel(user?.status)}
+                                {user?.status}
                               </Badge>
                             </TableCell>
                             <TableCell className="whitespace-nowrap py-4 text-sm text-text/65">
-                              {formatDate(user?.createdAt)}
+                              {user?.createdAt}
                             </TableCell>
                             <TableCell className="whitespace-nowrap py-4 text-sm text-text/65">
-                              {formatDate(user?.updatedAt)}
+                              {user?.updatedAt}
                             </TableCell>
                             <TableCell className="py-4">
                               <div className="flex flex-col gap-1 text-[11px] uppercase tracking-[0.2em] text-text/55">
@@ -474,10 +251,11 @@ function RouteComponent() {
                   </div>
                 </div>
               </ScrollArea>
-            )}
+              ))
+            }
           </CardContent>
         </Card>
-      </div>
+      </div> */}
     </div>
   )
 }
