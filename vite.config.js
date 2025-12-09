@@ -46,21 +46,18 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist',
-    commonjsOptions: {
-      transformMixedEsModules: true,
-    }
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          vendor: ['axios', /* add other big deps */],
+        },
+      },
+    },
   },
   server: {
     port: 8808,
-    proxy: {
-      '/api/chat': {
-        target: 'http://localhost:8880',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/v1\/ai/, ''),
-      },
-    },
   },
   preview: {
     port: 8808,
