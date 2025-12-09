@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 import path from "path"
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 
+const enableRouteGeneration = process.env.ENABLE_TANSTACK_ROUTE_GENERATION !== 'false'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -12,6 +13,7 @@ export default defineConfig({
     tanstackRouter({
       target: 'react',
       autoCodeSplitting: true,
+      enableRouteGeneration,
     }),
     react(),
     tailwindcss(),

@@ -163,6 +163,7 @@
         "ai-sdk": "AI SDK",
         "select-model": "Sélectionner le Modèle",
         "web_search": "Rechercher sur le Web",
-        "advanced_mode": "Mode Avancé"
+        "advanced_mode": "Mode Avancé",
+        "download-digital-id": "Télécharger l'ID Digital"
     }
 }

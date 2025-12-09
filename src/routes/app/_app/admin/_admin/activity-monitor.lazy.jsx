@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
 import DashboardBanner from '@components/sections/DashboardBanner'
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import * as tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import { useTheme } from 'next-themes';
@@ -25,7 +25,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { socketManager } from '../../../../__root';
 import { atom, useAtom } from 'jotai';
 import { LazyLog, ScrollFollow } from "@melloware/react-logviewer";
 import {
@@ -35,6 +34,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
+import { useWebSocketChannel } from '../../../../../hooks/useWebSocket';
 
 
 const viewFullLogsAtom = atom(false)
@@ -47,6 +47,31 @@ function RouteComponent() {
 
   const {t} = useTranslation()
   const [view, setView] = useAtom(viewFullLogsAtom)
+  const [activeUsers, setActiveUsers] = useState([])
+
+  const { isConnected, lastMessage, sendMessage } = useWebSocketChannel(
+    import.meta.env.VITE_SOCKET_URL,
+    'activity-logs',
+    {
+      reconnect: true,
+      reconnectInterval: 3000,
+      reconnectAttempts: 5,
+      onMessage: (data) => {
+        console.log('Received:', data);
+
+        if(data?.type === 'active-users') {
+          setActiveUsers(data.data)
+        }
+      },
+      onConnect: () => {
+        console.log('Successfully connected to channel');
+      },
+      onError: (err) => {
+        console.error('Connection error:', err);
+      }
+    }
+  );
+
 
   const {data, isLoading, isError, error, isRefetching} = useQuery({
     queryKey: ['admin-activity-monitor',],
@@ -73,21 +98,6 @@ function RouteComponent() {
     }
   })
 
-  useEffect(() => {
-    // Store the callback reference
-    const handleActivityLogs = (data) => {
-      console.log('ACTIVITY LOGS', data)
-      // TODO: Update state or refetch data when activity logs are received
-    }
-    
-    // Subscribe and get unsubscribe function
-    const unsubscribe = socketManager.subscribe('activity-logs', handleActivityLogs)
-    
-    // Return cleanup function
-    return () => {
-      unsubscribe()
-    }
-  }, [])
 
   if(isLoading) return <FetchLoader key="fetch-loader" />
 

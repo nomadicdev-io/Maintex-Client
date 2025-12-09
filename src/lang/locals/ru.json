@@ -163,6 +163,7 @@
         "ai-sdk": "AI SDK",
         "select-model": "Выбрать модель",
         "web_search": "Поиск в Интернете",
-        "advanced_mode": "Расширенный режим"
+        "advanced_mode": "Расширенный режим",
+        "download-digital-id": "Скачать цифровой идентификатор"
     }
 }

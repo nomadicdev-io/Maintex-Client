@@ -120,7 +120,7 @@
     "react-qr-code": "^2.0.18",
     "react-spinners": "^0.17.0",
     "react-use-websocket": "^4.13.0",
-    "recharts": "^3.5.1",
+    "recharts": "2.15.4",
     "remark-gfm": "^4.0.1",
     "sass": "^1.95.0",
     "shiki": "^3.19.0",

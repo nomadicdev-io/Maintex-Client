@@ -5,6 +5,8 @@ WORKDIR /app
 
 # Ensure Tailwind uses the JS implementation for compatibility
 ENV TAILWIND_DISABLE_OXIDE=1
+# Skip TanStack route generation during container builds (pre-generated in repo)
+ENV ENABLE_TANSTACK_ROUTE_GENERATION=false
 
 # Copy package files
 COPY package.json bun.lock* ./

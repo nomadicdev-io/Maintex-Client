@@ -163,6 +163,7 @@
         "ai-sdk": "AI SDK",
         "select-model": "اختر النموزج",
         "web_search": "البحث في الويب",
-        "advanced_mode": "الوضع المتقدم"
+        "advanced_mode": "الوضع المتقدم",
+        "download-digital-id": "تحميل الملف الرقمي"
     }
 }
