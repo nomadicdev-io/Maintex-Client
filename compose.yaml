@@ -30,10 +30,10 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2g
-          cpus: 2
+          memory: 8g
+          cpus: 4
         reservations:
-          memory: 1g
+          memory: 4g
           cpus: 2
     ports:
       - "8808:8808"
