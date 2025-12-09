@@ -3,6 +3,9 @@ FROM oven/bun:latest as build
 
 WORKDIR /app
 
+# Ensure Tailwind uses the JS implementation for compatibility
+ENV TAILWIND_DISABLE_OXIDE=1
+
 # Copy package files
 COPY package.json bun.lock* ./
 
