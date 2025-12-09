@@ -1,27 +1,27 @@
 # Build stage
-FROM node:24 as build
+FROM oven/bun:latest as build
 
 WORKDIR /app
 
 # Copy package files
-COPY package.json package-lock.json ./
+COPY package.json bun.lock ./
 
 # Install dependencies
-RUN npm install --frozen-lockfile
+RUN bun install --frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN bun run build
 
 # Production stage
-FROM node:24
+FROM oven/bun:latest
 
 WORKDIR /app
 
 # Install a simple http server to serve static content
-RUN npm install --global serve
+RUN bun install --global serve
 
 # Copy build artifacts from build stage
 COPY --from=build /app/dist /app/dist
