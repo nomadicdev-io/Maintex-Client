@@ -7,6 +7,9 @@ import {LogOutIcon, UserPen } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '@/hooks/useAuthStore'
+import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
 export const Route = createLazyFileRoute('/app/_app/account/_account/profile/_profile/')({
   component: RouteComponent,
@@ -24,8 +27,26 @@ function RouteComponent() {
   const { data, refetch } = authClient.useSession()
   const router = useRouter()
   const { t } = useTranslation()
-  const logout = useAuthStore((state) => state.logout)
+  const {logout} = useAuthStore()
+  const [isLoading, setIsLoading] = useState(false)
+  const queryClient = useQueryClient()
 
+  const handleSignOut = async() => {
+    setIsLoading(true)
+    try{
+
+        await logout()
+        router.invalidate()
+        router.navigate({to: '/', replace: true})
+        queryClient.clear()
+
+    }catch(error){
+        console.log(error)
+        toast.error(error.message)
+    }finally{
+        setIsLoading(false)
+    }
+}
   const quickStats = [
     {
       id: 'projects',
@@ -227,7 +248,7 @@ function RouteComponent() {
             <UserPen />
             <span>{t('edit-profile')}</span>
           </Button>
-          <Button variant='shade' onClick={logout}>
+          <Button variant='dangerShade' onClick={handleSignOut} disabled={isLoading}>
             <LogOutIcon />
             <span>{t('log-out')}</span>
           </Button>

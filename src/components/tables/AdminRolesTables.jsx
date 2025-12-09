@@ -33,7 +33,7 @@ export default function AdminRolesTables({data, onRefetch, onItemClick}) {
                 <TableBody>
                 {
                     data.map((item, index) => (
-                        <TableRow key={item._id}>
+                        <TableRow key={item.id}>
                             <TableCell className="text-text/50">{indexGenerator(index + 1)}</TableCell>
                             <TableCell className="text-semibold truncate">{item.name}</TableCell>
                             <TableCell><Badge variant="teal">{item.value}</Badge></TableCell>

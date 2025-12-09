@@ -358,7 +358,7 @@ function AppHomePage() {
     }
 
     return (
-      <div className="rounded-lg border border-zinc-800/80 bg-zinc-950/95 px-3 py-2 text-xs text-zinc-200 shadow-lg">
+      <div className="rounded-lg border px-3 py-2 text-xs shadow-lg">
         <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">{label}</p>
         <div className="mt-2 space-y-1">
           {payload.map((item) => (
